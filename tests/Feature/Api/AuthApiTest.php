@@ -128,6 +128,36 @@ class AuthApiTest extends TestCase
         $response->assertStatus(422);
     }
 
+    public function test_reregistering_an_unverified_phone_only_resends_otp_without_overwriting_it(): void
+    {
+        Log::spy();
+
+        $this->postJson('/api/auth/register', [
+            'name' => 'Real Owner',
+            'phone' => '+225 07 00 00 00 07',
+            'password' => 'password123',
+            'password_confirmation' => 'password123',
+            'role' => 'client',
+        ])->assertCreated();
+
+        // An attacker who doesn't own the phone tries to hijack the pending
+        // signup by "re-registering" with their own password/role.
+        $response = $this->postJson('/api/auth/register', [
+            'name' => 'Attacker',
+            'phone' => '+225 07 00 00 00 07',
+            'password' => 'attacker-password',
+            'password_confirmation' => 'attacker-password',
+            'role' => 'vendor',
+        ]);
+
+        $response->assertOk();
+
+        $user = User::where('phone', '+225 07 00 00 00 07')->firstOrFail();
+        $this->assertSame('Real Owner', $user->name);
+        $this->assertSame('client', $user->role);
+        $this->assertTrue(\Illuminate\Support\Facades\Hash::check('password123', $user->password));
+    }
+
     public function test_login_succeeds_once_verified(): void
     {
         User::factory()->create([

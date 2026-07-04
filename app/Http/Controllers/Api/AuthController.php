@@ -27,17 +27,26 @@ class AuthController extends Controller
             ]);
         }
 
-        // Allow retrying registration (new password + fresh OTP) while the
-        // phone hasn't been verified yet, instead of hard-failing on the
-        // unique constraint.
-        $user = $existing ?? new User();
-        $user->fill([
+        if ($existing) {
+            // Someone else could be retrying with this phone number without
+            // actually owning it. Only resend the OTP — never overwrite
+            // name/password/role of a pending registration from an
+            // unauthenticated request, or an attacker could hijack it before
+            // the real owner verifies.
+            $this->sendOtp($existing->phone);
+
+            return response()->json([
+                'message' => 'Ce numéro a déjà une inscription en attente. Un nouveau code de vérification a été envoyé.',
+                'user' => new UserResource($existing),
+            ], 200);
+        }
+
+        $user = User::create([
             'name' => $data['name'],
             'phone' => $data['phone'],
             'role' => $data['role'],
+            'password' => Hash::make($data['password']),
         ]);
-        $user->password = Hash::make($data['password']);
-        $user->save();
 
         $this->sendOtp($user->phone);
 
@@ -98,8 +107,14 @@ class AuthController extends Controller
     {
         $code = OtpCode::generateFor($phone);
 
-        // No SMS/WhatsApp aggregator wired up yet (Phase 2 per the spec) —
-        // log the code so it can be used in local/dev testing.
-        Log::info("OTP for {$phone}: {$code}");
+        // No SMS/WhatsApp aggregator wired up yet (Phase 2 per the spec).
+        // Only log the plaintext code in local/testing — never in an
+        // environment whose logs could reach staging/production log
+        // aggregation, to avoid shipping OTPs in plaintext.
+        if (app()->environment(['local', 'testing'])) {
+            Log::info("OTP for {$phone}: {$code}");
+        } else {
+            Log::warning('OTP requested but no SMS/WhatsApp provider is configured; code was not delivered.');
+        }
     }
 }
