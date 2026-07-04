@@ -1,0 +1,280 @@
+<!DOCTYPE html><html lang="fr" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#e2e3dd",
+                        "on-background": "#191c19",
+                        "surface-container": "#edeee8",
+                        "secondary": "#9b4500",
+                        "on-secondary-fixed-variant": "#763300",
+                        "secondary-fixed": "#ffdbca",
+                        "secondary-fixed-dim": "#ffb68e",
+                        "primary-container": "#204e29",
+                        "inverse-surface": "#2e312d",
+                        "primary": "#053715",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-container": "#8dbf8f",
+                        "on-surface-variant": "#414940",
+                        "on-secondary-container": "#6b2d00",
+                        "tertiary": "#511d2c",
+                        "tertiary-fixed": "#ffd9e0",
+                        "surface-container-low": "#f3f4ee",
+                        "on-tertiary-fixed": "#380919",
+                        "surface-tint": "#3a6841",
+                        "on-primary-fixed-variant": "#22502b",
+                        "on-tertiary-container": "#ea9eae",
+                        "on-tertiary": "#ffffff",
+                        "surface-dim": "#d9dbd5",
+                        "inverse-primary": "#a0d3a2",
+                        "outline": "#727970",
+                        "inverse-on-surface": "#f0f1eb",
+                        "on-error": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "surface": "#f9faf4",
+                        "surface-container-high": "#e7e9e3",
+                        "on-primary-fixed": "#002108",
+                        "primary-fixed-dim": "#a0d3a2",
+                        "on-surface": "#191c19",
+                        "tertiary-container": "#6c3342",
+                        "primary-fixed": "#bbf0bd",
+                        "on-error-container": "#93000a",
+                        "surface-bright": "#f9faf4",
+                        "error": "#ba1a1a",
+                        "background": "#f9faf4",
+                        "outline-variant": "#c1c9be",
+                        "on-secondary-fixed": "#331200",
+                        "tertiary-fixed-dim": "#ffb1c2",
+                        "on-secondary": "#ffffff",
+                        "surface-container-highest": "#e2e3dd",
+                        "on-tertiary-fixed-variant": "#6e3544",
+                        "on-primary": "#ffffff",
+                        "secondary-container": "#fe8e48"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xxl": "48px",
+                        "lg": "24px",
+                        "base": "4px",
+                        "container-margin": "16px",
+                        "xs": "8px",
+                        "md": "16px",
+                        "sm": "12px",
+                        "xl": "32px",
+                        "gutter": "12px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "display": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "label-sm": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "display": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface min-h-screen pb-32">
+<!-- Top AppBar (JSON Mapping) -->
+<header class="w-full sticky top-0 z-50 bg-surface dark:bg-surface-dim border-b border-outline-variant dark:border-outline flex items-center justify-between px-container-margin h-16">
+<button class="w-10 h-10 flex items-center justify-center transition-colors duration-200 active:bg-surface-variant rounded-full">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim">arrow_back</span>
+</button>
+<div class="h-8 flex items-center justify-center"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuALYeUo6MdfXRfFV2tJ7ue8TT9GYcRBHStKp8sS99wXn3MWRqyarLLElonzdWMjNJhBinZL5_bhT0BslBhykxX85Bt9HNSevKY3xyapAJe1pSC1-iawZ_yeR4J8Lq9kHtqKkJ6gmBA-xdFhWxNH6xQEW14mxKBdIfntzNMuwv0HwD80A9XUCWhyKT9Idxh41ftPtaIPKceOrImKTOrxfWYwbgegJF_IH6vAytfw62TSa7AX154j3EuZ3Uw-5zLsz-8v1Q" alt="Djidji Market" class="h-full w-auto object-contain"></div>
+<button class="w-10 h-10 flex items-center justify-center transition-colors duration-200 active:bg-surface-variant rounded-full">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim">share</span>
+</button>
+</header>
+<main>
+<!-- Hero Section -->
+<section class="relative">
+<div class="h-56 w-full relative overflow-hidden" data-alt="A cinematic, high-quality photograph of a bustling, vibrant West African open-air kitchen in Abidjan. Large charcoal grills are filled with smoking fish and meats. Golden sunlight filters through the steam, highlighting a clean, professional cooking environment. The scene is full of warmth, life, and authentic culinary activity with a modern, high-contrast light mode aesthetic.">
+<img alt="" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdKZzpIJzeMvl8ygeVtmBOLRKHZNXpS0RJkYzmiENxwBF-vNegoiJf7gZa31qgzFqR4jSDa4mGcZ-1CE4T_NJrbDDVYj0u-IAM692KatsDKw37WGMGwOKQDhanwFmjG-iQsbnp-RfrXGCdM7-SmLHIvlF8Se4nGiVTF3fQOWpmyRF26U3biQ33BJUkC9pZKirLpz7vD_BMJbBZAoceuu00uJFNxHPEHzLq3fpE4XKe3f9hcBqBwpW4">
+<div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+</div>
+<div class="px-container-margin -mt-12 relative flex items-end justify-between">
+<div class="relative">
+<div class="w-24 h-24 rounded-full border-4 border-surface overflow-hidden bg-surface-container shadow-sm" data-alt="A warm and professional portrait of Tantie Awa, an elderly African woman with a kind smile and dignified presence. She wears a clean, bright culinary apron and a stylish headwrap. The lighting is soft and flattering, emphasizing her expertise and welcoming nature. The background is a blurred, high-end kitchen setting in soft whites and greens.">
+<img alt="" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAr2ZInjczdPp3nHVrTuPxtsp9nZ4cQuYAMgN4JF6X64ZCH2NLHwmdy6Mnvj3TbKzuJciNhgpRCfEtkWHe41BpsZB0GIDLApgwZyIYOuX4bKYXHYzsZfcc-vCbaDEsrtlweD93_0OjNJg8-6h61j9GFwCoKFJlcyH--OFUK9QkmMHJd8FDOhk0aCgEQBSg0ROHT-CPNhVD0yHJxGyhTV6YuR2dzRQ7a-exlLAhrShLrRmMX9htoCumK">
+</div>
+</div>
+<div class="flex gap-xs pb-xs">
+<button class="h-10 px-md bg-primary-container text-on-primary-container rounded-full font-label-md flex items-center gap-xs transition-transform active:scale-95">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+                        Suivre
+                    </button>
+</div>
+</div>
+</section>
+<!-- Vendor Identity -->
+<section class="px-container-margin mt-md">
+<div class="flex items-center gap-xs">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Chez Tantie Awa</h2>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 bg-primary/10 text-primary rounded-full text-[10px] font-bold uppercase tracking-wider">
+<span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+                    Vérifié
+                </span>
+</div>
+<div class="flex items-center gap-md mt-xs text-on-surface-variant">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px] text-secondary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-md">4.8 (120+ avis)</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span class="font-label-md">Cocody, Abidjan</span>
+</div>
+</div>
+<p class="mt-md text-on-surface-variant font-body-md leading-relaxed">
+                Les meilleures saveurs d'Attiéké et de poisson braisé depuis 15 ans. Recettes traditionnelles ivoiriennes servies avec amour et authenticité.
+            </p>
+</section>
+<!-- Categories -->
+<nav class="mt-xl overflow-x-auto hide-scrollbar flex gap-sm px-container-margin">
+<button class="px-lg py-2 bg-primary text-on-primary rounded-full font-label-md whitespace-nowrap transition-colors">Tout</button>
+<button class="px-lg py-2 bg-surface-container text-on-surface-variant rounded-full font-label-md whitespace-nowrap transition-colors hover:bg-surface-variant">Plats Signature</button>
+<button class="px-lg py-2 bg-surface-container text-on-surface-variant rounded-full font-label-md whitespace-nowrap transition-colors hover:bg-surface-variant">Accompagnements</button>
+<button class="px-lg py-2 bg-surface-container text-on-surface-variant rounded-full font-label-md whitespace-nowrap transition-colors hover:bg-surface-variant">Boissons</button>
+</nav>
+<!-- Product Grid -->
+<section class="px-container-margin mt-xl grid grid-cols-2 gap-gutter">
+<!-- Item 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-lg overflow-hidden group active:scale-95 transition-transform duration-200">
+<div class="aspect-square w-full relative" data-alt="A top-down professional food photograph of a whole grilled tilapia fish (Poisson Braisé). The fish is perfectly charred with golden-brown skin, served on a white ceramic plate with sides of golden fried plantains (alloco), fresh tomato and onion salsa, and fluffy attiéké. The lighting is bright and warm, emphasizing the textures and colors of the traditional Ivoirian meal.">
+<img alt="" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-nxWmDXuHKHIUe1CaxM2nj0MSu4RrmQ9GKdmNVYPCQYlANanMrBsK3NRaj-e9o7jceBuUU9o5LBCWPCJC4zyjPxCfETW9YexBv4eVrKwV5MfRhWwMle1n-6LAX5GyD2qrnFGbHAkfW5tyLPIYxZROSDjyY9fKy8Sct8e-_2WTsdZfKdgw03Dp9lI17J2S114ZTQ5UFzlh2BezRW2wGkjR6DgnsE9A-0Z-dRdWCVQ4RXlLWvjxLpF0">
+</div>
+<div class="p-sm">
+<h3 class="font-label-md text-on-surface line-clamp-1">Poisson Braisé Complet</h3>
+<p class="text-secondary font-headline-md mt-1">2 500 F</p>
+<button class="mt-sm w-full py-2 border border-primary/20 text-primary rounded-full font-label-sm hover:bg-primary-container hover:text-on-primary-container transition-colors">
+                        Ajouter
+                    </button>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-lg overflow-hidden group active:scale-95 transition-transform duration-200">
+<div class="aspect-square w-full relative" data-alt="A vibrant culinary shot of Choukouya de Mouton. Succulent pieces of seasoned grilled lamb are piled high on a rustic platter. The meat is garnished with sliced onions, spicy peppers, and local spices. The aesthetic is clean and appetizing, with high-key lighting that makes the savory juices of the meat glisten against a white background.">
+<img alt="" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjJlRdvUsxdhZCHCTRbUeOa_BEOvZHtR2NZlAJEk-Z-NfCYepq7uEpCJJB36mbaLM6oJPyp0fjS7Tvh9MYRdcNk33cxvivsugCGSpKTR6wXQS6GPsH0isLNgCx2oCaPjFGVQPAGwa0iltwjRXuzAp5IvvOwiLdYfZ3afVAXzprkUh1fs050-y_75RVucgt2aZcKMD_D57WxDNBsMJr8GDt7V_m7rguuBT17-IdssLSn2mVgXIlZcGp">
+</div>
+<div class="p-sm">
+<h3 class="font-label-md text-on-surface line-clamp-1">Choukouya de Mouton</h3>
+<p class="text-secondary font-headline-md mt-1">3 500 F</p>
+<button class="mt-sm w-full py-2 border border-primary/20 text-primary rounded-full font-label-sm hover:bg-primary-container hover:text-on-primary-container transition-colors">
+                        Ajouter
+                    </button>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-lg overflow-hidden group active:scale-95 transition-transform duration-200">
+<div class="aspect-square w-full relative" data-alt="A minimalist and beautiful plate of Alloco (fried plantains). The plantain cubes are deep-fried to a perfect caramel-golden color. They are served in a modern white bowl, slightly glistening under bright, even light. The styling is contemporary, focusing on the simple beauty of the food against a clean, light-filled backdrop of a high-end restaurant.">
+<img alt="" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAufSen7xtJSPPxpzFRLGyEuQVPrXCi8iDdWp5lScAW4idq7cyG8m1NEWrTBegikjOcQINxeiedyE2Wo8Ifeyce4C7NZKrtSi6XwiwdMjGcPNSMnzoGro0BVazVfaWJK1wyP_SYChsLucyvQSeuyjXgNhD9U7X3JGX33jrgdB39Fw0_AfhFV75M8VqfFG1g_OyuFTUZrUxEi_X0XtEF-Cn-HVABjpLi2FrnnjPb01hHRpUkZzk2uiB2">
+</div>
+<div class="p-sm">
+<h3 class="font-label-md text-on-surface line-clamp-1">Alloco</h3>
+<p class="text-secondary font-headline-md mt-1">500 F</p>
+<button class="mt-sm w-full py-2 border border-primary/20 text-primary rounded-full font-label-sm hover:bg-primary-container hover:text-on-primary-container transition-colors">
+                        Ajouter
+                    </button>
+</div>
+</div>
+<!-- Item 4 -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-lg overflow-hidden group active:scale-95 transition-transform duration-200">
+<div class="aspect-square w-full relative" data-alt="A crisp and clean photo of a portion of Attiéké (cassava couscous). The attiéké is light, fluffy, and presented as a neat mound on a textured white plate. The lighting is soft and natural, emphasizing the fine texture of the fermented cassava. The composition is elegant and modern, highlighting this West African staple food with premium food photography techniques.">
+<img alt="" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGXrPgQKlrNzGlGSFF1LUYR1-lXBsErURqCr9ptRrZCSAQKIUDtI-70_00gu3Jm6AnZly4NjsFTrdIAeHQunINahtlihikki0kEXiE41eYpFdFIdtGbzbCg-EXGpOX3msS1ogW60pYPc4u-Z2v-1ccYqeCJQnL0o9IF8QkHBeqEEFuz5pOCxSWaVfWwcle_GNIogKeHHy2N6WoMudEqbW9IM2BZ4ovSq_OMjIGC_RGgL5FO3eYBAiL">
+</div>
+<div class="p-sm">
+<h3 class="font-label-md text-on-surface line-clamp-1">Attiéké (Portion)</h3>
+<p class="text-secondary font-headline-md mt-1">300 F</p>
+<button class="mt-sm w-full py-2 border border-primary/20 text-primary rounded-full font-label-sm hover:bg-primary-container hover:text-on-primary-container transition-colors">
+                        Ajouter
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (JSON Mapping) -->
+<nav class="fixed bottom-0 w-full z-50 rounded-t-lg bg-surface-container dark:bg-surface-container-high border-t border-outline-variant dark:border-outline flex justify-around items-center h-20 px-4 pb-safe">
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant dark:hover:bg-surface-container-highest transition-transform scale-95 active:scale-90">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 transition-transform scale-95 active:scale-90">
+<span class="material-symbols-outlined">storefront</span>
+<span class="font-label-sm text-label-sm">Market</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant dark:hover:bg-surface-container-highest transition-transform scale-95 active:scale-90">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="font-label-sm text-label-sm">Cart</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant dark:hover:bg-surface-container-highest transition-transform scale-95 active:scale-90">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-label-sm text-label-sm">Orders</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant dark:hover:bg-surface-container-highest transition-transform scale-95 active:scale-90">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</div>
+</nav>
+<!-- FAB (Suppressed as per rules for Detail/Profile screens) -->
+<script>
+        // Simple micro-interaction for item adding
+        document.querySelectorAll('button').forEach(button => {
+            if (button.textContent.trim() === 'Ajouter') {
+                button.addEventListener('click', function() {
+                    const originalText = this.textContent;
+                    this.textContent = 'Ajouté !';
+                    this.classList.add('bg-primary-container', 'text-on-primary-container');
+                    setTimeout(() => {
+                        this.textContent = originalText;
+                        this.classList.remove('bg-primary-container', 'text-on-primary-container');
+                    }, 1500);
+                });
+            }
+        });
+    </script>
+
+
+</body></html>

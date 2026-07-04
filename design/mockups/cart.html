@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DjidjiMarket - Panier</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error-container": "#93000a",
+                    "on-primary-fixed-variant": "#22502b",
+                    "surface-tint": "#3a6841",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container": "#edeee8",
+                    "on-primary-container": "#8dbf8f",
+                    "surface-variant": "#e2e3dd",
+                    "secondary": "#9b4500",
+                    "secondary-container": "#fe8e48",
+                    "primary": "#053715",
+                    "on-primary-fixed": "#002108",
+                    "inverse-on-surface": "#f0f1eb",
+                    "primary-fixed": "#bbf0bd",
+                    "on-primary": "#ffffff",
+                    "surface-container-low": "#f3f4ee",
+                    "primary-fixed-dim": "#a0d3a2",
+                    "on-surface-variant": "#414940",
+                    "on-background": "#191c19",
+                    "on-secondary-fixed-variant": "#763300",
+                    "on-surface": "#191c19",
+                    "surface": "#f9faf4",
+                    "background": "#f9faf4",
+                    "on-error": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-container": "#ea9eae",
+                    "tertiary-container": "#6c3342",
+                    "on-secondary": "#ffffff",
+                    "surface-dim": "#d9dbd5",
+                    "surface-container-high": "#e7e9e3",
+                    "inverse-surface": "#2e312d",
+                    "outline": "#727970",
+                    "secondary-fixed-dim": "#ffb68e",
+                    "on-tertiary": "#ffffff",
+                    "outline-variant": "#c1c9be",
+                    "tertiary-fixed": "#ffd9e0",
+                    "tertiary": "#511d2c",
+                    "secondary-fixed": "#ffdbca",
+                    "on-secondary-fixed": "#331200",
+                    "primary-container": "#204e29",
+                    "surface-container-highest": "#e2e3dd",
+                    "on-tertiary-fixed-variant": "#6e3544",
+                    "inverse-primary": "#a0d3a2",
+                    "tertiary-fixed-dim": "#ffb1c2",
+                    "surface-bright": "#f9faf4",
+                    "error": "#ba1a1a",
+                    "on-secondary-container": "#6b2d00",
+                    "on-tertiary-fixed": "#380919"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xs": "8px",
+                    "sm": "12px",
+                    "base": "4px",
+                    "xl": "32px",
+                    "lg": "24px",
+                    "xxl": "48px",
+                    "md": "16px",
+                    "gutter": "12px",
+                    "container-margin": "16px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "label-sm": ["Plus Jakarta Sans"],
+                    "label-md": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "display": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "display": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-payment {
+            border-color: #053715;
+            background-color: #f3f4ee;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen pb-40">
+<!-- Header (TopAppBar Context) -->
+<header class="bg-surface sticky top-0 z-50 border-b border-surface-variant flex justify-between items-center px-container-margin py-sm w-full">
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined text-primary active:scale-95 transition-transform" data-icon="arrow_back">arrow_back</button>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-tight">Votre panier</h1>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant p-xs hover:bg-surface-container-highest rounded-full" data-icon="more_vert">more_vert</button>
+</header>
+<main class="max-w-md mx-auto px-container-margin space-y-lg pt-md">
+<!-- Cart Items List -->
+<section class="space-y-md">
+<h2 class="font-headline-md text-headline-md px-base">Articles (2)</h2>
+<!-- Item 1: Poisson Braisé -->
+<div class="bg-white rounded-lg border border-surface-variant p-md flex gap-md items-start group transition-all duration-300">
+<div class="w-24 h-24 flex-shrink-0 rounded-DEFAULT overflow-hidden">
+<img alt="Poisson Braisé" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLsehMfd3mlBTnVLRb_7LsKNqRZkpePXUUu6yHch_yKDfFEYaDDY80e2pq7qWiW7HfPLjHUi2Je866zknA-nrcWLyL34bc5av-eK4tgtChjafdkUPdzA-PbmtjgV6bsgJNlx3Mkqd4BKJxctDMm3kacsAg71b64Y04EyYPkbQqZQnW2N_5j1OHUPW5bRbobUgTeqXRd4dGFqPkiPsMoHSP_9rGl3WK9MIIXVLjMkK1SqxkakYfbRSwFPm10"/>
+</div>
+<div class="flex-grow flex flex-col gap-xs">
+<div class="flex justify-between items-start">
+<h3 class="font-label-md text-label-md text-on-surface">Poisson Braisé Royal</h3>
+<button class="material-symbols-outlined text-error text-[20px] hover:scale-110 transition-transform" data-icon="delete">delete</button>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Vendeur: Chez Tantie Alice</p>
+<div class="flex justify-between items-center mt-base">
+<span class="font-headline-md text-headline-md text-primary">8 500 FCFA</span>
+<div class="flex items-center bg-surface-container rounded-full px-xs py-base border border-outline-variant">
+<button class="w-8 h-8 flex items-center justify-center rounded-full active:bg-outline-variant transition-colors" onclick="this.nextElementSibling.innerText = Math.max(1, parseInt(this.nextElementSibling.innerText) - 1)">
+<span class="material-symbols-outlined text-[18px]">remove</span>
+</button>
+<span class="px-sm font-label-md text-label-md">1</span>
+<button class="w-8 h-8 flex items-center justify-center rounded-full active:bg-outline-variant transition-colors" onclick="this.previousElementSibling.innerText = parseInt(this.previousElementSibling.innerText) + 1">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Item 2: Alloco -->
+<div class="bg-white rounded-lg border border-surface-variant p-md flex gap-md items-start group transition-all duration-300">
+<div class="w-24 h-24 flex-shrink-0 rounded-DEFAULT overflow-hidden">
+<img alt="Alloco" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLtB4eptNKpsWCobno9m7rq3yzf8P_KC5YBwEjRROXRpnNtpGrIG10r86-a7xw6auheksirGg9pY8LVrKed2zcX8Y0iX8hN5kY6VUu5pWwhQ46xDqFdRajDcH0-elEHLCpiOUjOCOTFoF0pz4twi5jGyLHTuXw0gTYBvqaiCqx9VFTVVTpph2LTfJP-QjAwiJggOp1pp9-4-9z29ri1ltvZgGFj3Guevug35E403dXKaWyv7zMb0wBJ2cw"/>
+</div>
+<div class="flex-grow flex flex-col gap-xs">
+<div class="flex justify-between items-start">
+<h3 class="font-label-md text-label-md text-on-surface">Alloco Doré</h3>
+<button class="material-symbols-outlined text-error text-[20px] hover:scale-110 transition-transform" data-icon="delete">delete</button>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Vendeur: Le Petit Coin</p>
+<div class="flex justify-between items-center mt-base">
+<span class="font-headline-md text-headline-md text-primary">1 500 FCFA</span>
+<div class="flex items-center bg-surface-container rounded-full px-xs py-base border border-outline-variant">
+<button class="w-8 h-8 flex items-center justify-center rounded-full active:bg-outline-variant transition-colors" onclick="this.nextElementSibling.innerText = Math.max(1, parseInt(this.nextElementSibling.innerText) - 1)">
+<span class="material-symbols-outlined text-[18px]">remove</span>
+</button>
+<span class="px-sm font-label-md text-label-md">2</span>
+<button class="w-8 h-8 flex items-center justify-center rounded-full active:bg-outline-variant transition-colors" onclick="this.previousElementSibling.innerText = parseInt(this.previousElementSibling.innerText) + 1">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Delivery Address Card -->
+<section class="space-y-sm">
+<div class="flex justify-between items-center px-base">
+<h2 class="font-headline-md text-headline-md">Livraison</h2>
+<button class="text-secondary font-label-md hover:underline">Modifier</button>
+</div>
+<div class="bg-white rounded-lg border border-surface-variant p-md flex items-center gap-md">
+<div class="w-12 h-12 bg-primary-fixed rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="location_on">location_on</span>
+</div>
+<div class="flex-grow">
+<p class="font-label-md text-on-surface">Rue des Jardins, Cocody</p>
+<p class="font-label-sm text-on-surface-variant">Abidjan, Côte d'Ivoire</p>
+</div>
+</div>
+</section>
+<!-- Trust Banner -->
+<div class="bg-primary-fixed/30 rounded-lg p-md flex items-center gap-md border border-primary-container/20">
+<span class="material-symbols-outlined text-primary-container" data-icon="shield" style="font-variation-settings: 'FILL' 1">shield</span>
+<p class="font-label-sm text-on-primary-fixed-variant leading-tight">
+                Votre paiement est protégé jusqu'à la réception de votre commande.
+            </p>
+</div>
+<!-- Payment Selection -->
+<section class="space-y-sm">
+<h2 class="font-headline-md text-headline-md px-base">Mode de paiement</h2>
+<div class="flex gap-sm overflow-x-auto no-scrollbar pb-xs">
+<!-- Wave (Selected) -->
+<button class="flex-shrink-0 active-payment border-2 border-primary rounded-lg p-sm w-28 flex flex-col items-center gap-xs transition-all">
+<div class="w-10 h-10 rounded-full bg-[#1da1f2] flex items-center justify-center">
+<span class="text-white font-bold text-xs">Wave</span>
+</div>
+<span class="font-label-sm text-on-surface">Wave</span>
+<span class="material-symbols-outlined text-primary text-[18px]" data-icon="check_circle" style="font-variation-settings: 'FILL' 1">check_circle</span>
+</button>
+<!-- Orange Money -->
+<button class="flex-shrink-0 border-2 border-surface-variant rounded-lg p-sm w-28 flex flex-col items-center gap-xs hover:bg-surface-container transition-all">
+<div class="w-10 h-10 rounded-full bg-[#ff7900] flex items-center justify-center text-white font-bold text-[10px]">OM</div>
+<span class="font-label-sm text-on-surface-variant">Orange</span>
+</button>
+<!-- MTN Money -->
+<button class="flex-shrink-0 border-2 border-surface-variant rounded-lg p-sm w-28 flex flex-col items-center gap-xs hover:bg-surface-container transition-all">
+<div class="w-10 h-10 rounded-full bg-[#ffcc00] flex items-center justify-center text-[#000] font-bold text-[10px]">MTN</div>
+<span class="font-label-sm text-on-surface-variant">MoMo</span>
+</button>
+<!-- Moov Money -->
+<button class="flex-shrink-0 border-2 border-surface-variant rounded-lg p-sm w-28 flex flex-col items-center gap-xs hover:bg-surface-container transition-all">
+<div class="w-10 h-10 rounded-full bg-[#005a9c] flex items-center justify-center text-white font-bold text-[10px]">Moov</div>
+<span class="font-label-sm text-on-surface-variant">Moov</span>
+</button>
+</div>
+</section>
+<!-- Summary -->
+<section class="bg-surface-container-low rounded-lg p-lg space-y-md">
+<div class="flex justify-between items-center text-on-surface-variant font-label-md">
+<span>Sous-total</span>
+<span>11 500 FCFA</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant font-label-md">
+<span>Frais de livraison</span>
+<span>1 000 FCFA</span>
+</div>
+<div class="border-t border-outline-variant pt-md flex justify-between items-center">
+<span class="font-headline-md text-headline-md">Total</span>
+<span class="font-display text-headline-lg text-primary">12 500 FCFA</span>
+</div>
+</section>
+</main>
+<!-- Footer Action -->
+<footer class="fixed bottom-0 left-0 right-0 bg-white p-lg pb-safe border-t border-surface-variant z-50">
+<div class="max-w-md mx-auto">
+<button class="w-full bg-primary-container text-white font-headline-md py-md rounded-full shadow-lg active:scale-[0.98] transition-all flex items-center justify-center gap-sm">
+<span class="material-symbols-outlined" data-icon="lock">lock</span>
+                Payer maintenant
+            </button>
+</div>
+</footer>
+<!-- Bottom Navigation Shell (Filter Applied: Transactional Hidden, but placeholder provided for structural completeness if needed elsewhere) -->
+<!-- Not rendered as per Destination Rule: Checkout is Transactional -->
+<script>
+        // Micro-interactions for quantity
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                // Haptic feedback simulation
+                if ('vibrate' in navigator) {
+                    navigator.vibrate(10);
+                }
+            });
+        });
+
+        // Payment selection highlight logic
+        const paymentButtons = document.querySelectorAll('button.border-2');
+        paymentButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                if(this.classList.contains('w-28')) {
+                    paymentButtons.forEach(b => {
+                        b.classList.remove('active-payment', 'border-primary');
+                        b.classList.add('border-surface-variant');
+                        const check = b.querySelector('[data-icon="check_circle"]');
+                        if(check) check.remove();
+                    });
+                    this.classList.add('active-payment', 'border-primary');
+                    this.classList.remove('border-surface-variant');
+                    const checkIcon = document.createElement('span');
+                    checkIcon.className = 'material-symbols-outlined text-primary text-[18px]';
+                    checkIcon.setAttribute('data-icon', 'check_circle');
+                    checkIcon.style.fontVariationSettings = "'FILL' 1";
+                    checkIcon.innerText = 'check_circle';
+                    this.appendChild(checkIcon);
+                }
+            });
+        });
+    </script>
+</body></html>

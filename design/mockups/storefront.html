@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+
+<html lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chez Tantie Awa - DjidjiMarket</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed-variant": "#22502b",
+                        "surface-tint": "#3a6841",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#edeee8",
+                        "on-primary-container": "#8dbf8f",
+                        "surface-variant": "#e2e3dd",
+                        "secondary": "#9b4500",
+                        "secondary-container": "#fe8e48",
+                        "primary": "#053715",
+                        "on-primary-fixed": "#002108",
+                        "inverse-on-surface": "#f0f1eb",
+                        "primary-fixed": "#bbf0bd",
+                        "on-primary": "#ffffff",
+                        "surface-container-low": "#f3f4ee",
+                        "primary-fixed-dim": "#a0d3a2",
+                        "on-surface-variant": "#414940",
+                        "on-background": "#191c19",
+                        "on-secondary-fixed-variant": "#763300",
+                        "on-surface": "#191c19",
+                        "surface": "#f9faf4",
+                        "background": "#f9faf4",
+                        "on-error": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-container": "#ea9eae",
+                        "tertiary-container": "#6c3342",
+                        "on-secondary": "#ffffff",
+                        "surface-dim": "#d9dbd5",
+                        "surface-container-high": "#e7e9e3",
+                        "inverse-surface": "#2e312d",
+                        "outline": "#727970",
+                        "secondary-fixed-dim": "#ffb68e",
+                        "on-tertiary": "#ffffff",
+                        "outline-variant": "#c1c9be",
+                        "tertiary-fixed": "#ffd9e0",
+                        "tertiary": "#511d2c",
+                        "secondary-fixed": "#ffdbca",
+                        "on-secondary-fixed": "#331200",
+                        "primary-container": "#204e29",
+                        "surface-container-highest": "#e2e3dd",
+                        "on-tertiary-fixed-variant": "#6e3544",
+                        "inverse-primary": "#a0d3a2",
+                        "tertiary-fixed-dim": "#ffb1c2",
+                        "surface-bright": "#f9faf4",
+                        "error": "#ba1a1a",
+                        "on-secondary-container": "#6b2d00",
+                        "on-tertiary-fixed": "#380919",
+                        "accent-orange": "#D56E2B",
+                        "primary-green": "#204E29"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "8px",
+                        "sm": "12px",
+                        "base": "4px",
+                        "xl": "32px",
+                        "lg": "24px",
+                        "xxl": "48px",
+                        "md": "16px",
+                        "gutter": "12px",
+                        "container-margin": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "label-sm": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "display": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "display": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #FFFFFF; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .fill-icon { font-variation-settings: 'FILL' 1; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="max-w-md mx-auto relative min-h-screen bg-white pb-32">
+<!-- Header & Banner -->
+<header class="relative w-full h-48">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="A vibrant local Ivorian restaurant storefront with warm sunlight, wooden tables, and lush green tropical plants in the background. The scene is bright and welcoming, capturing the communal essence of Abidjan street food culture with clean, modern photographic quality." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuATvqVOWm05sDr5YEf_maYdpvi7zYgOEuJrTTiy2EWAJdpydtrbyuvlvhh4NoRKoBjED260LYpsl_BSUut3l--vv2aa0P1WIMVCFHXPZgIiLA-N_ibh-ItXqurDV_Mp2gnB4-9ynvPrtRCAhF7yUcJ5JADQuow5OBEZeRe-UiDKo-vE-BjRcZQE6uut68jk9PXUGLZy4q0yD0iv_1TZT-WbaI1btGjJnOc2Km_PC-C_Dvs8Yq_2M2Ja')"></div>
+<div class="absolute inset-0 bg-gradient-to-b from-black/30 to-transparent"></div>
+<button class="absolute top-md left-md w-10 h-10 flex items-center justify-center bg-white/20 backdrop-blur-md rounded-full text-white active:scale-95 transition-transform">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<!-- Vendor Avatar Overlay -->
+<div class="absolute -bottom-xl left-md">
+<div class="relative">
+<div class="w-24 h-24 rounded-full border-4 border-white bg-surface overflow-hidden shadow-sm">
+<img class="w-full h-full object-cover" data-alt="A close-up portrait of a friendly West African female chef in a clean white apron, smiling warmly against a bright kitchen background. The image has a soft, high-key lighting style that emphasizes trust and quality in a multi-vendor marketplace context." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzMc9LiJYkp3EPWVydNEpHMv3kf2jsuY8-iYJKqIHc3yF2ZJidPswm15F8J0zNuzDp67NKkDRffSCFV2vdQb8bwOGR-1R9Aob94DJxnmse5Ds79_JvGIihlGxSmz_Om0BqjGXp5qzOL1vntWHLXuZUKPymwNGsohI3rb2b7bFePaDrU21MG4uD27KOtnYuvqx6ZJQdLNO_FFncVxm2e0q4XPU1ZhUHqeAhBknN0gzCeQuhGvwh6ssM"/>
+</div>
+<div class="absolute bottom-0 right-0 w-8 h-8 bg-primary-green rounded-full border-2 border-white flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[16px] fill-icon">verified</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Profile Info -->
+<section class="mt-16 px-md">
+<div class="flex items-center justify-between">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Chez Tantie Awa</h1>
+<div class="flex items-center gap-xs px-sm py-[4px] bg-primary-fixed/30 rounded-full border border-primary-fixed">
+<span class="material-symbols-outlined text-primary-green text-label-md fill-icon">verified</span>
+<span class="text-label-md text-primary-green">Vérifié</span>
+</div>
+</div>
+<div class="flex items-center gap-xs mt-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-accent-orange fill-icon text-body-md">star</span>
+<span class="font-label-md text-label-md text-on-surface">4.8</span>
+<span class="font-label-md text-label-md text-outline">(126 avis)</span>
+</div>
+<!-- Stats Row -->
+<div class="grid grid-cols-3 gap-gutter mt-lg">
+<div class="bg-surface-container-low border border-surface-variant p-sm rounded-lg flex flex-col items-center">
+<span class="font-label-md text-label-md text-primary">Commandes</span>
+<span class="font-headline-md text-headline-md text-primary">1.2k+</span>
+</div>
+<div class="bg-surface-container-low border border-surface-variant p-sm rounded-lg flex flex-col items-center">
+<span class="font-label-md text-label-md text-primary">Réponse</span>
+<span class="font-headline-md text-headline-md text-primary">&lt; 5 min</span>
+</div>
+<div class="bg-surface-container-low border border-surface-variant p-sm rounded-lg flex flex-col items-center">
+<span class="font-label-md text-label-md text-primary">Zone</span>
+<span class="font-headline-md text-headline-md text-primary truncate w-full text-center">Cocody</span>
+</div>
+</div>
+</section>
+<!-- Live Order Strip -->
+<section class="mt-xl">
+<div class="px-md flex items-center justify-between mb-sm">
+<h2 class="font-label-md text-label-md text-primary uppercase tracking-wider flex items-center gap-xs">
+<span class="w-2 h-2 rounded-full bg-error animate-pulse"></span>
+                Commande en Direct Live
+            </h2>
+<span class="text-label-sm text-outline">Glissez les numéros</span>
+</div>
+<div class="flex gap-sm overflow-x-auto px-md hide-scrollbar pb-xs">
+<!-- Badges for Live Ordering -->
+<button class="flex-shrink-0 w-12 h-12 rounded-full border-2 border-primary-green text-primary-green font-bold flex items-center justify-center hover:bg-primary-green hover:text-white transition-colors active:scale-90">1</button>
+<button class="flex-shrink-0 w-12 h-12 rounded-full border-2 border-primary-green text-primary-green font-bold flex items-center justify-center hover:bg-primary-green hover:text-white transition-colors active:scale-90">2</button>
+<button class="flex-shrink-0 w-12 h-12 rounded-full border-2 border-primary-green text-primary-green font-bold flex items-center justify-center hover:bg-primary-green hover:text-white transition-colors active:scale-90">3</button>
+<button class="flex-shrink-0 w-12 h-12 rounded-full border-2 border-primary-green text-primary-green font-bold flex items-center justify-center hover:bg-primary-green hover:text-white transition-colors active:scale-90">4</button>
+<button class="flex-shrink-0 w-12 h-12 rounded-full border-2 border-primary-green text-primary-green font-bold flex items-center justify-center hover:bg-primary-green hover:text-white transition-colors active:scale-90">5</button>
+<button class="flex-shrink-0 w-12 h-12 rounded-full border-2 border-primary-green text-primary-green font-bold flex items-center justify-center hover:bg-primary-green hover:text-white transition-colors active:scale-90">6</button>
+</div>
+</section>
+<!-- Menu Categories -->
+<nav class="mt-lg px-md sticky top-0 z-40 bg-white/90 backdrop-blur-md py-xs overflow-x-auto hide-scrollbar flex gap-sm border-b border-surface-variant">
+<button class="flex-shrink-0 bg-primary-green text-white px-md py-xs rounded-full font-label-md text-label-md">Tout</button>
+<button class="flex-shrink-0 text-outline-variant px-md py-xs rounded-full font-label-md text-label-md border border-outline-variant">Plats</button>
+<button class="flex-shrink-0 text-outline-variant px-md py-xs rounded-full font-label-md text-label-md border border-outline-variant">Accompagnements</button>
+<button class="flex-shrink-0 text-outline-variant px-md py-xs rounded-full font-label-md text-label-md border border-outline-variant">Boissons</button>
+</nav>
+<!-- Product Grid -->
+<main class="mt-md px-md grid grid-cols-2 gap-gutter">
+<!-- Card 1 -->
+<div class="bg-white rounded-lg border border-surface-variant overflow-hidden flex flex-col">
+<div class="h-40 w-full overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="A beautifully presented whole grilled Tilapia fish seasoned with local Ivorian spices, garnished with fresh onions, tomatoes, and parsley on a rustic ceramic plate. Professional food photography with bright, airy lighting to showcase the vibrant colors and texture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuABjFuOR2iQL5EZATQCgghkhaqB3IEVyHXiZrF5nS4MHrJx1ayhBT1ZvrkZwFR94n1FYJassmloom3UZi6slwqNgO0GTQk9aIiMTsYMPZhEtugoFiBBwbHagd2yJB_2ySPitrUil7RI1DOg_0YHnRHEKju37nyH9iq-ITV6Q7dsQXij3Old3d3N33tm-eCJ3PiI7fLKqzlZLFSPbTuWIsloJGvGmV0RqxlxpxM6xe1tlv0bFIKYPyUg"/>
+<div class="absolute top-xs right-xs bg-white/80 backdrop-blur-sm rounded-full w-8 h-8 flex items-center justify-center text-primary-green shadow-sm">
+<span class="font-bold text-label-sm">1</span>
+</div>
+</div>
+<div class="p-sm flex flex-col flex-grow">
+<h3 class="font-label-md text-label-md text-on-surface line-clamp-1">Carpe Grillée Spéciale</h3>
+<div class="mt-auto pt-xs flex items-center justify-between">
+<span class="font-headline-md text-headline-md text-accent-orange">4 500 F</span>
+<button class="w-8 h-8 rounded-full bg-primary-green text-white flex items-center justify-center active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-white rounded-lg border border-surface-variant overflow-hidden flex flex-col">
+<div class="h-40 w-full overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="Succulent pieces of grilled chicken marinated in a savory dark sauce, served with roasted tomatoes and lime on a traditional earthenware platter. High-end food photography with warm, localized lighting that highlights the glistening glaze of the meat." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCw8xT0lYOmMyjdl7yl2gwYo94GB7Tz2ynilhEMsfJWbh9jbq5RT-SdIv_5GY-TL770g15oIT6qNUaJLSINrB8UZdgkHZeiMaLtVs8gG7G4EKY4QTy307vUNIEzNClALnJUi-ig5eQTzv-azwiX4MoYGN1zU05JMn1UYdfxPlIvgz_Yi6AeoGCAhb_YATxwwM0oJJQMArXLZndllfQo78VMGn-rkBV8PaagnzGcwsMfODbtZihMJTuY"/>
+<div class="absolute top-xs right-xs bg-white/80 backdrop-blur-sm rounded-full w-8 h-8 flex items-center justify-center text-primary-green shadow-sm">
+<span class="font-bold text-label-sm">2</span>
+</div>
+</div>
+<div class="p-sm flex flex-col flex-grow">
+<h3 class="font-label-md text-label-md text-on-surface line-clamp-1">Poulet Braisé</h3>
+<div class="mt-auto pt-xs flex items-center justify-between">
+<span class="font-headline-md text-headline-md text-accent-orange">3 500 F</span>
+<button class="w-8 h-8 rounded-full bg-primary-green text-white flex items-center justify-center active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 3 (Alloco) -->
+<div class="bg-white rounded-lg border border-surface-variant overflow-hidden flex flex-col">
+<div class="h-40 w-full overflow-hidden relative">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLtB4eptNKpsWCobno9m7rq3yzf8P_KC5YBwEjRROXRpnNtpGrIG10r86-a7xw6auheksirGg9pY8LVrKed2zcX8Y0iX8hN5kY6VUu5pWwhQ46xDqFdRajDcH0-elEHLCpiOUjOCOTFoF0pz4twi5jGyLHTuXw0gTYBvqaiCqx9VFTVVTpph2LTfJP-QjAwiJggOp1pp9-4-9z29ri1ltvZgGFj3Guevug35E403dXKaWyv7zMb0wBJ2cw"/>
+<div class="absolute top-xs right-xs bg-white/80 backdrop-blur-sm rounded-full w-8 h-8 flex items-center justify-center text-primary-green shadow-sm">
+<span class="font-bold text-label-sm">3</span>
+</div>
+</div>
+<div class="p-sm flex flex-col flex-grow">
+<h3 class="font-label-md text-label-md text-on-surface line-clamp-1">Alloco</h3>
+<div class="mt-auto pt-xs flex items-center justify-between">
+<span class="font-headline-md text-headline-md text-accent-orange">1 000 F</span>
+<button class="w-8 h-8 rounded-full bg-primary-green text-white flex items-center justify-center active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 4 (Attiéké) -->
+<div class="bg-white rounded-lg border border-surface-variant overflow-hidden flex flex-col">
+<div class="h-40 w-full overflow-hidden relative">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLtiDRIHigzlsVccnn_z8nZrrZMKd4c7pyW8K6xyzMIvnl5Ee0AlOHibZTJiNUo0La51yzJ8jlk_vuLlLXWbQuDQ19EyDFQfWrYjrWnGhJzVNIoeDiKzE4lNn9Tvpry65jcmRlU8ro0KKpSUaFyw9bet1vGginvXNFa-rwx3LUgLZApkTeg_LX_AoI63T9uM75Ua3PkPk9PuZm_YFy3ZPi7anOJSWkD9XbDl2DPmZJmmZ10sXZd0tgSMcA"/>
+<div class="absolute top-xs right-xs bg-white/80 backdrop-blur-sm rounded-full w-8 h-8 flex items-center justify-center text-primary-green shadow-sm">
+<span class="font-bold text-label-sm">4</span>
+</div>
+</div>
+<div class="p-sm flex flex-col flex-grow">
+<h3 class="font-label-md text-label-md text-on-surface line-clamp-1">Attiéké Frais</h3>
+<div class="mt-auto pt-xs flex items-center justify-between">
+<span class="font-headline-md text-headline-md text-accent-orange">500 F</span>
+<button class="w-8 h-8 rounded-full bg-primary-green text-white flex items-center justify-center active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Cart Summary -->
+<div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto z-50 p-md pointer-events-none">
+<div class="bg-primary-green rounded-full shadow-lg p-xs flex items-center justify-between pointer-events-auto">
+<div class="flex items-center gap-md pl-md">
+<div class="relative">
+<span class="material-symbols-outlined text-white">shopping_basket</span>
+<span class="absolute -top-xs -right-xs bg-accent-orange text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center border border-primary-green">3</span>
+</div>
+<div class="flex flex-col">
+<span class="text-white/80 font-label-sm text-label-sm">3 articles</span>
+<span class="text-white font-headline-md text-headline-md">4 500 F</span>
+</div>
+</div>
+<button class="bg-white text-primary-green font-headline-md text-headline-md px-lg py-sm rounded-full active:scale-95 transition-transform flex items-center gap-xs">
+                Voir le panier
+                <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Micro-interaction Script -->
+<script>
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                // Simple ripple/scale effect already handled by tailwind active:scale
+            });
+        });
+
+        // Floating Action Button logic for shop status or contact
+        const fab = document.createElement('div');
+        fab.className = "fixed bottom-32 right-md z-40 bg-white border border-surface-variant p-sm rounded-full shadow-md flex items-center gap-xs text-primary-green";
+        fab.innerHTML = '<span class="material-symbols-outlined">chat</span> <span class="font-label-md">Contacter</span>';
+        document.body.appendChild(fab);
+    </script>
+</body></html>

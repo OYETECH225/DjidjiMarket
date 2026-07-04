@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Suivi de Commande - DjidjiMarket</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "on-error-container": "#93000a",
+                "on-primary-fixed-variant": "#22502b",
+                "surface-tint": "#3a6841",
+                "surface-container-lowest": "#ffffff",
+                "surface-container": "#edeee8",
+                "on-primary-container": "#8dbf8f",
+                "surface-variant": "#e2e3dd",
+                "secondary": "#9b4500",
+                "secondary-container": "#fe8e48",
+                "primary": "#053715",
+                "on-primary-fixed": "#002108",
+                "inverse-on-surface": "#f0f1eb",
+                "primary-fixed": "#bbf0bd",
+                "on-primary": "#ffffff",
+                "surface-container-low": "#f3f4ee",
+                "primary-fixed-dim": "#a0d3a2",
+                "on-surface-variant": "#414940",
+                "on-background": "#191c19",
+                "on-secondary-fixed-variant": "#763300",
+                "on-surface": "#191c19",
+                "surface": "#f9faf4",
+                "background": "#f9faf4",
+                "on-error": "#ffffff",
+                "error-container": "#ffdad6",
+                "on-tertiary-container": "#ea9eae",
+                "tertiary-container": "#6c3342",
+                "on-secondary": "#ffffff",
+                "surface-dim": "#d9dbd5",
+                "surface-container-high": "#e7e9e3",
+                "inverse-surface": "#2e312d",
+                "outline": "#727970",
+                "secondary-fixed-dim": "#ffb68e",
+                "on-tertiary": "#ffffff",
+                "outline-variant": "#c1c9be",
+                "tertiary-fixed": "#ffd9e0",
+                "tertiary": "#511d2c",
+                "secondary-fixed": "#ffdbca",
+                "on-secondary-fixed": "#331200",
+                "primary-container": "#204e29",
+                "surface-container-highest": "#e2e3dd",
+                "on-tertiary-fixed-variant": "#6e3544",
+                "inverse-primary": "#a0d3a2",
+                "tertiary-fixed-dim": "#ffb1c2",
+                "surface-bright": "#f9faf4",
+                "error": "#ba1a1a",
+                "on-secondary-container": "#6b2d00",
+                "on-tertiary-fixed": "#380919"
+            },
+            "borderRadius": {
+                "DEFAULT": "1rem",
+                "lg": "2rem",
+                "xl": "3rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "xs": "8px",
+                "sm": "12px",
+                "base": "4px",
+                "xl": "32px",
+                "lg": "24px",
+                "xxl": "48px",
+                "md": "16px",
+                "gutter": "12px",
+                "container-margin": "16px"
+            },
+            "fontFamily": {
+                "headline-lg": ["Plus Jakarta Sans"],
+                "body-md": ["Plus Jakarta Sans"],
+                "headline-lg-mobile": ["Plus Jakarta Sans"],
+                "body-lg": ["Plus Jakarta Sans"],
+                "label-sm": ["Plus Jakarta Sans"],
+                "label-md": ["Plus Jakarta Sans"],
+                "headline-md": ["Plus Jakarta Sans"],
+                "display": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                "display": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .step-line::after {
+            content: '';
+            position: absolute;
+            left: 11px;
+            top: 24px;
+            width: 2px;
+            height: calc(100% - 16px);
+            background-color: #c1c9be;
+        }
+        .step-line-active::after {
+            background-color: #204e29;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md min-h-screen pb-40">
+<!-- Top App Bar -->
+<header class="w-full sticky top-0 z-50 bg-surface border-b border-surface-variant flex justify-between items-center px-container-margin py-sm">
+<div class="flex items-center gap-md">
+<button class="text-primary active:scale-95 duration-150 p-base">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md text-primary">Commande #4521</h1>
+</div>
+<button class="text-on-surface-variant hover:bg-surface-container transition-colors p-sm rounded-full active:scale-95">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</header>
+<main class="px-container-margin pt-md space-y-lg">
+<!-- Map Section -->
+<section class="w-full rounded-lg overflow-hidden border border-surface-variant bg-surface-container-low aspect-[16/9] relative">
+<div class="absolute inset-0 z-0 bg-cover bg-center" data-alt="A clean, minimalist digital map of Abidjan, Côte d'Ivoire, featuring a soft green delivery route line connecting Cocody to Marcory. The map uses a light-mode aesthetic with pastel greens and whites, reflecting a friendly and reliable neighborhood atmosphere. A small motorbike icon is positioned halfway along the route. The lighting is bright and airy, consistent with a modern, high-end mobile interface." data-location="Abidjan" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAyE2cK2Jv0jKa-JsGHDSUo3HYq8vnsmzj3J4YN23g5RhagxbNLEauVx9rP42nTUBpO0uzyMiydz61Ir_pIfyOolIslaw8z_onji-UjwiI-C9A13HRidRnvlS8Aph6gM4T5M24LCU44pgPpPm6AspDmq3nKI6t0WuoauDHgK3SD_cRdg9Htq-HjPyNKwLAGhWUR8Y3zebjSSbU5Z5uqmqFV2ZzVBKjVkYHpjqfU3AVe8epjph0qWROS')">
+</div>
+<!-- Map Overlay UI -->
+<div class="absolute bottom-md left-md right-md bg-white/90 backdrop-blur-md p-sm rounded-md border border-surface-variant flex items-center justify-between">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 bg-primary-container rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-container !text-[18px]">moped</span>
+</div>
+<div>
+<p class="font-label-md text-label-md">Arrivée estimée</p>
+<p class="font-bold text-primary">12 - 18 mins</p>
+</div>
+</div>
+<button class="bg-primary text-on-primary font-label-md text-label-md px-md py-xs rounded-full active:scale-95 transition-transform">
+                    Ouvrir
+                </button>
+</div>
+</section>
+<!-- Escrow Info -->
+<div class="bg-surface-container-high/50 p-md rounded-lg flex items-center gap-md border border-surface-variant">
+<div class="text-secondary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">lock</span>
+</div>
+<p class="font-label-md text-label-md text-on-surface-variant">
+                Paiement en séquestre — sera libéré à réception
+            </p>
+</div>
+<!-- Courier Card -->
+<section class="border border-surface-variant rounded-lg p-md bg-surface flex items-center justify-between">
+<div class="flex items-center gap-md">
+<img class="w-14 h-14 rounded-full object-cover border-2 border-primary-fixed" data-alt="A professional and friendly portrait of a young Ivorian delivery driver named Koffi Junior. He is smiling warmly, wearing a clean, green branded DjidjiMarket polo shirt. The photo is a close-up circular avatar with a soft-focus urban background in Abidjan. The lighting is natural and bright, conveying a sense of reliability and trust." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKdvhu2NErPiomxL0mq0v70PuOS8Z1hGyRZMG37seB7ufYFQ_rFqzQoR1goJYJ_nOvGG64vyetNfFADV9e_mGwmjePql375vY3zsu_PbdJ1Av_djqg22YsFHlCwy8XtoCxD7zz3QHtubBV_jsc5u_knV7IWagQs91e05gnhobCHDxmLaBggoR_ItTNlurQeqDKNBY7ELmWmeQgbSguEJXmwq4a2jEPS2YiwAdcBBJRbKsv98mgfPjF"/>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Koffi Junior</h3>
+<div class="flex items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined !text-[16px]">moped</span>
+<span class="font-label-sm text-label-sm">Yamaha NMAX • 22-A-543</span>
+</div>
+</div>
+</div>
+<div class="flex gap-sm">
+<button class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center text-primary active:scale-90 transition-all">
+<span class="material-symbols-outlined">call</span>
+</button>
+<button class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center text-primary active:scale-90 transition-all">
+<span class="material-symbols-outlined">chat_bubble</span>
+</button>
+</div>
+</section>
+<!-- Timeline Section -->
+<section class="space-y-md py-xs">
+<h2 class="font-headline-md text-headline-md px-base">Statut de la commande</h2>
+<div class="space-y-0">
+<!-- Step 1: Confirmée -->
+<div class="relative pl-xl pb-lg step-line step-line-active">
+<div class="absolute left-0 top-0 w-6 h-6 bg-primary rounded-full flex items-center justify-center z-10">
+<span class="material-symbols-outlined text-white !text-[16px]">check</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-primary">Confirmée</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Hier, 14:30</p>
+</div>
+</div>
+<!-- Step 2: En préparation -->
+<div class="relative pl-xl pb-lg step-line step-line-active">
+<div class="absolute left-0 top-0 w-6 h-6 bg-primary rounded-full flex items-center justify-center z-10">
+<span class="material-symbols-outlined text-white !text-[16px]">check</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-primary">En préparation</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Aujourd'hui, 09:15</p>
+</div>
+</div>
+<!-- Step 3: Livreur en route (ACTIVE) -->
+<div class="relative pl-xl pb-lg step-line">
+<div class="absolute left-0 top-0 w-6 h-6 bg-primary-container rounded-full flex items-center justify-center z-10 animate-pulse">
+<div class="w-2.5 h-2.5 bg-on-primary-container rounded-full"></div>
+</div>
+<div class="bg-primary-container/10 p-sm rounded-md -ml-sm">
+<p class="font-bold text-label-md text-primary">Livreur en route</p>
+<p class="font-label-sm text-label-sm text-on-primary-container">Koffi se rapproche de votre position</p>
+</div>
+</div>
+<!-- Step 4: Récupérée -->
+<div class="relative pl-xl pb-lg step-line">
+<div class="absolute left-0 top-0 w-6 h-6 bg-surface-variant rounded-full flex items-center justify-center z-10 border border-outline-variant">
+</div>
+<div>
+<p class="font-label-md text-label-md text-outline">Récupérée</p>
+</div>
+</div>
+<!-- Step 5: Livrée -->
+<div class="relative pl-xl">
+<div class="absolute left-0 top-0 w-6 h-6 bg-surface-variant rounded-full flex items-center justify-center z-10 border border-outline-variant">
+</div>
+<div>
+<p class="font-label-md text-label-md text-outline">Livrée</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Fixed Footer Actions -->
+<footer class="fixed bottom-0 left-0 w-full bg-surface border-t border-surface-variant px-container-margin pt-md pb-safe flex flex-col gap-sm">
+<button class="w-full h-[52px] rounded-full border-2 border-primary text-primary font-label-md text-label-md active:scale-95 transition-all">
+            Signaler un problème
+        </button>
+<button class="w-full h-[52px] rounded-full bg-primary text-on-primary font-label-md text-label-md active:scale-95 transition-all shadow-sm">
+            J'ai reçu ma commande
+        </button>
+</footer>
+<!-- Bottom Nav (Hidden on focus screens as per mandate, but shown here for navigation context if needed) -->
+<!-- We suppress global nav as per "Task-Focused" rule in instructions for sub-pages -->
+<script>
+        // Micro-interaction for the map pulsating effect
+        document.addEventListener('DOMContentLoaded', () => {
+            const activeStep = document.querySelector('.animate-pulse');
+            if(activeStep) {
+                activeStep.addEventListener('click', () => {
+                    activeStep.classList.remove('animate-pulse');
+                    setTimeout(() => activeStep.classList.add('animate-pulse'), 10);
+                });
+            }
+        });
+    </script>
+</body></html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DjidjiMarket - Commande Rapide</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .input-focus-ring:focus {
+            outline: none;
+            border-color: #053715; /* Primary Green */
+            box-shadow: 0 0 0 2px rgba(5, 55, 21, 0.1);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed-variant": "#22502b",
+                        "surface-tint": "#3a6841",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#edeee8",
+                        "on-primary-container": "#8dbf8f",
+                        "surface-variant": "#e2e3dd",
+                        "secondary": "#D56E2B", /* Adjusted to match user's Accent Orange */
+                        "secondary-container": "#fe8e48",
+                        "primary": "#053715",
+                        "on-primary-fixed": "#002108",
+                        "inverse-on-surface": "#f0f1eb",
+                        "primary-fixed": "#bbf0bd",
+                        "on-primary": "#ffffff",
+                        "surface-container-low": "#f3f4ee",
+                        "primary-fixed-dim": "#a0d3a2",
+                        "on-surface-variant": "#414940",
+                        "on-background": "#191c19",
+                        "on-secondary-fixed-variant": "#763300",
+                        "on-surface": "#191c19",
+                        "surface": "#f9faf4",
+                        "background": "#f9faf4",
+                        "on-error": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-container": "#ea9eae",
+                        "tertiary-container": "#6c3342",
+                        "on-secondary": "#ffffff",
+                        "surface-dim": "#d9dbd5",
+                        "surface-container-high": "#e7e9e3",
+                        "inverse-surface": "#2e312d",
+                        "outline": "#727970",
+                        "secondary-fixed-dim": "#ffb68e",
+                        "on-tertiary": "#ffffff",
+                        "outline-variant": "#c1c9be",
+                        "tertiary-fixed": "#ffd9e0",
+                        "tertiary": "#511d2c",
+                        "secondary-fixed": "#ffdbca",
+                        "on-secondary-fixed": "#331200",
+                        "primary-container": "#204e29",
+                        "surface-container-highest": "#e2e3dd",
+                        "on-tertiary-fixed-variant": "#6e3544",
+                        "inverse-primary": "#a0d3a2",
+                        "tertiary-fixed-dim": "#ffb1c2",
+                        "surface-bright": "#f9faf4",
+                        "error": "#ba1a1a",
+                        "on-secondary-container": "#6b2d00",
+                        "on-tertiary-fixed": "#380919"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "8px",
+                        "sm": "12px",
+                        "base": "4px",
+                        "xl": "32px",
+                        "lg": "24px",
+                        "xxl": "48px",
+                        "md": "16px",
+                        "gutter": "12px",
+                        "container-margin": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "label-sm": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "display": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "display": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen flex flex-col items-center">
+<!-- Header Section -->
+<header class="w-full pt-lg px-container-margin pb-md bg-surface">
+<div class="flex items-center justify-between mb-xs">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-tight">Commande rapide</h1>
+<div class="flex items-center bg-secondary/10 px-sm py-1 rounded-full">
+<span class="text-[10px] font-bold text-secondary tracking-widest uppercase">via TikTok Live</span>
+</div>
+</div>
+<div class="flex items-center gap-xs">
+<div class="w-10 h-10 rounded-full overflow-hidden border border-surface-variant shrink-0">
+<img class="w-full h-full object-cover" data-alt="A warm, professional close-up portrait of an Ivorian female vendor named Tantie Awa, smiling kindly. She is wearing traditional colorful attire against a clean, bright minimalist marketplace background. The lighting is soft and natural, emphasizing a trustworthy and communal neighborhood merchant aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7jzVlUWRMFpCkWK7l31AJnLl38exkiHV42gckr6W0vkOSy2V9i0qTITGmfcR0vpOnUKJjx2-2mfwws16dwROI6-CC36C1BOSaqRcVAFBsxcXuFfeXQl1a83FoaxPjRlx1Arz3YurMRzfgiLUSNH_C1AGFMX036136tcm7LKMxSYjLkg00eIYhOF74-7-4BU-4-eKFAz-xUqGYP8Y-qSq3JhgMIFwO7NSWpiTSd8RLaHYf9f6Fw3wv"/>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Chez Tantie Awa</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                    Direct en cours
+                </p>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="w-full max-w-md px-container-margin flex-grow pb-xxl">
+<!-- Live Preview Card (Optional Visual Context) -->
+<div class="mt-md mb-lg rounded-lg overflow-hidden relative border border-surface-variant aspect-[16/9]">
+<img class="w-full h-full object-cover opacity-80" data-alt="A vibrant and organized marketplace stall in Abidjan, Côte d'Ivoire, showing various neatly packaged local products. The scene is bright and airy, captured with a modern smartphone aesthetic as if seen through a TikTok Live stream. Subtle bokeh background creates focus on the products in the foreground, with primary green and warm orange accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1mRMhZkq9J6V-3AHUTurSK6Rd9jD1ZsK8l3b_yP2IeFke_k_xoMRGHa-VJ_B22xboqeSk90kUYNC_eaupI2sNwpDzC0LwxLzaVGAh2dlOOUUCQB_Xteqx14j2XvRXcQw16QBxqU743EuOrs5zCjfaOjUZXMtUlexTacEMEhmQ9SlTTEw6v4QjiBsKgF4MRyFOhLmimNXPlOE-n_WdZ3WwWB465MZJowaOs6wB6SgZ__ncfL8qta3b"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent flex items-end p-md">
+<p class="text-white font-label-md">Sélectionnez vos articles vus en direct</p>
+</div>
+</div>
+<!-- Order Form -->
+<form class="space-y-md" id="quickOrderForm">
+<!-- Item Number (Highlight Field) -->
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant ml-xs" for="item_number">Numéro de l'article</label>
+<input class="w-full py-md px-lg rounded-lg border border-surface-variant bg-surface-bright font-headline-md text-headline-md text-primary input-focus-ring placeholder:text-outline-variant transition-all" id="item_number" placeholder="Ex: 3" required="" type="number"/>
+</div>
+<!-- Stacked Details -->
+<div class="space-y-sm pt-sm">
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant ml-xs" for="full_name">Votre nom</label>
+<input class="w-full py-md px-lg rounded-lg border border-surface-variant bg-surface-bright font-body-md text-body-md text-on-surface input-focus-ring placeholder:text-outline-variant transition-all" id="full_name" placeholder="Nom complet" required="" type="text"/>
+</div>
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant ml-xs" for="phone">Votre téléphone</label>
+<input class="w-full py-md px-lg rounded-lg border border-surface-variant bg-surface-bright font-body-md text-body-md text-on-surface input-focus-ring placeholder:text-outline-variant transition-all" id="phone" placeholder="00 00 00 00 00" required="" type="tel"/>
+</div>
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant ml-xs" for="address">Adresse de livraison</label>
+<textarea class="w-full py-md px-lg rounded-lg border border-surface-variant bg-surface-bright font-body-md text-body-md text-on-surface input-focus-ring placeholder:text-outline-variant transition-all resize-none" id="address" placeholder="Quartier, repères, etc." required="" rows="2"></textarea>
+</div>
+</div>
+<!-- Trust Line -->
+<div class="flex items-center justify-center gap-xs pt-md">
+<span class="material-symbols-outlined text-primary text-[20px]">verified_user</span>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Paiement protégé, aucune inscription requise</p>
+</div>
+</form>
+</main>
+<!-- Fixed Footer Action -->
+<footer class="fixed bottom-0 left-0 w-full p-md bg-surface/80 backdrop-blur-md">
+<button class="w-full py-lg rounded-full bg-secondary text-white font-headline-md text-headline-md active:scale-[0.98] transition-transform duration-150 flex items-center justify-center gap-sm" form="quickOrderForm" type="submit">
+            Commander
+            <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<!-- Safe Area Spacer -->
+<div class="h-base"></div>
+</footer>
+<script>
+        // Micro-interactions for form feedback
+        document.getElementById('quickOrderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = this.querySelector('button[type="submit"]');
+            const originalContent = btn.innerHTML;
+            
+            // Visual feedback on submit
+            btn.disabled = true;
+            btn.innerHTML = '<span class="material-symbols-outlined animate-spin">sync</span> Traitement...';
+            btn.classList.add('opacity-80');
+
+            setTimeout(() => {
+                btn.innerHTML = '<span class="material-symbols-outlined">check_circle</span> Envoyé !';
+                btn.classList.remove('bg-secondary');
+                btn.classList.add('bg-primary');
+                
+                // Clear form for demo purposes
+                setTimeout(() => {
+                    btn.disabled = false;
+                    btn.innerHTML = originalContent;
+                    btn.classList.add('bg-secondary');
+                    btn.classList.remove('bg-primary', 'opacity-80');
+                    alert('Commande reçue ! Tantie Awa vous contactera sous peu pour confirmer la livraison.');
+                    document.getElementById('quickOrderForm').reset();
+                }, 2000);
+            }, 1500);
+        });
+
+        // Add input masking logic or visual polish if needed
+        const phoneInput = document.getElementById('phone');
+        phoneInput.addEventListener('input', (e) => {
+            // Very simple visual feedback for digit grouping
+            let val = e.target.value.replace(/\D/g, '');
+            if (val.length > 10) val = val.substring(0, 10);
+            e.target.value = val;
+        });
+    </script>
+</body></html>
