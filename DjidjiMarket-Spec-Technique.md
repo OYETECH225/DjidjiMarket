@@ -1,6 +1,8 @@
 # DjidjiMarket — Spécification technique
 
-**Version 1.0 — Document de référence pour développement avec Claude Code**
+**Version 1.1 — Document de référence pour développement avec Claude Code**
+
+*v1.1 : ajout des sections 8-11 (identité de marque, sécurité API, stratégie de tests, état d'avancement Phase 1) reflétant les décisions prises lors de l'implémentation. Sections 1-7 inchangées.*
 
 ---
 
@@ -372,8 +374,78 @@ POST   /api/reviews
 
 ---
 
-## 8. Notes d'usage de ce document avec Claude Code
+## 8. Identité de marque
+
+Charte graphique v1.0 (juillet 2026), fichiers sources dans `public/images/` (`DjidjiMarket-Charte-Graphique.pdf` + variantes du logo). Tagline : *« le vrai marché, en toute confiance »*.
+
+**Couleurs :**
+
+| Couleur | Hex | Usage |
+|---|---|---|
+| Vert Djidji | `#204E29` | Icône, mot "djidji", CTA principaux, confiance/vérification — doit dominer visuellement |
+| Orange Djidji | `#D56E2B` | Sac du panier, mot "market", accents, badges promo — ponctuation uniquement, jamais à parts égales avec le vert |
+| Texte principal | `#222222` | Corps de texte, titres secondaires |
+| Fond neutre | `#F2F2F0` | Arrière-plans clairs, cartes, séparateurs |
+
+**Typographie :** Poppins Bold (titres, CTA principaux), Poppins Medium/Regular (sous-titres, nav, boutons secondaires), Inter ou Nunito Sans Regular (corps de texte, formulaires).
+
+**Logo :** espace de protection minimum = hauteur du "d" minuscule ; largeur minimale 30 mm print / 120 px écran ; versions fond clair et fond sombre disponibles (monochrome blanc/noir). Ne jamais étirer, recolorer, ombrer, ni placer sur un fond chargé.
+
+**État d'application :** intégré au panel Filament admin (`AdminPanelProvider`) — couleur primaire, logo clair/sombre, favicon. Pas encore appliqué à un front public (PWA non démarrée, voir section 11).
+
+---
+
+## 9. Sécurité API
+
+Décisions de sécurité prises lors de l'implémentation des endpoints de la section 5, à respecter pour toute extension future de l'API.
+
+**Authentification :**
+- Sanctum (tokens API), téléphone comme identifiant principal + vérification OTP.
+- L'inscription publique (`POST /api/auth/register`) ne peut auto-attribuer que les rôles `client`, `vendor`, `courier` — `admin` et `partner_manager` restent réservés à une attribution interne (jamais via un endpoint public), pour empêcher toute élévation de privilège.
+- Réinscrire un numéro déjà utilisé mais non-vérifié ne fait que renvoyer un nouvel OTP — ça n'écrase jamais le mot de passe/rôle existant. Sans cette règle, quelqu'un connaissant juste le numéro de téléphone d'un tiers pourrait détourner son inscription en cours avant qu'il ne la vérifie.
+- Les requêtes API non authentifiées renvoient toujours un 401 JSON propre (pas de tentative de redirection vers une page de login web inexistante).
+
+**OTP :**
+- Codes à 6 chiffres, hashés en base (table `otp_codes`), expiration 10 minutes.
+- Le code en clair n'est loggé (`Log::info`) qu'en environnement `local`/`testing`, jamais au-delà — pour ne pas fuiter d'OTP dans les logs une fois un vrai fournisseur SMS/WhatsApp branché en Phase 2.
+
+**Rate limiting :**
+- 60 req/min par utilisateur (ou IP si non authentifié) sur l'ensemble de l'API (`RateLimiter::for('api', ...)`).
+- 5 req/min par IP sur les routes `/api/auth/*` pour limiter le brute-force et le spam d'OTP.
+
+**Paiement :**
+- `POST /api/payments/webhook` est un endpoint public (appelé par l'agrégateur) protégé par un secret partagé transmis en en-tête `X-Webhook-Secret`, comparé avec `hash_equals` (config `services.payment_aggregator.webhook_secret`, variable d'env `PAYMENT_WEBHOOK_SECRET`). À remplacer par le vrai schéma de signature CinetPay/PayDunya lors de l'intégration réelle.
+
+**Exposition de données :**
+- Le profil vendeur public (`GET /api/vendors/{slug}`) exclut délibérément les champs internes : numéros RCCM/DFE, URLs des documents de vérification, `commission_rate`.
+- Le panel Filament admin est restreint aux utilisateurs `role=admin` via `User::canAccessPanel()`.
+
+---
+
+## 10. Stratégie de tests
+
+- Tests Feature (`tests/Feature/Api/`) via le client de test HTTP de Laravel + `Sanctum::actingAs()` pour les requêtes authentifiées — pas de tests unitaires isolés sur la logique métier, elle est simple et directement vérifiée par les tests d'intégration.
+- Suite de tests sur SQLite en mémoire (rapide, isolé), base de développement réelle sur PostgreSQL — les deux sont vérifiées à chaque changement de schéma pour repérer les écarts de comportement entre moteurs (ex : enums, valeurs par défaut).
+- `RefreshDatabase` sur chaque classe de test.
+- Couverture actuelle : flow auth complet (inscription/OTP/connexion + cas de sécurité comme la tentative de détournement par ré-inscription), onboarding vendeur + visibilité du catalogue public (actif/inactif, champs internes masqués), création de commande (calcul du total/commission, validation du stock, rejet d'articles d'un autre vendeur), flow de paiement (cash vs mobile money, webhook, libération d'escrow), acceptation atomique "premier arrivé" côté livreur + séquence de transition de statut. Pages Filament testées pour l'accès restreint aux admins et le rendu des pages index/create/edit.
+
+---
+
+## 11. État d'avancement — Phase 1
+
+**Fait :** modèle de données, migrations, modèles Eloquent avec relations ; panel Filament (Vendors, Listings, Orders) ; endpoints API auth/OTP, onboarding vendeur et livreur, catalogue public, création de commande, paiement avec séquestre simplifié, acceptation/statut livreur ; identité de marque appliquée au panel admin.
+
+**Écarts connus vis-à-vis de la section 6 :**
+- Pas d'endpoint listant les commandes en attente pour les livreurs (ex. `GET /api/courier/orders/available`) — un livreur ne peut aujourd'hui accepter une commande que s'il en connaît déjà l'ID. La spec Phase 1 prévoit explicitement une "liste d'attente affichée aux livreurs".
+- PWA non démarrée.
+- App Flutter non démarrée.
+- Lancement pilote (hors périmètre code).
+
+---
+
+## 12. Notes d'usage de ce document avec Claude Code
 
 - Donner ce document en contexte à chaque nouvelle session Claude Code pour éviter les incohérences d'architecture d'une session à l'autre.
 - Démarrer par les migrations Laravel correspondant à la section 3, puis les modèles Eloquent avec les relations, avant d'attaquer les endpoints de la section 5.
 - Prioriser strictement selon les phases de la section 6 — ne pas implémenter la section 7/monétisation additionnelle avant d'avoir un MVP fonctionnel avec de vrais vendeurs actifs.
+- Tenir la section 11 à jour à mesure que les écarts se comblent ou que de nouveaux apparaissent.
