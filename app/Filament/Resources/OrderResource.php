@@ -19,21 +19,6 @@ class OrderResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-shopping-cart';
 
-    public const STATUSES = [
-        'en_attente_paiement' => 'En attente de paiement',
-        'paiement_sequestre' => 'Paiement séquestré',
-        'confirmee' => 'Confirmée',
-        'en_preparation' => 'En préparation',
-        'cherche_livreur' => 'Recherche livreur',
-        'livreur_assigne' => 'Livreur assigné',
-        'recuperee' => 'Récupérée',
-        'en_livraison' => 'En livraison',
-        'livree' => 'Livrée',
-        'paiement_libere' => 'Paiement libéré',
-        'litige_ouvert' => 'Litige ouvert',
-        'annulee' => 'Annulée',
-    ];
-
     public static function form(Form $form): Form
     {
         return $form
@@ -53,7 +38,7 @@ class OrderResource extends Resource
                     ->searchable()
                     ->preload(),
                 Forms\Components\Select::make('status')
-                    ->options(self::STATUSES)
+                    ->options(Order::STATUS_LABELS)
                     ->required()
                     ->default('en_attente_paiement'),
                 Forms\Components\TextInput::make('delivery_latitude')
@@ -111,7 +96,7 @@ class OrderResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => self::STATUSES[$state] ?? $state)
+                    ->formatStateUsing(fn (string $state): string => Order::STATUS_LABELS[$state] ?? $state)
                     ->color(fn (string $state): string => match ($state) {
                         'livree', 'paiement_libere' => 'success',
                         'litige_ouvert', 'annulee' => 'danger',
@@ -143,7 +128,7 @@ class OrderResource extends Resource
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('status')
-                    ->options(self::STATUSES),
+                    ->options(Order::STATUS_LABELS),
                 Tables\Filters\SelectFilter::make('source')
                     ->options([
                         'app' => 'App',

@@ -7,67 +7,34 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Auth\VerifyOtpRequest;
 use App\Http\Resources\UserResource;
-use App\Models\OtpCode;
 use App\Models\User;
+use App\Services\AuthService;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
+    public function __construct(private readonly AuthService $auth) {}
+
     public function register(RegisterRequest $request)
     {
         $data = $request->validated();
 
-        $existing = User::where('phone', $data['phone'])->first();
-
-        if ($existing && $existing->phone_verified_at !== null) {
-            throw ValidationException::withMessages([
-                'phone' => ['Ce numéro est déjà enregistré et vérifié.'],
-            ]);
-        }
-
-        if ($existing) {
-            // Someone else could be retrying with this phone number without
-            // actually owning it. Only resend the OTP — never overwrite
-            // name/password/role of a pending registration from an
-            // unauthenticated request, or an attacker could hijack it before
-            // the real owner verifies.
-            $this->sendOtp($existing->phone);
-
-            return response()->json([
-                'message' => 'Ce numéro a déjà une inscription en attente. Un nouveau code de vérification a été envoyé.',
-                'user' => new UserResource($existing),
-            ], 200);
-        }
-
-        $user = User::create([
-            'name' => $data['name'],
-            'phone' => $data['phone'],
-            'role' => $data['role'],
-            'password' => Hash::make($data['password']),
-        ]);
-
-        $this->sendOtp($user->phone);
+        $user = $this->auth->registerOrResendOtp($data['name'], $data['phone'], $data['password'], $data['role']);
 
         return response()->json([
-            'message' => 'Compte créé. Un code de vérification a été envoyé.',
+            'message' => $user->wasRecentlyCreated
+                ? 'Compte créé. Un code de vérification a été envoyé.'
+                : 'Ce numéro a déjà une inscription en attente. Un nouveau code de vérification a été envoyé.',
             'user' => new UserResource($user),
-        ], 201);
+        ], $user->wasRecentlyCreated ? 201 : 200);
     }
 
     public function verifyOtp(VerifyOtpRequest $request)
     {
         $data = $request->validated();
 
-        if (! OtpCode::attempt($data['phone'], $data['code'])) {
-            throw ValidationException::withMessages([
-                'code' => ['Code invalide ou expiré.'],
-            ]);
-        }
-
-        $user = User::where('phone', $data['phone'])->firstOrFail();
-        $user->forceFill(['phone_verified_at' => now()])->save();
+        $user = $this->auth->verifyOtpAndActivate($data['phone'], $data['code']);
 
         $token = $user->createToken('api')->plainTextToken;
 
@@ -101,20 +68,5 @@ class AuthController extends Controller
             'token' => $token,
             'user' => new UserResource($user),
         ]);
-    }
-
-    private function sendOtp(string $phone): void
-    {
-        $code = OtpCode::generateFor($phone);
-
-        // No SMS/WhatsApp aggregator wired up yet (Phase 2 per the spec).
-        // Only log the plaintext code in local/testing — never in an
-        // environment whose logs could reach staging/production log
-        // aggregation, to avoid shipping OTPs in plaintext.
-        if (app()->environment(['local', 'testing'])) {
-            Log::info("OTP for {$phone}: {$code}");
-        } else {
-            Log::warning('OTP requested but no SMS/WhatsApp provider is configured; code was not delivered.');
-        }
     }
 }

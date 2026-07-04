@@ -8,43 +8,20 @@ use App\Http\Requests\Payment\PaymentWebhookRequest;
 use App\Http\Resources\PaymentResource;
 use App\Models\Order;
 use App\Models\Payment;
+use App\Services\PaymentService;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Validation\ValidationException;
 
 class PaymentController extends Controller
 {
+    public function __construct(private readonly PaymentService $payments) {}
+
     public function initiate(InitiatePaymentRequest $request)
     {
         $order = Order::findOrFail($request->validated('order_id'));
 
         abort_unless($order->client_id === $request->user()->id, 403);
 
-        if ($order->status !== 'en_attente_paiement') {
-            throw ValidationException::withMessages([
-                'order_id' => ['Cette commande a déjà un paiement en cours ou confirmé.'],
-            ]);
-        }
-
-        $provider = $request->validated('provider');
-        $amount = $order->total_amount + $order->delivery_fee;
-
-        $payment = DB::transaction(function () use ($order, $provider, $amount) {
-            $payment = Payment::create([
-                'order_id' => $order->id,
-                'provider' => $provider,
-                'amount' => $amount,
-                // Cash is collected physically at delivery, so there is no
-                // aggregator confirmation step or escrow for it in Phase 1 —
-                // the order moves straight to "confirmee".
-                'status' => $provider === 'cash_on_delivery' ? 'confirme' : 'initie',
-            ]);
-
-            if ($provider === 'cash_on_delivery') {
-                $order->update(['status' => 'confirmee']);
-            }
-
-            return $payment;
-        });
+        $payment = $this->payments->initiate($order, $request->validated('provider'));
 
         return response()->json(['payment' => new PaymentResource($payment)], 201);
     }

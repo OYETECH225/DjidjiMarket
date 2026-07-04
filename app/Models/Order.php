@@ -14,6 +14,21 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 ])]
 class Order extends Model
 {
+    public const STATUS_LABELS = [
+        'en_attente_paiement' => 'En attente de paiement',
+        'paiement_sequestre' => 'Paiement séquestré',
+        'confirmee' => 'Confirmée',
+        'en_preparation' => 'En préparation',
+        'cherche_livreur' => 'Recherche livreur',
+        'livreur_assigne' => 'Livreur assigné',
+        'recuperee' => 'Récupérée',
+        'en_livraison' => 'En livraison',
+        'livree' => 'Livrée',
+        'paiement_libere' => 'Paiement libéré',
+        'litige_ouvert' => 'Litige ouvert',
+        'annulee' => 'Annulée',
+    ];
+
     protected static function booted(): void
     {
         // The DB column defaults to 'en_attente_paiement', but that default

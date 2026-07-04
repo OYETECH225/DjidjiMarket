@@ -29,9 +29,9 @@ DjidjiMarket est une marketplace multi-vertical pour la Côte d'Ivoire, connecta
 |---|---|---|
 | Backend / API | Laravel (PHP) | Écosystème mature, Sanctum pour l'auth API |
 | Admin & back-office vendeur | Filament (sur Laravel) | Panneau CRUD généré rapidement, gagne un temps considérable |
-| Base de données | MySQL ou PostgreSQL | PostgreSQL recommandé si usage de types avancés (JSON, geo) |
+| Base de données | PostgreSQL (choisi) | Types avancés utilisés dès Phase 1 (JSON pour `photo_urls`, decimal geo) |
 | App mobile | Flutter, développée en parallèle du web dès la Phase 1 (le développement étant assuré par Claude Code, le temps de code n'est plus le facteur limitant — voir note en fin de tableau) | Un seul code pour iOS/Android, bonnes perfs sur téléphones d'entrée de gamme |
-| Web | PWA légère (installable, sans Play Store), déployée en premier car sans délai de publication | Faible bande passante des utilisateurs cibles, mise en ligne immédiate pour tester avec les premiers vendeurs |
+| Web | PWA en Blade + Livewire + Alpine.js (dans le même repo Laravel), déployée en premier car sans délai de publication | Pas de build JS séparé ni de second projet à maintenir ; réutilise directement les modèles Eloquent et les services métier (`OrderService`, `PaymentService`) partagés avec l'API ; Livewire déjà présent comme dépendance de Filament |
 | Paiement | Agrégateur mobile money (CinetPay ou PayDunya) | Couvre Orange Money, MTN Money, Moov Money, Wave en une seule intégration |
 | Notifications | WhatsApp Business API (principal) + SMS (secours) + Push (app) | WhatsApp est le canal le plus fiable et familier en Côte d'Ivoire |
 | Cartographie | Mapbox ou OpenStreetMap/Leaflet | Moins coûteux que Google Maps au volume |
@@ -428,6 +428,8 @@ Décisions de sécurité prises lors de l'implémentation des endpoints de la se
 ## 10. Stratégie de tests
 
 - Tests Feature (`tests/Feature/Api/`) via le client de test HTTP de Laravel + `Sanctum::actingAs()` pour les requêtes authentifiées — pas de tests unitaires isolés sur la logique métier, elle est simple et directement vérifiée par les tests d'intégration.
+- Tests des composants Livewire de la PWA (`tests/Feature/Livewire/`) via `Livewire::test()` / `Livewire::actingAs()` — vérifie le flow auth session, l'ajout au panier, la création de commande au checkout, et les autorisations sur le suivi de commande.
+- Vérification visuelle ponctuelle des pages PWA via Playwright (captures d'écran en local, pas dans la suite de tests automatisée) pour valider le rendu réel de la charte graphique.
 - Suite de tests sur SQLite en mémoire (rapide, isolé), base de développement réelle sur PostgreSQL — les deux sont vérifiées à chaque changement de schéma pour repérer les écarts de comportement entre moteurs (ex : enums, valeurs par défaut).
 - `RefreshDatabase` sur chaque classe de test.
 - Couverture actuelle : flow auth complet (inscription/OTP/connexion + cas de sécurité comme la tentative de détournement par ré-inscription), onboarding vendeur + visibilité du catalogue public (actif/inactif, champs internes masqués), création de commande (calcul du total/commission, validation du stock, rejet d'articles d'un autre vendeur), flow de paiement (cash vs mobile money, webhook, libération d'escrow), acceptation atomique "premier arrivé" côté livreur + séquence de transition de statut. Pages Filament testées pour l'accès restreint aux admins et le rendu des pages index/create/edit.
@@ -436,10 +438,10 @@ Décisions de sécurité prises lors de l'implémentation des endpoints de la se
 
 ## 11. État d'avancement — Phase 1
 
-**Fait :** modèle de données, migrations, modèles Eloquent avec relations ; panel Filament (Vendors, Listings, Orders) ; endpoints API auth/OTP, onboarding vendeur et livreur, catalogue public, création de commande, paiement avec séquestre simplifié, liste d'attente + acceptation/statut livreur ; identité de marque appliquée au panel admin.
+**Fait :** modèle de données, migrations, modèles Eloquent avec relations ; panel Filament (Vendors, Listings, Orders) ; endpoints API auth/OTP, onboarding vendeur et livreur, catalogue public, création de commande, paiement avec séquestre simplifié, liste d'attente + acceptation/statut livreur ; identité de marque appliquée au panel admin ; **PWA (parcours client)** — inscription/OTP/connexion en session web, découverte des boutiques, page boutique publique (`/boutique/{slug}`), panier (session), checkout avec choix du mode de paiement, suivi de commande avec confirmation de réception ; logique métier partagée entre API et PWA via `OrderService`/`PaymentService`/`AuthService`/`OtpService`/`CartService`.
 
 **Écarts connus vis-à-vis de la section 6 :**
-- PWA non démarrée.
+- PWA : parcours vendeur et livreur pas encore construits (uniquement le parcours client pour l'instant) ; pas d'écran pour faire progresser une commande de `confirmee` à `cherche_livreur`/`livree` côté web (fait via Filament ou l'API courier en attendant).
 - App Flutter non démarrée.
 - Lancement pilote (hors périmètre code).
 
