@@ -22,6 +22,7 @@ class ListingResource extends JsonResource
             'available_until' => $this->available_until,
             'photo_urls' => $this->photo_urls,
             'display_number' => $this->display_number,
+            'is_active' => $this->is_active,
         ];
     }
 }

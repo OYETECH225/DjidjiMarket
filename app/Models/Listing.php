@@ -14,6 +14,16 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 ])]
 class Listing extends Model
 {
+    protected static function booted(): void
+    {
+        // The DB column defaults to true, but that default isn't reflected
+        // on the in-memory model right after insert — set it explicitly so
+        // API responses right after creation don't show is_active as null.
+        static::creating(function (Listing $listing) {
+            $listing->is_active ??= true;
+        });
+    }
+
     protected function casts(): array
     {
         return [

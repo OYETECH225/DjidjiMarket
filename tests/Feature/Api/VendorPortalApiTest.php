@@ -73,6 +73,7 @@ class VendorPortalApiTest extends TestCase
         ]);
         $create->assertCreated();
         $create->assertJsonPath('listing.currency', 'XOF');
+        $create->assertJsonPath('listing.is_active', true);
         $listingId = $create->json('listing.id');
 
         $this->getJson('/api/vendor/listings')

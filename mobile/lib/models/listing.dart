@@ -7,6 +7,7 @@ class Listing {
   final double price;
   final String currency;
   final int? stockQuantity;
+  final bool isActive;
 
   Listing({
     required this.id,
@@ -17,6 +18,7 @@ class Listing {
     required this.currency,
     this.description,
     this.stockQuantity,
+    this.isActive = true,
   });
 
   factory Listing.fromJson(Map<String, dynamic> json) {
@@ -29,6 +31,7 @@ class Listing {
       price: double.parse(json['price'].toString()),
       currency: json['currency'] ?? 'XOF',
       stockQuantity: json['stock_quantity'],
+      isActive: json['is_active'] ?? true,
     );
   }
 }

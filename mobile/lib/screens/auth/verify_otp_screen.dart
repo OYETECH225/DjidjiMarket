@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../theme/app_theme.dart';
 import 'package:provider/provider.dart';
 
 import '../../services/api_client.dart';
@@ -62,7 +63,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
             ),
             if (_errorMessage != null) ...[
               const SizedBox(height: 8),
-              Text(_errorMessage!, style: const TextStyle(color: Colors.red), textAlign: TextAlign.center),
+              Text(_errorMessage!, style: const TextStyle(color: AppColors.error), textAlign: TextAlign.center),
             ],
             const SizedBox(height: 16),
             ElevatedButton(

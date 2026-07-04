@@ -8,6 +8,7 @@ import '../services/vendor_service.dart';
 import '../theme/app_theme.dart';
 import 'auth/login_screen.dart';
 import 'cart_screen.dart';
+import 'vendor/vendor_dashboard_screen.dart';
 import 'vendor_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -75,11 +76,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 MaterialPageRoute(builder: (_) => const LoginScreen()),
               ),
             )
-          else
+          else ...[
+            if (auth.currentUser?.role == 'vendor')
+              IconButton(
+                icon: const Icon(Icons.storefront_outlined),
+                tooltip: 'Mon espace vendeur',
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const VendorDashboardScreen()),
+                ),
+              ),
             IconButton(
               icon: const Icon(Icons.logout),
               onPressed: () => context.read<AuthService>().logout(),
             ),
+          ],
         ],
       ),
       body: RefreshIndicator(

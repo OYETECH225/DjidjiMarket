@@ -73,6 +73,32 @@ class ApiClient {
     return _handle(response);
   }
 
+  Future<dynamic> put(String path, {Map<String, dynamic>? body, bool auth = true}) async {
+    final response = await http.put(
+      Uri.parse('$baseUrl$path'),
+      headers: await _headers(auth: auth),
+      body: jsonEncode(body ?? {}),
+    );
+
+    return _handle(response);
+  }
+
+  Future<dynamic> patch(String path, {Map<String, dynamic>? body, bool auth = true}) async {
+    final response = await http.patch(
+      Uri.parse('$baseUrl$path'),
+      headers: await _headers(auth: auth),
+      body: jsonEncode(body ?? {}),
+    );
+
+    return _handle(response);
+  }
+
+  Future<dynamic> delete(String path, {bool auth = true}) async {
+    final response = await http.delete(Uri.parse('$baseUrl$path'), headers: await _headers(auth: auth));
+
+    return _handle(response);
+  }
+
   dynamic _handle(http.Response response) {
     final decoded = response.body.isNotEmpty ? jsonDecode(response.body) : null;
 

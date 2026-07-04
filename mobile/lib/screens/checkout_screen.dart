@@ -121,7 +121,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               )),
           if (_errorMessage != null) ...[
             const SizedBox(height: 8),
-            Text(_errorMessage!, style: const TextStyle(color: Colors.red)),
+            Text(_errorMessage!, style: const TextStyle(color: AppColors.error)),
           ],
           const SizedBox(height: 16),
           ElevatedButton(

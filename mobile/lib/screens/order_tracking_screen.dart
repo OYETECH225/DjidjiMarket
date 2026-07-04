@@ -108,7 +108,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
                 if (_errorMessage != null)
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8),
-                    child: Text(_errorMessage!, style: const TextStyle(color: Colors.red)),
+                    child: Text(_errorMessage!, style: const TextStyle(color: AppColors.error)),
                   ),
                 if (order.status == 'livree')
                   ElevatedButton(

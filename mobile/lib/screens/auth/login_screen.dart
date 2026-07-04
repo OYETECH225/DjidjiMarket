@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../theme/app_theme.dart';
 import 'package:provider/provider.dart';
 
 import '../../services/api_client.dart';
@@ -61,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             if (_errorMessage != null) ...[
               const SizedBox(height: 12),
-              Text(_errorMessage!, style: const TextStyle(color: Colors.red)),
+              Text(_errorMessage!, style: const TextStyle(color: AppColors.error)),
             ],
             const SizedBox(height: 24),
             ElevatedButton(
