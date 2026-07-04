@@ -13,6 +13,19 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 ])]
 class Courier extends Model
 {
+    public const VEHICLE_TYPE_LABELS = [
+        'moto' => 'Moto',
+        'tricycle' => 'Tricycle',
+        'velo' => 'Vélo',
+        'pied' => 'À pied',
+    ];
+
+    public const VERIFICATION_STATUS_LABELS = [
+        'en_attente' => 'En attente',
+        'verifie' => 'Vérifié',
+        'rejete' => 'Rejeté',
+    ];
+
     protected function casts(): array
     {
         return [

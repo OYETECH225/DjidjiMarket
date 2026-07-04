@@ -36,6 +36,8 @@
                     @auth
                         @if (auth()->user()->role === 'vendor')
                             <a href="{{ route('vendor.dashboard') }}" class="text-djidji-text/70 hover:text-djidji-green">Mon espace vendeur</a>
+                        @elseif (auth()->user()->role === 'courier')
+                            <a href="{{ route('courier.dashboard') }}" class="text-djidji-text/70 hover:text-djidji-green">Mon espace livreur</a>
                         @endif
                         <span class="text-djidji-text/70">{{ auth()->user()->name }}</span>
                         <form method="POST" action="{{ route('logout') }}">

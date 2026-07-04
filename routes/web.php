@@ -5,6 +5,10 @@ use App\Livewire\Auth\Register;
 use App\Livewire\Auth\VerifyOtp;
 use App\Livewire\Cart;
 use App\Livewire\Checkout;
+use App\Livewire\Courier\AvailableOrders as CourierAvailableOrders;
+use App\Livewire\Courier\Dashboard as CourierDashboard;
+use App\Livewire\Courier\MyDeliveries as CourierMyDeliveries;
+use App\Livewire\Courier\Onboarding as CourierOnboarding;
 use App\Livewire\Home;
 use App\Livewire\OrderTracking;
 use App\Livewire\Vendor\Dashboard as VendorDashboard;
@@ -47,5 +51,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/catalogue/nouveau', ListingForm::class)->name('vendor.listings.create');
         Route::get('/catalogue/{listing}/modifier', ListingForm::class)->name('vendor.listings.edit');
         Route::get('/commandes', VendorOrders::class)->name('vendor.orders');
+    });
+
+    Route::prefix('livreur')->middleware('role:courier')->group(function () {
+        Route::get('/profil', CourierOnboarding::class)->name('courier.onboarding');
+        Route::get('/', CourierDashboard::class)->name('courier.dashboard');
+        Route::get('/commandes-disponibles', CourierAvailableOrders::class)->name('courier.available-orders');
+        Route::get('/mes-livraisons', CourierMyDeliveries::class)->name('courier.deliveries');
     });
 });

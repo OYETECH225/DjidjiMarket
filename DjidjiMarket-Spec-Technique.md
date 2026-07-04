@@ -482,8 +482,10 @@ Ajout à l'état "fait" : **app Flutter (parcours vendeur)** — même périmèt
 
 **Design system :** `DjidjiMarket-DESIGN-System.md` (mobile) et `DjidjiMarket-DESIGN-System-web.md` (web, ajoute grille desktop/nav horizontale/sidebar sticky — mêmes tokens couleur/police/rayons que le mobile) ont été appliqués à la PWA et au thème Flutter : Plus Jakarta Sans, CTA principaux en orange plein (vert = action secondaire), aucune ombre (bordures 1px `outline-variant` à la place), cartes/inputs en rayon 24px. Des maquettes HTML (accueil, boutique, panier, suivi, commande rapide) ont aussi été fournies avec une structure plus riche (nav basse 5 onglets, bannières hero, filtres catégorie) — pas encore intégrées, voir écarts ci-dessous.
 
+Ajout à l'état "fait" : **PWA (parcours livreur)** — onboarding (véhicule), tableau de bord (statut de vérification, toggle disponibilité, compteur de livraisons en cours), liste des commandes en attente d'un livreur avec acceptation atomique "premier arrivé", mes livraisons avec progression du statut (`livreur_assigne` → `recuperee` → `en_livraison` → `livree`). Logique d'acceptation/transition extraite dans `CourierDispatchService`, partagée avec l'API (le contrôleur API a été refactoré pour l'utiliser aussi, au lieu de dupliquer la logique de verrou atomique).
+
 **Écarts connus vis-à-vis de la section 6 :**
-- PWA et Flutter : parcours livreur pas encore construit ; pas d'écran pour faire progresser une commande de `confirmee` à `cherche_livreur`/`livree` côté client (fait via Filament ou l'API courier en attendant).
+- Flutter : parcours livreur pas encore construit (seuls client et vendeur le sont).
 - Maquettes HTML fournies (structure nav basse, hero, catégories) pas encore intégrées aux écrans PWA/Flutter existants — accueil/boutique/panier/suivi actuels restent plus simples que les maquettes.
 - Lancement pilote (hors périmètre code).
 
