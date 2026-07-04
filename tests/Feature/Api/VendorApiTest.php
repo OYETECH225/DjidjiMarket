@@ -78,6 +78,27 @@ class VendorApiTest extends TestCase
         $this->getJson("/api/vendors/{$inactiveVendor->slug}")->assertNotFound();
     }
 
+    public function test_index_only_lists_active_vendors(): void
+    {
+        $activeUser = User::factory()->create(['role' => 'vendor']);
+        Vendor::create([
+            'user_id' => $activeUser->id, 'business_name' => 'Active', 'vendor_type' => 'boutique',
+            'slug' => 'active', 'is_active' => true,
+        ]);
+        $inactiveUser = User::factory()->create(['role' => 'vendor']);
+        Vendor::create([
+            'user_id' => $inactiveUser->id, 'business_name' => 'Inactive', 'vendor_type' => 'boutique',
+            'slug' => 'inactive', 'is_active' => false,
+        ]);
+
+        $response = $this->getJson('/api/vendors');
+
+        $response->assertOk();
+        $names = collect($response->json('data'))->pluck('business_name');
+        $this->assertTrue($names->contains('Active'));
+        $this->assertFalse($names->contains('Inactive'));
+    }
+
     public function test_public_listings_only_returns_active_listings(): void
     {
         $vendorUser = User::factory()->create(['role' => 'vendor']);

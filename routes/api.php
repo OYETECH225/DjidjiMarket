@@ -18,6 +18,7 @@ Route::prefix('auth')->middleware('throttle:auth')->group(function () {
     Route::post('/otp/verify', [AuthController::class, 'verifyOtp']);
 });
 
+Route::get('/vendors', [VendorController::class, 'index']);
 Route::get('/vendors/{slug}', [VendorController::class, 'show']);
 Route::get('/vendors/{vendor}/listings', [VendorController::class, 'listings']);
 

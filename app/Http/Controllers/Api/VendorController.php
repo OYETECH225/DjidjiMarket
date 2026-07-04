@@ -12,6 +12,13 @@ use Illuminate\Validation\ValidationException;
 
 class VendorController extends Controller
 {
+    public function index()
+    {
+        $vendors = Vendor::where('is_active', true)->latest()->paginate(20);
+
+        return VendorResource::collection($vendors);
+    }
+
     public function storeProfile(StoreVendorProfileRequest $request)
     {
         $user = $request->user();

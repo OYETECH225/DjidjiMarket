@@ -305,6 +305,7 @@ POST   /api/auth/register
 POST   /api/auth/login
 POST   /api/auth/otp/verify        # vérification par SMS/WhatsApp
 
+GET    /api/vendors                 # liste des boutiques actives (découverte, nécessaire à l'app Flutter)
 GET    /api/vendors/{slug}          # page boutique publique (lien perso)
 GET    /api/vendors/{id}/listings
 
