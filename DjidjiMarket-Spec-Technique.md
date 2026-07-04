@@ -25,6 +25,8 @@ DjidjiMarket est une marketplace multi-vertical pour la Côte d'Ivoire, connecta
 
 ## 2. Stack technique
 
+**Système de design :** voir `DjidjiMarket-DESIGN-System.md` (fourni séparément) — tokens de couleurs Material 3 prêts à mapper directement sur `ColorScheme` en Flutter (primary/onPrimary/primaryContainer/secondary/onSecondary...), typographie (Plus Jakarta Sans, police officielle de la marque), rayons d'arrondi, espacements et règles de composants (boutons, cartes, badges vérifié). À donner à Claude Code en même temps que ce document lors de la mise en place du thème de l'app. *(Note : ce fichier n'existe pas encore dans le repo au moment de la fusion — à fournir.)*
+
 | Composant | Choix | Justification |
 |---|---|---|
 | Backend / API | Laravel (PHP) | Écosystème mature, Sanctum pour l'auth API |
@@ -252,6 +254,19 @@ ad_slots
 - status: enum [actif, termine, en_attente_paiement]
 ```
 
+### 3.11 Sessions live (TikTok)
+
+```
+live_sessions
+- id
+- vendor_id (FK vendors)
+- platform: enum [tiktok]
+- live_url (lien direct vers le live ou le profil du vendeur)
+- is_active (boolean — activé par le vendeur quand il démarre son live)
+- started_at
+- ended_at (nullable)
+```
+
 ---
 
 ## 4. Flows critiques
@@ -298,6 +313,15 @@ ad_slots
 
 ---
 
+### 4.7 Rejoindre un live TikTok depuis l'app
+1. Un vendeur démarre son live TikTok et active son statut dans l'app (`live_sessions.is_active = true`, `live_url` renseigné)
+2. La page d'accueil affiche automatiquement un bandeau "DIRECT LIVE" mettant en avant ce vendeur (un seul live à la fois en priorité, ou rotation si plusieurs vendeurs sont en direct simultanément)
+3. Le client tape "Rejoindre" → ouverture du live TikTok (deep link vers l'app TikTok si installée, sinon navigateur)
+4. Le vendeur continue de partager son lien perso (`/boutique/{slug}`) pendant le live pour les commandes — le bandeau in-app sert de rappel/découverte pour les clients qui n'étaient pas déjà en train de regarder
+5. `is_active` repasse à `false` automatiquement après un délai sans mise à jour (ex: 3h) pour éviter d'afficher un live terminé
+
+---
+
 ## 5. Endpoints API principaux (aperçu)
 
 ```
@@ -318,6 +342,13 @@ POST   /api/payments/initiate
 POST   /api/payments/webhook        # callback de l'agrégateur mobile money
 
 POST   /api/vendor/profile          # onboarding vendeur (business_name, type, adresse...)
+GET    /api/vendor/me               # profil vendeur (vue propriétaire, inclut commission_rate/is_active)
+PATCH  /api/vendor/me               # ex: toggle is_active
+GET    /api/vendor/orders           # commandes reçues par le vendeur connecté
+GET    /api/vendor/listings         # catalogue du vendeur connecté (actifs + inactifs)
+POST   /api/vendor/listings         # créer un article
+PUT    /api/vendor/listings/{id}    # modifier un article (vérifie la propriété)
+DELETE /api/vendor/listings/{id}    # supprimer un article (vérifie la propriété)
 POST   /api/courier/profile         # onboarding livreur (vehicle_type, documents)
 POST   /api/courier/availability    # toggle disponibilité
 GET    /api/courier/orders/available   # liste d'attente des commandes cherche_livreur
