@@ -27,8 +27,16 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->brandName('DjidjiMarket')
+            ->brandLogo(asset('images/DjidjiMarket-PNG-transparent.png'))
+            ->darkModeBrandLogo(asset('images/DjidjiMarket-monochrome-blanc.png'))
+            ->brandLogoHeight('2rem')
+            ->favicon(asset('images/DjidjiMarket-icone-seule.png'))
             ->colors([
-                'primary' => Color::Amber,
+                // Vert Djidji — charte graphique v1.0. Dominant/trust color;
+                // orange stays an accent only per the charter's usage rule,
+                // so it isn't mapped onto a panel-wide semantic color here.
+                'primary' => Color::hex('#204E29'),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
