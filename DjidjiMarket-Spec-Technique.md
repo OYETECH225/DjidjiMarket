@@ -350,6 +350,8 @@ POST   /api/vendor/listings         # créer un article
 PUT    /api/vendor/listings/{id}    # modifier un article (vérifie la propriété)
 DELETE /api/vendor/listings/{id}    # supprimer un article (vérifie la propriété)
 POST   /api/courier/profile         # onboarding livreur (vehicle_type, documents)
+GET    /api/courier/me              # profil livreur (vue propriétaire)
+GET    /api/courier/orders          # commandes assignées à ce livreur (en cours + historique)
 POST   /api/courier/availability    # toggle disponibilité
 GET    /api/courier/orders/available   # liste d'attente des commandes cherche_livreur
 POST   /api/courier/orders/{id}/accept

@@ -47,6 +47,25 @@ class CourierController extends Controller
         return response()->json(['courier' => new CourierResource($courier)], 201);
     }
 
+    public function me(Request $request)
+    {
+        $courier = $request->user()->courier()->first();
+
+        abort_unless($courier, 404, 'Profil livreur introuvable.');
+
+        return new CourierResource($courier);
+    }
+
+    public function myOrders(Request $request)
+    {
+        $orders = Order::where('courier_id', $request->user()->id)
+            ->with('vendor')
+            ->latest()
+            ->get();
+
+        return OrderResource::collection($orders);
+    }
+
     public function updateAvailability(UpdateAvailabilityRequest $request)
     {
         // Query fresh rather than the cached `courier` relation property —

@@ -96,6 +96,46 @@ class CourierApiTest extends TestCase
         $this->assertNotNull($response->json('data.0.vendor_business_name'));
     }
 
+    public function test_me_returns_own_profile(): void
+    {
+        $courier = $this->makeCourierUser();
+        Sanctum::actingAs($courier);
+
+        $this->getJson('/api/courier/me')
+            ->assertOk()
+            ->assertJsonPath('data.vehicle_type', 'moto');
+    }
+
+    public function test_me_returns_404_without_a_courier_profile(): void
+    {
+        $courierUser = User::factory()->create(['role' => 'courier']);
+        Sanctum::actingAs($courierUser);
+
+        $this->getJson('/api/courier/me')->assertNotFound();
+    }
+
+    public function test_my_orders_only_shows_orders_assigned_to_this_courier(): void
+    {
+        $orderA = $this->makeOrderSearchingForCourier();
+        $orderB = $this->makeOrderSearchingForCourier();
+
+        $courierA = $this->makeCourierUser();
+        $courierB = $this->makeCourierUser();
+
+        Sanctum::actingAs($courierA);
+        $this->postJson("/api/courier/orders/{$orderA->id}/accept")->assertOk();
+
+        Sanctum::actingAs($courierB);
+        $this->postJson("/api/courier/orders/{$orderB->id}/accept")->assertOk();
+
+        Sanctum::actingAs($courierA);
+        $response = $this->getJson('/api/courier/orders');
+
+        $response->assertOk();
+        $ids = collect($response->json('data'))->pluck('id');
+        $this->assertEquals([$orderA->id], $ids->all());
+    }
+
     public function test_only_one_courier_can_accept_a_waiting_order(): void
     {
         $order = $this->makeOrderSearchingForCourier();
