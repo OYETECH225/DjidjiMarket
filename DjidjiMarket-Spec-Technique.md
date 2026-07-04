@@ -445,10 +445,10 @@ Ajout à l'état "fait" : **app Flutter (`mobile/`)** — même parcours client 
 
 **Écarts connus vis-à-vis de la section 6 :**
 - PWA : parcours vendeur et livreur pas encore construits (uniquement le parcours client pour l'instant) ; pas d'écran pour faire progresser une commande de `confirmee` à `cherche_livreur`/`livree` côté web (fait via Filament ou l'API courier en attendant).
-- Flutter : même limitation (parcours client uniquement) ; `flutter analyze`/`flutter test` passent (0 erreur) mais le rendu réel dans un navigateur/émulateur n'a pas pu être vérifié dans cet environnement (voir note ci-dessous) — à confirmer visuellement à la prochaine session.
+- Flutter : même limitation (parcours client uniquement).
 - Lancement pilote (hors périmètre code).
 
-**Note d'environnement :** le SDK Flutter n'était pas installé au démarrage de ce chantier ; installé via `brew install --cask flutter`. Aucun SDK Android ni CocoaPods (iOS) n'est configuré sur cette machine — seule la cible web (Chrome) est disponible pour un lancement local (`flutter run -d chrome`), et son rendu n'a pas pu être automatiquement vérifié via Playwright dans ce sandbox (page restée blanche sans erreur, probablement une limitation WebGL/headless plutôt qu'un bug de code, à revalider dans un vrai navigateur).
+**Note d'environnement :** le SDK Flutter n'était pas installé au démarrage de ce chantier ; installé via `brew install --cask flutter`. Aucun SDK Android ni CocoaPods (iOS) n'est configuré sur cette machine — seule la cible web (Chrome) est disponible pour un lancement local. Rendu vérifié manuellement dans un vrai navigateur Chrome (boutique et logo visibles) ; la vérification automatisée via Playwright/Chromium headless n'a pas fonctionné dans ce sandbox (rendu WebGL/CanvasKit qui reste bloqué), à noter comme limite d'outillage plutôt que de code si ça se reproduit.
 
 ---
 
