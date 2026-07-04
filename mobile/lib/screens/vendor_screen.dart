@@ -106,8 +106,7 @@ class _VendorScreenState extends State<VendorScreen> {
                           '${_currencyFormat.format(listing.price)} ${listing.currency}',
                           style: const TextStyle(color: AppColors.orange, fontWeight: FontWeight.w600),
                         ),
-                        trailing: FilledButton(
-                          style: FilledButton.styleFrom(backgroundColor: AppColors.green),
+                        trailing: ElevatedButton(
                           onPressed: () {
                             context.read<CartService>().add(listing);
                             ScaffoldMessenger.of(context).showSnackBar(
