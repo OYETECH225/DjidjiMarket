@@ -61,6 +61,25 @@ class CourierController extends Controller
         return new CourierResource($courier);
     }
 
+    public function available(Request $request)
+    {
+        $courier = $request->user()->courier()->first();
+
+        abort_unless($courier, 404, 'Profil livreur introuvable.');
+        abort_unless($courier->is_available, 403, 'Passez-vous disponible pour voir les commandes en attente.');
+
+        // No geo-radius filtering yet (Phase 2's automated dispatch adds
+        // that) — Phase 1's "basic" dispatch just lists every order
+        // currently searching for a courier, oldest first.
+        $orders = Order::where('status', 'cherche_livreur')
+            ->whereNull('courier_id')
+            ->with('vendor')
+            ->oldest()
+            ->paginate(20);
+
+        return OrderResource::collection($orders);
+    }
+
     public function accept(Request $request, Order $order)
     {
         $courier = $request->user()->courier()->first();

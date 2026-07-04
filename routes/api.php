@@ -33,6 +33,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('courier')->middleware('role:courier')->group(function () {
         Route::post('/profile', [CourierController::class, 'storeProfile']);
         Route::post('/availability', [CourierController::class, 'updateAvailability']);
+        Route::get('/orders/available', [CourierController::class, 'available']);
         Route::post('/orders/{order}/accept', [CourierController::class, 'accept']);
         Route::post('/orders/{order}/status', [CourierController::class, 'updateStatus']);
     });

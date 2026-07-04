@@ -22,6 +22,10 @@ class OrderResource extends JsonResource
             'delivery_fee' => $this->delivery_fee,
             'commission_amount' => $this->commission_amount,
             'source' => $this->source,
+            'vendor_business_name' => $this->whenLoaded('vendor', fn () => $this->vendor->business_name),
+            'vendor_address_text' => $this->whenLoaded('vendor', fn () => $this->vendor->address_text),
+            'vendor_latitude' => $this->whenLoaded('vendor', fn () => $this->vendor->latitude),
+            'vendor_longitude' => $this->whenLoaded('vendor', fn () => $this->vendor->longitude),
             'items' => OrderItemResource::collection($this->whenLoaded('items')),
             'created_at' => $this->created_at,
         ];

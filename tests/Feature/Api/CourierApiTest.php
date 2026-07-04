@@ -65,6 +65,37 @@ class CourierApiTest extends TestCase
             ->assertJsonPath('data.is_available', true);
     }
 
+    public function test_available_orders_requires_courier_to_be_marked_available(): void
+    {
+        $this->makeOrderSearchingForCourier();
+        $courier = $this->makeCourierUser();
+
+        Sanctum::actingAs($courier);
+        $this->getJson('/api/courier/orders/available')->assertForbidden();
+
+        $this->postJson('/api/courier/availability', ['is_available' => true])->assertOk();
+        $this->getJson('/api/courier/orders/available')->assertOk();
+    }
+
+    public function test_available_orders_lists_only_unassigned_orders_searching_for_a_courier(): void
+    {
+        $waiting = $this->makeOrderSearchingForCourier();
+        $alreadyAssigned = $this->makeOrderSearchingForCourier();
+        $alreadyAssigned->update(['status' => 'livreur_assigne', 'courier_id' => User::factory()->create(['role' => 'courier'])->id]);
+
+        $courier = $this->makeCourierUser();
+        Sanctum::actingAs($courier);
+        $this->postJson('/api/courier/availability', ['is_available' => true])->assertOk();
+
+        $response = $this->getJson('/api/courier/orders/available');
+
+        $response->assertOk();
+        $ids = collect($response->json('data'))->pluck('id');
+        $this->assertTrue($ids->contains($waiting->id));
+        $this->assertFalse($ids->contains($alreadyAssigned->id));
+        $this->assertNotNull($response->json('data.0.vendor_business_name'));
+    }
+
     public function test_only_one_courier_can_accept_a_waiting_order(): void
     {
         $order = $this->makeOrderSearchingForCourier();

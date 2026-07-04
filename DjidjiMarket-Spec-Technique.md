@@ -316,7 +316,10 @@ POST   /api/orders/{id}/dispute
 POST   /api/payments/initiate
 POST   /api/payments/webhook        # callback de l'agrégateur mobile money
 
+POST   /api/vendor/profile          # onboarding vendeur (business_name, type, adresse...)
+POST   /api/courier/profile         # onboarding livreur (vehicle_type, documents)
 POST   /api/courier/availability    # toggle disponibilité
+GET    /api/courier/orders/available   # liste d'attente des commandes cherche_livreur
 POST   /api/courier/orders/{id}/accept
 POST   /api/courier/orders/{id}/status   # mise à jour statut livraison
 
@@ -433,10 +436,9 @@ Décisions de sécurité prises lors de l'implémentation des endpoints de la se
 
 ## 11. État d'avancement — Phase 1
 
-**Fait :** modèle de données, migrations, modèles Eloquent avec relations ; panel Filament (Vendors, Listings, Orders) ; endpoints API auth/OTP, onboarding vendeur et livreur, catalogue public, création de commande, paiement avec séquestre simplifié, acceptation/statut livreur ; identité de marque appliquée au panel admin.
+**Fait :** modèle de données, migrations, modèles Eloquent avec relations ; panel Filament (Vendors, Listings, Orders) ; endpoints API auth/OTP, onboarding vendeur et livreur, catalogue public, création de commande, paiement avec séquestre simplifié, liste d'attente + acceptation/statut livreur ; identité de marque appliquée au panel admin.
 
 **Écarts connus vis-à-vis de la section 6 :**
-- Pas d'endpoint listant les commandes en attente pour les livreurs (ex. `GET /api/courier/orders/available`) — un livreur ne peut aujourd'hui accepter une commande que s'il en connaît déjà l'ID. La spec Phase 1 prévoit explicitement une "liste d'attente affichée aux livreurs".
 - PWA non démarrée.
 - App Flutter non démarrée.
 - Lancement pilote (hors périmètre code).
