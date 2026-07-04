@@ -16,7 +16,7 @@
         @livewireStyles
     </head>
     <body class="min-h-screen bg-djidji-bg font-body text-djidji-text antialiased">
-        <header class="sticky top-0 z-10 border-b border-black/5 bg-white">
+        <header class="sticky top-0 z-10 border-b border-djidji-outline bg-white">
             <div class="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
                 <a href="{{ route('home') }}" class="flex items-center gap-2">
                     <img src="/images/DjidjiMarket-icone-seule.png" alt="DjidjiMarket" class="h-8 w-8">

@@ -1,5 +1,5 @@
 <div>
-    <div class="mb-8 flex items-center gap-4 rounded-xl bg-white p-5 shadow-sm">
+    <div class="mb-8 flex items-center gap-4 rounded-xl bg-white p-5">
         <img
             src="{{ $vendor->logo_url ?? '/images/DjidjiMarket-icone-seule.png' }}"
             alt="{{ $vendor->business_name }}"
@@ -17,7 +17,7 @@
     </div>
 
     @if ($addedMessage)
-        <div class="mb-4 rounded-lg bg-djidji-green/10 px-4 py-2 text-sm text-djidji-green">
+        <div class="mb-4 rounded-xl bg-djidji-green/10 px-4 py-2 text-sm text-djidji-green">
             {{ $addedMessage }}
             — <a href="{{ route('cart.show') }}" class="font-semibold underline">voir le panier</a>
         </div>
@@ -28,7 +28,7 @@
     @else
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
             @foreach ($listings as $listing)
-                <div class="flex flex-col justify-between rounded-xl border border-black/5 bg-white p-4 shadow-sm">
+                <div class="flex flex-col justify-between rounded-xl border border-djidji-outline bg-white p-4">
                     <div>
                         <p class="font-sans font-semibold text-djidji-text">{{ $listing->name }}</p>
                         @if ($listing->description)
@@ -37,7 +37,7 @@
                         <p class="mt-2 font-semibold text-djidji-orange">{{ number_format($listing->price, 0, ',', ' ') }} {{ $listing->currency }}</p>
                     </div>
 
-                    <x-button wire:click="addToCart({{ $listing->id }})" variant="secondary" class="mt-4">
+                    <x-button wire:click="addToCart({{ $listing->id }})" class="mt-4">
                         Ajouter au panier
                     </x-button>
                 </div>

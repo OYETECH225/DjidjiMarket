@@ -6,7 +6,7 @@
     @else
         <div class="space-y-3">
             @foreach ($orders as $order)
-                <div class="flex items-center justify-between rounded-xl border border-black/5 bg-white p-4 shadow-sm">
+                <div class="flex items-center justify-between rounded-xl border border-djidji-outline bg-white p-4">
                     <div>
                         <p class="font-semibold text-djidji-text">Commande #{{ $order->id }} — {{ $order->client->name }}</p>
                         <p class="text-sm text-djidji-text/60">{{ number_format($order->total_amount, 0, ',', ' ') }} XOF · {{ $order->created_at->format('d/m/Y H:i') }}</p>

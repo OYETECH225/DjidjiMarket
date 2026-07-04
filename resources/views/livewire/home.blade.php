@@ -11,7 +11,7 @@
             @foreach ($vendors as $vendor)
                 <a
                     href="{{ route('vendor.show', $vendor->slug) }}"
-                    class="rounded-xl border border-black/5 bg-white p-4 shadow-sm transition hover:shadow-md"
+                    class="rounded-xl border border-djidji-outline bg-white p-4 transition"
                 >
                     <div class="flex items-center gap-3">
                         <img

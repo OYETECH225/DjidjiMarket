@@ -9,7 +9,7 @@
 
         <div>
             <label class="mb-1 block text-sm font-medium text-djidji-text">Type d'activité</label>
-            <select wire:model="vendor_type" class="w-full rounded-lg border border-black/10 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-djidji-green">
+            <select wire:model="vendor_type" class="w-full rounded-xl border border-djidji-outline px-3 py-2 focus:outline-none focus:ring-2 focus:ring-djidji-green">
                 <option value="boutique">Boutique</option>
                 <option value="street_food">Street food</option>
                 <option value="restaurant">Restaurant</option>
@@ -25,7 +25,7 @@
 
         <div>
             <label class="mb-1 block text-sm font-medium text-djidji-text">Description</label>
-            <textarea wire:model="description" rows="3" class="w-full rounded-lg border border-black/10 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-djidji-green"></textarea>
+            <textarea wire:model="description" rows="3" class="w-full rounded-xl border border-djidji-outline px-3 py-2 focus:outline-none focus:ring-2 focus:ring-djidji-green"></textarea>
         </div>
 
         <x-button type="submit" wire:loading.attr="disabled" wire:target="create">

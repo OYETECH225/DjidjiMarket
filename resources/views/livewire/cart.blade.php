@@ -8,7 +8,7 @@
     @else
         <div class="space-y-3">
             @foreach ($items as $item)
-                <div class="flex items-center justify-between rounded-xl border border-black/5 bg-white p-4 shadow-sm">
+                <div class="flex items-center justify-between rounded-xl border border-djidji-outline bg-white p-4">
                     <div>
                         <p class="font-semibold text-djidji-text">{{ $item['listing']->name }}</p>
                         <p class="text-sm text-djidji-text/60">{{ number_format($item['listing']->price, 0, ',', ' ') }} {{ $item['listing']->currency }}</p>
@@ -20,12 +20,12 @@
                             min="1"
                             value="{{ $item['quantity'] }}"
                             wire:change="updateQuantity({{ $item['listing']->id }}, $event.target.value)"
-                            class="w-16 rounded-lg border border-black/10 px-2 py-1 text-center"
+                            class="w-16 rounded-xl border border-djidji-outline px-2 py-1 text-center"
                         >
                         <p class="w-24 text-right font-semibold text-djidji-orange">
                             {{ number_format($item['subtotal'], 0, ',', ' ') }}
                         </p>
-                        <button wire:click="remove({{ $item['listing']->id }})" class="text-djidji-text/40 hover:text-red-600">
+                        <button wire:click="remove({{ $item['listing']->id }})" class="text-djidji-text/40 hover:text-djidji-error">
                             &times;
                         </button>
                     </div>
@@ -33,7 +33,7 @@
             @endforeach
         </div>
 
-        <div class="mt-6 flex items-center justify-between border-t border-black/10 pt-4">
+        <div class="mt-6 flex items-center justify-between border-t border-djidji-outline pt-4">
             <p class="font-sans text-lg font-bold text-djidji-text">Total</p>
             <p class="font-sans text-lg font-bold text-djidji-green">{{ number_format($total, 0, ',', ' ') }} XOF</p>
         </div>

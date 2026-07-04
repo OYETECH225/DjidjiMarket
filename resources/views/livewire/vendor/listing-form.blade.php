@@ -6,7 +6,7 @@
     <form wire:submit="save" class="space-y-4">
         <div>
             <label class="mb-1 block text-sm font-medium text-djidji-text">Type</label>
-            <select wire:model="type" class="w-full rounded-lg border border-black/10 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-djidji-green">
+            <select wire:model="type" class="w-full rounded-xl border border-djidji-outline px-3 py-2 focus:outline-none focus:ring-2 focus:ring-djidji-green">
                 <option value="produit">Produit</option>
                 <option value="plat_du_jour">Plat du jour</option>
                 <option value="menu_item">Menu item</option>
@@ -17,7 +17,7 @@
 
         <div>
             <label class="mb-1 block text-sm font-medium text-djidji-text">Description</label>
-            <textarea wire:model="description" rows="3" class="w-full rounded-lg border border-black/10 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-djidji-green"></textarea>
+            <textarea wire:model="description" rows="3" class="w-full rounded-xl border border-djidji-outline px-3 py-2 focus:outline-none focus:ring-2 focus:ring-djidji-green"></textarea>
         </div>
 
         <x-input label="Prix (XOF)" type="number" wire:model="price" :error="$errors->first('price')" />
@@ -36,11 +36,11 @@
                 <div class="flex flex-wrap gap-2">
                     @foreach ($listing->photo_urls as $url)
                         <div class="relative">
-                            <img src="{{ $url }}" class="h-20 w-20 rounded-lg object-cover">
+                            <img src="{{ $url }}" class="h-20 w-20 rounded-xl object-cover">
                             <button
                                 type="button"
                                 wire:click="removePhoto('{{ $url }}')"
-                                class="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-white text-red-600 shadow"
+                                class="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full border border-djidji-outline bg-white text-djidji-error"
                             >
                                 &times;
                             </button>
@@ -54,7 +54,7 @@
             <label class="mb-1 block text-sm font-medium text-djidji-text">Ajouter des photos</label>
             <input type="file" wire:model="newPhotos" multiple accept="image/*" class="w-full text-sm">
             @error('newPhotos.*')
-                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                <p class="mt-1 text-sm text-djidji-error">{{ $message }}</p>
             @enderror
         </div>
 

@@ -1,9 +1,11 @@
 @props(['variant' => 'primary'])
 
 @php
+    // Design system: primary CTAs are orange-filled, secondary actions
+    // green-filled — always white text on color, never an outline.
     $classes = match ($variant) {
-        'secondary' => 'bg-white text-djidji-green border border-djidji-green hover:bg-djidji-green/5',
-        default => 'bg-djidji-green text-white hover:bg-djidji-green-dark',
+        'secondary' => 'bg-djidji-green text-white hover:bg-djidji-green-dark',
+        default => 'bg-djidji-orange text-white hover:brightness-95',
     };
 @endphp
 

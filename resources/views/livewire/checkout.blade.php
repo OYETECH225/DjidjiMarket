@@ -1,21 +1,21 @@
 <div class="mx-auto max-w-lg">
     <h1 class="mb-6 font-sans text-2xl font-bold text-djidji-green">Finaliser la commande</h1>
 
-    <div class="mb-6 rounded-xl border border-black/5 bg-white p-4 shadow-sm">
+    <div class="mb-6 rounded-xl border border-djidji-outline bg-white p-4">
         @foreach ($items as $item)
             <div class="flex justify-between py-1 text-sm">
                 <span>{{ $item['quantity'] }} × {{ $item['listing']->name }}</span>
                 <span>{{ number_format($item['subtotal'], 0, ',', ' ') }} XOF</span>
             </div>
         @endforeach
-        <div class="mt-2 flex justify-between border-t border-black/10 pt-2 font-semibold">
+        <div class="mt-2 flex justify-between border-t border-djidji-outline pt-2 font-semibold">
             <span>Total</span>
             <span class="text-djidji-green">{{ number_format($total, 0, ',', ' ') }} XOF</span>
         </div>
     </div>
 
     @error('items')
-        <div class="mb-4 rounded-lg bg-red-50 px-4 py-2 text-sm text-red-600">{{ $message }}</div>
+        <div class="mb-4 rounded-xl bg-djidji-error/10 px-4 py-2 text-sm text-djidji-error">{{ $message }}</div>
     @enderror
 
     <form wire:submit="placeOrder" class="space-y-4">
@@ -31,7 +31,7 @@
                     'moov_money' => 'Moov Money',
                     'wave' => 'Wave',
                 ] as $value => $label)
-                    <label class="flex items-center gap-2 rounded-lg border border-black/10 px-3 py-2 has-[:checked]:border-djidji-green has-[:checked]:bg-djidji-green/5">
+                    <label class="flex items-center gap-2 rounded-xl border border-djidji-outline px-3 py-2 has-[:checked]:border-djidji-green has-[:checked]:bg-djidji-green/5">
                         <input type="radio" wire:model="provider" value="{{ $value }}" class="text-djidji-green focus:ring-djidji-green">
                         {{ $label }}
                     </label>

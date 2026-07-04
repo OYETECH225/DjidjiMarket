@@ -6,14 +6,23 @@
 @source '../../app/Livewire/**/*.php';
 
 @theme {
-    --font-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
-    --font-body: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    /* DjidjiMarket-DESIGN-System.md — Plus Jakarta Sans is the single
+       source of truth for typography, superseding Poppins/Nunito Sans
+       from the earlier brand PDF. */
+    --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+        'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-body: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
 
-    /* Charte graphique DjidjiMarket v1.0 */
+    /* Design system tokens (Material 3-flavored) */
     --color-djidji-green: #204e29;
     --color-djidji-green-dark: #163420;
     --color-djidji-orange: #d56e2b;
-    --color-djidji-text: #222222;
-    --color-djidji-bg: #f2f2f0;
+    --color-djidji-text: #191c19;
+    --color-djidji-text-muted: #414940;
+    --color-djidji-bg: #f9faf4;
+    --color-djidji-outline: #c1c9be;
+    --color-djidji-error: #ba1a1a;
+
+    /* Cards/inputs use a 24px corner radius per the design system. */
+    --radius-xl: 1.5rem;
 }

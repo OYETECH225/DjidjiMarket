@@ -7,7 +7,7 @@
 
         <div>
             <label class="mb-1 block text-sm font-medium text-djidji-text">Je suis...</label>
-            <select wire:model="role" class="w-full rounded-lg border border-black/10 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-djidji-green">
+            <select wire:model="role" class="w-full rounded-xl border border-djidji-outline px-3 py-2 focus:outline-none focus:ring-2 focus:ring-djidji-green">
                 <option value="client">Client</option>
                 <option value="vendor">Vendeur</option>
                 <option value="courier">Livreur</option>
