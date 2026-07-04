@@ -32,11 +32,7 @@ class VendorResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Select::make('vendor_type')
-                    ->options([
-                        'boutique' => 'Boutique',
-                        'street_food' => 'Street food',
-                        'restaurant' => 'Restaurant',
-                    ])
+                    ->options(Vendor::VENDOR_TYPE_LABELS)
                     ->required(),
                 Forms\Components\TextInput::make('slug')
                     ->required()
@@ -55,11 +51,7 @@ class VendorResource extends Resource
                 Forms\Components\TextInput::make('longitude')
                     ->numeric(),
                 Forms\Components\Select::make('verification_level')
-                    ->options([
-                        'non_verifie' => 'Non vérifié',
-                        'identite_confirmee' => 'Identité confirmée',
-                        'verifie' => 'Vérifié',
-                    ])
+                    ->options(Vendor::VERIFICATION_LABELS)
                     ->required()
                     ->default('non_verifie'),
                 Forms\Components\TextInput::make('rccm_number')
@@ -134,17 +126,9 @@ class VendorResource extends Resource
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('vendor_type')
-                    ->options([
-                        'boutique' => 'Boutique',
-                        'street_food' => 'Street food',
-                        'restaurant' => 'Restaurant',
-                    ]),
+                    ->options(Vendor::VENDOR_TYPE_LABELS),
                 Tables\Filters\SelectFilter::make('verification_level')
-                    ->options([
-                        'non_verifie' => 'Non vérifié',
-                        'identite_confirmee' => 'Identité confirmée',
-                        'verifie' => 'Vérifié',
-                    ]),
+                    ->options(Vendor::VERIFICATION_LABELS),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

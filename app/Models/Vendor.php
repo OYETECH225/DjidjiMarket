@@ -15,6 +15,18 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 ])]
 class Vendor extends Model
 {
+    public const VERIFICATION_LABELS = [
+        'non_verifie' => 'Non vérifié',
+        'identite_confirmee' => 'Identité confirmée',
+        'verifie' => 'Vérifié',
+    ];
+
+    public const VENDOR_TYPE_LABELS = [
+        'boutique' => 'Boutique',
+        'street_food' => 'Street food',
+        'restaurant' => 'Restaurant',
+    ];
+
     protected function casts(): array
     {
         return [

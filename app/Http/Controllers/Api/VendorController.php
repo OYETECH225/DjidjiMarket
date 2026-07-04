@@ -7,11 +7,13 @@ use App\Http\Requests\Vendor\StoreVendorProfileRequest;
 use App\Http\Resources\ListingResource;
 use App\Http\Resources\VendorResource;
 use App\Models\Vendor;
+use App\Services\VendorOnboardingService;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
 
 class VendorController extends Controller
 {
+    public function __construct(private readonly VendorOnboardingService $onboarding) {}
+
     public function index()
     {
         $vendors = Vendor::where('is_active', true)->latest()->paginate(20);
@@ -21,18 +23,7 @@ class VendorController extends Controller
 
     public function storeProfile(StoreVendorProfileRequest $request)
     {
-        $user = $request->user();
-
-        if ($user->vendor()->exists()) {
-            throw ValidationException::withMessages([
-                'business_name' => ['Un profil vendeur existe déjà pour ce compte.'],
-            ]);
-        }
-
-        $vendor = $user->vendor()->create([
-            ...$request->validated(),
-            'verification_level' => 'non_verifie',
-        ]);
+        $vendor = $this->onboarding->createProfile($request->user(), $request->validated());
 
         return response()->json(['vendor' => new VendorResource($vendor)], 201);
     }

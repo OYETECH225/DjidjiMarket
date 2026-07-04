@@ -443,9 +443,11 @@ Décisions de sécurité prises lors de l'implémentation des endpoints de la se
 
 Ajout à l'état "fait" : **app Flutter (`mobile/`)** — même parcours client que la PWA (auth OTP, découverte boutiques, storefront, panier, checkout, suivi de commande) consommant l'API REST via un `ApiClient` (package `http`) et `flutter_secure_storage` pour le token, state management avec `provider`. A nécessité l'ajout de `GET /api/vendors` (liste des boutiques actives), absent de la section 5 d'origine — la PWA n'en avait pas besoin car server-rendue avec accès direct à Eloquent, mais Flutter n'a que l'API.
 
+Ajout à l'état "fait" : **PWA (parcours vendeur)** — onboarding (création de la boutique après inscription), tableau de bord (statut de vérification, compteurs, visibilité on/off), gestion du catalogue (créer/modifier/activer/désactiver/supprimer ses propres articles avec upload photo), liste de ses commandes (lecture seule). Accès restreint par le rôle (`role:vendor` middleware) et par propriété (un vendeur ne peut agir que sur ses propres listings/commandes — vérifié par test). `Vendor::VERIFICATION_LABELS`/`VENDOR_TYPE_LABELS` centralisés sur le modèle et réutilisés par Filament, même pattern que `Order::STATUS_LABELS`.
+
 **Écarts connus vis-à-vis de la section 6 :**
-- PWA : parcours vendeur et livreur pas encore construits (uniquement le parcours client pour l'instant) ; pas d'écran pour faire progresser une commande de `confirmee` à `cherche_livreur`/`livree` côté web (fait via Filament ou l'API courier en attendant).
-- Flutter : même limitation (parcours client uniquement).
+- PWA : parcours livreur pas encore construit ; pas d'écran pour faire progresser une commande de `confirmee` à `cherche_livreur`/`livree` côté web (fait via Filament ou l'API courier en attendant).
+- Flutter : parcours client uniquement (pas encore de parcours vendeur/livreur).
 - Lancement pilote (hors périmètre code).
 
 **Note d'environnement :** le SDK Flutter n'était pas installé au démarrage de ce chantier ; installé via `brew install --cask flutter`. Aucun SDK Android ni CocoaPods (iOS) n'est configuré sur cette machine — seule la cible web (Chrome) est disponible pour un lancement local. Rendu vérifié manuellement dans un vrai navigateur Chrome (boutique et logo visibles) ; la vérification automatisée via Playwright/Chromium headless n'a pas fonctionné dans ce sandbox (rendu WebGL/CanvasKit qui reste bloqué), à noter comme limite d'outillage plutôt que de code si ça se reproduit.
