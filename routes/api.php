@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\CourierController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\VendorController;
+use App\Http\Controllers\Api\VendorListingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,7 +24,16 @@ Route::get('/vendors/{slug}', [VendorController::class, 'show']);
 Route::get('/vendors/{vendor}/listings', [VendorController::class, 'listings']);
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/vendor/profile', [VendorController::class, 'storeProfile'])->middleware('role:vendor');
+    Route::prefix('vendor')->middleware('role:vendor')->group(function () {
+        Route::post('/profile', [VendorController::class, 'storeProfile']);
+        Route::get('/me', [VendorController::class, 'me']);
+        Route::patch('/me', [VendorController::class, 'updateMe']);
+        Route::get('/orders', [VendorController::class, 'myOrders']);
+        Route::get('/listings', [VendorListingController::class, 'index']);
+        Route::post('/listings', [VendorListingController::class, 'store']);
+        Route::put('/listings/{listing}', [VendorListingController::class, 'update']);
+        Route::delete('/listings/{listing}', [VendorListingController::class, 'destroy']);
+    });
 
     Route::post('/orders', [OrderController::class, 'store']);
     Route::get('/orders/{order}', [OrderController::class, 'show']);

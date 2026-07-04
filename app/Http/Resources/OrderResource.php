@@ -26,6 +26,7 @@ class OrderResource extends JsonResource
             'vendor_address_text' => $this->whenLoaded('vendor', fn () => $this->vendor->address_text),
             'vendor_latitude' => $this->whenLoaded('vendor', fn () => $this->vendor->latitude),
             'vendor_longitude' => $this->whenLoaded('vendor', fn () => $this->vendor->longitude),
+            'client_name' => $this->whenLoaded('client', fn () => $this->client->name),
             'items' => OrderItemResource::collection($this->whenLoaded('items')),
             'created_at' => $this->created_at,
         ];

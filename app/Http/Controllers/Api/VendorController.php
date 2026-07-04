@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Vendor\StoreVendorProfileRequest;
+use App\Http\Requests\Vendor\UpdateVendorProfileRequest;
 use App\Http\Resources\ListingResource;
+use App\Http\Resources\OrderResource;
+use App\Http\Resources\VendorProfileResource;
 use App\Http\Resources\VendorResource;
 use App\Models\Vendor;
 use App\Services\VendorOnboardingService;
@@ -26,6 +29,35 @@ class VendorController extends Controller
         $vendor = $this->onboarding->createProfile($request->user(), $request->validated());
 
         return response()->json(['vendor' => new VendorResource($vendor)], 201);
+    }
+
+    public function me(Request $request)
+    {
+        $vendor = $request->user()->vendor()->first();
+
+        abort_unless($vendor, 404, 'Profil vendeur introuvable.');
+
+        return new VendorProfileResource($vendor);
+    }
+
+    public function updateMe(UpdateVendorProfileRequest $request)
+    {
+        $vendor = $request->user()->vendor()->first();
+
+        abort_unless($vendor, 404, 'Profil vendeur introuvable.');
+
+        $vendor->update($request->validated());
+
+        return new VendorProfileResource($vendor->refresh());
+    }
+
+    public function myOrders(Request $request)
+    {
+        $vendor = $request->user()->vendor()->first();
+
+        abort_unless($vendor, 404, 'Profil vendeur introuvable.');
+
+        return OrderResource::collection($vendor->orders()->with('client')->latest()->get());
     }
 
     public function show(string $slug)
