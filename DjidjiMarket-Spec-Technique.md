@@ -441,10 +441,14 @@ Décisions de sécurité prises lors de l'implémentation des endpoints de la se
 
 **Fait :** modèle de données, migrations, modèles Eloquent avec relations ; panel Filament (Vendors, Listings, Orders) ; endpoints API auth/OTP, onboarding vendeur et livreur, catalogue public, création de commande, paiement avec séquestre simplifié, liste d'attente + acceptation/statut livreur ; identité de marque appliquée au panel admin ; **PWA (parcours client)** — inscription/OTP/connexion en session web, découverte des boutiques, page boutique publique (`/boutique/{slug}`), panier (session), checkout avec choix du mode de paiement, suivi de commande avec confirmation de réception ; logique métier partagée entre API et PWA via `OrderService`/`PaymentService`/`AuthService`/`OtpService`/`CartService`.
 
+Ajout à l'état "fait" : **app Flutter (`mobile/`)** — même parcours client que la PWA (auth OTP, découverte boutiques, storefront, panier, checkout, suivi de commande) consommant l'API REST via un `ApiClient` (package `http`) et `flutter_secure_storage` pour le token, state management avec `provider`. A nécessité l'ajout de `GET /api/vendors` (liste des boutiques actives), absent de la section 5 d'origine — la PWA n'en avait pas besoin car server-rendue avec accès direct à Eloquent, mais Flutter n'a que l'API.
+
 **Écarts connus vis-à-vis de la section 6 :**
 - PWA : parcours vendeur et livreur pas encore construits (uniquement le parcours client pour l'instant) ; pas d'écran pour faire progresser une commande de `confirmee` à `cherche_livreur`/`livree` côté web (fait via Filament ou l'API courier en attendant).
-- App Flutter non démarrée.
+- Flutter : même limitation (parcours client uniquement) ; `flutter analyze`/`flutter test` passent (0 erreur) mais le rendu réel dans un navigateur/émulateur n'a pas pu être vérifié dans cet environnement (voir note ci-dessous) — à confirmer visuellement à la prochaine session.
 - Lancement pilote (hors périmètre code).
+
+**Note d'environnement :** le SDK Flutter n'était pas installé au démarrage de ce chantier ; installé via `brew install --cask flutter`. Aucun SDK Android ni CocoaPods (iOS) n'est configuré sur cette machine — seule la cible web (Chrome) est disponible pour un lancement local (`flutter run -d chrome`), et son rendu n'a pas pu être automatiquement vérifié via Playwright dans ce sandbox (page restée blanche sans erreur, probablement une limitation WebGL/headless plutôt qu'un bug de code, à revalider dans un vrai navigateur).
 
 ---
 
