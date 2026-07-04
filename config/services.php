@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'payment_aggregator' => [
+        // Shared secret verified on incoming /api/payments/webhook calls.
+        // Replace with the real CinetPay/PayDunya signature scheme once integrated.
+        'webhook_secret' => env('PAYMENT_WEBHOOK_SECRET'),
+    ],
+
 ];

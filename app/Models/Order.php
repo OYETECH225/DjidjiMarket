@@ -14,6 +14,16 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 ])]
 class Order extends Model
 {
+    protected static function booted(): void
+    {
+        // The DB column defaults to 'en_attente_paiement', but that default
+        // isn't reflected on the in-memory model right after insert — set it
+        // explicitly so OrderObserver sees the real value when logging history.
+        static::creating(function (Order $order) {
+            $order->status ??= 'en_attente_paiement';
+        });
+    }
+
     protected function casts(): array
     {
         return [
@@ -48,5 +58,10 @@ class Order extends Model
     public function statusHistory(): HasMany
     {
         return $this->hasMany(OrderStatusHistory::class);
+    }
+
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class);
     }
 }

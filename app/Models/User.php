@@ -46,6 +46,11 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasOne(Vendor::class);
     }
 
+    public function courier(): HasOne
+    {
+        return $this->hasOne(Courier::class);
+    }
+
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class, 'client_id');
