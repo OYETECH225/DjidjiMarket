@@ -1,0 +1,254 @@
+<!DOCTYPE html><html class="light" lang="fr" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport">
+<title>Mes Commandes | DjidjiMarket</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed": "#ffdbca",
+                    "on-tertiary-fixed": "#380919",
+                    "background": "#f9faf4",
+                    "surface-container-highest": "#e2e3dd",
+                    "surface": "#f9faf4",
+                    "on-background": "#191c19",
+                    "primary-fixed-dim": "#a0d3a2",
+                    "outline-variant": "#c1c9be",
+                    "on-surface-variant": "#414940",
+                    "inverse-primary": "#a0d3a2",
+                    "on-tertiary": "#ffffff",
+                    "surface-variant": "#e2e3dd",
+                    "tertiary": "#511d2c",
+                    "secondary-container": "#fe8e48",
+                    "on-surface": "#191c19",
+                    "on-primary": "#ffffff",
+                    "secondary": "#9b4500",
+                    "on-secondary-fixed": "#331200",
+                    "on-error": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "tertiary-fixed": "#ffd9e0",
+                    "primary-container": "#204e29",
+                    "primary": "#053715",
+                    "outline": "#727970",
+                    "tertiary-fixed-dim": "#ffb1c2",
+                    "on-tertiary-fixed-variant": "#6e3544",
+                    "on-primary-fixed-variant": "#22502b",
+                    "tertiary-container": "#6c3342",
+                    "surface-bright": "#f9faf4",
+                    "inverse-on-surface": "#f0f1eb",
+                    "inverse-surface": "#2e312d",
+                    "surface-container-high": "#e7e9e3",
+                    "surface-dim": "#d9dbd5",
+                    "on-primary-container": "#8dbf8f",
+                    "surface-container-lowest": "#ffffff",
+                    "error": "#ba1a1a",
+                    "surface-container": "#edeee8",
+                    "primary-fixed": "#bbf0bd",
+                    "secondary-fixed-dim": "#ffb68e",
+                    "error-container": "#ffdad6",
+                    "on-primary-fixed": "#002108",
+                    "surface-container-low": "#f3f4ee",
+                    "on-tertiary-container": "#ea9eae",
+                    "on-secondary-container": "#6b2d00",
+                    "on-secondary-fixed-variant": "#763300",
+                    "surface-tint": "#3a6841",
+                    "on-secondary": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xxl": "48px",
+                    "lg": "24px",
+                    "gutter": "12px",
+                    "base": "4px",
+                    "xs": "8px",
+                    "md": "16px",
+                    "sm": "12px",
+                    "xl": "32px",
+                    "container-margin": "16px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "display": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "label-sm": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "label-md": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "display": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f9faf4;
+            color: #191c19;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .order-card {
+            transition: background-color 0.2s ease, transform 0.1s active;
+        }
+        .order-card:active {
+            background-color: rgba(0,0,0,0.05);
+            transform: scale(0.98);
+        }
+        .tab-indicator {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="bg-background min-h-screen pb-32">
+<!-- Top AppBar Component -->
+<header class="w-full top-0 sticky z-40 bg-surface border-b border-outline-variant flex justify-between items-center px-container-margin h-16 w-full">
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined text-primary hover:bg-surface-variant/50 p-2 rounded-full transition-colors duration-200 active:scale-95">arrow_back</button>
+<h1 class="font-headline-md text-headline-md-mobile md:text-headline-md text-primary">Mes commandes</h1>
+</div>
+<div class="flex items-center gap-xs">
+<button class="material-symbols-outlined text-primary hover:bg-surface-variant/50 p-2 rounded-full transition-colors duration-200 active:scale-95">notifications</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="max-w-3xl mx-auto px-container-margin py-md">
+<!-- Pill Tabs Navigation -->
+<div class="flex p-1 bg-surface-container-low rounded-full mb-xl border border-outline-variant/30">
+<button class="flex-1 py-3 px-md rounded-full font-label-md text-label-md bg-primary text-on-primary tab-indicator" onclick="setActiveTab(this)">
+                En cours
+            </button>
+<button class="flex-1 py-3 px-md rounded-full font-label-md text-label-md text-on-surface-variant hover:bg-surface-variant/50 tab-indicator" onclick="setActiveTab(this)">
+                Terminées
+            </button>
+</div>
+<!-- Orders Vertical List -->
+<div class="flex flex-col gap-md">
+<!-- Order Card 1: Active -->
+<div class="order-card p-md bg-surface border border-outline-variant rounded-lg flex items-center gap-md cursor-pointer" style="opacity: 1; transform: translateY(0px); transition: 0.4s ease-out;">
+<div class="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A professional studio product photograph of artisanal Ivorian cocoa beans and chocolate bars arranged elegantly on a clean white surface. The lighting is soft and natural, emphasizing the rich textures and deep brown colors of the chocolate. The style is modern and minimal, fitting a premium marketplace aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMt8uIQCK9hRnky99hfHlA4Nhfa_ik5lZ3JoW6SSfAurdPiW2QBHHpvMaE3ksynlXOPsj1UJGIinUOkkSb2C5ANkf7LFQqZWle4WZqAiBzTQTtw0XKdFeLqylJGHB7Hi7CoEN-Dp5Nt0HQFqICJaM27j4iPCwlGm6gBeYZgrNkfFZhvYP6Eofoddr__cV3YstSsSu8XFvCPyk_p-mHrkVKWbuGoGrBIRSRJe-un5-J1kd9_Co3RkYc">
+</div>
+<div class="flex-grow flex flex-col justify-between h-16 w-0">
+<div class="flex justify-between items-start">
+<h3 class="font-label-md text-label-md text-on-surface">Chocolat de Côte d'Ivoire</h3>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+<div class="flex justify-between items-end">
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Vendu par: <span class="font-semibold">Maison du Cacao</span></p>
+<p class="font-label-sm text-label-sm text-outline">12 Oct 2023 • 14:30</p>
+</div>
+<div class="flex flex-col items-end flex-shrink-0">
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider mb-1">En cours</span>
+<p class="font-headline-md text-headline-md-mobile text-secondary" style="color: rgb(213, 110, 43); font-weight: 700;">15,500 FCFA</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Order Card 2: Active -->
+<div class="order-card p-md bg-surface border border-outline-variant rounded-lg flex items-center gap-md cursor-pointer" style="opacity: 1; transform: translateY(0px); transition: 0.4s ease-out;">
+<div class="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A high-quality lifestyle photograph of a handcrafted traditional African wicker basket filled with vibrant tropical fruits like mangoes and pineapples. The scene is bathed in bright, warm sunlight against a clean, modern interior background. The colors are vivid and the composition is airy and inviting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPubniVvXU9GvpzvXDKHfapv-RZLRqV7_GrPhY4AjtyLSHt97NN2aHxxoB0fE2d57i4bbD0xjvNyiSyoo_WTICTUDYyHDsd9aqzwVbT6276RatlJu5CQhI8cQLb2khRpT-zSHsuGVsQ4cy2ixtL1Zoex8i_MXRu0KV4C4-NKulRyHVsx_DkdXf-dxTkfixFEXvQ3X4ULOAWhcbdbLq_ZxczJ6sG7zNEj_0_GuMXAWJiInoCfYOFG5L">
+</div>
+<div class="flex-grow flex flex-col justify-between h-16 w-0">
+<div class="flex justify-between items-start">
+<h3 class="font-label-md text-label-md text-on-surface">Panier de Fruits Tropicaux</h3>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</div>
+<div class="flex justify-between items-end">
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Vendu par: <span class="font-semibold">Marché d'Adjamé</span></p>
+<p class="font-label-sm text-label-sm text-outline">11 Oct 2023 • 09:15</p>
+</div>
+<div class="flex flex-col items-end flex-shrink-0">
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider mb-1">En cours</span>
+<p class="font-headline-md text-headline-md-mobile text-secondary" style="color: rgb(213, 110, 43); font-weight: 700;">8,000 FCFA</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Empty Space Illustration (Subtle Decoration) -->
+<div class="mt-xl flex flex-col items-center opacity-10">
+<span class="material-symbols-outlined text-[64px]">receipt_long</span>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 px-2 pb-safe bg-surface border-t border-outline-variant z-50">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary transition-transform duration-200 active:scale-90" href="#">
+<span class="material-symbols-outlined">storefront</span>
+<span class="font-label-md text-label-md">Boutique</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary transition-transform duration-200 active:scale-90" href="#">
+<span class="material-symbols-outlined">favorite</span>
+<span class="font-label-md text-label-md">Favoris</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary transition-transform duration-200 active:scale-90" href="#">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="font-label-md text-label-md">Panier</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary transition-transform duration-200 active:scale-90" href="#">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="font-label-md text-label-md">DjidjiPay</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 transition-transform duration-200 active:scale-90" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-label-md text-label-md">Profil</span>
+</a>
+</nav>
+<!-- JavaScript for Interactions -->
+<script>
+        function setActiveTab(element) {
+            // Reset all buttons in the tab group
+            const buttons = element.parentElement.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-primary', 'text-on-primary');
+                btn.classList.add('text-on-surface-variant', 'hover:bg-surface-variant/50');
+            });
+
+            // Set active button
+            element.classList.remove('text-on-surface-variant', 'hover:bg-surface-variant/50');
+            element.classList.add('bg-primary', 'text-on-primary');
+        }
+
+        // Simple enter animation for cards
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.order-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(10px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.4s ease-out';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+
+
+</body></html>

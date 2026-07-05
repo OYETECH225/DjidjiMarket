@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Votre Panier - DjidjiMarket</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-payment-pill {
+            border-color: #9b4500 !important;
+            background-color: #ffdbca !important;
+            color: #331200 !important;
+        }
+        body {
+            background-color: #f9faf4;
+            color: #191c19;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed-variant": "#763300",
+                        "surface-tint": "#3a6841",
+                        "on-tertiary-container": "#ea9eae",
+                        "tertiary": "#511d2c",
+                        "surface-container": "#edeee8",
+                        "on-secondary-container": "#6b2d00",
+                        "on-primary-fixed": "#002108",
+                        "primary-fixed-dim": "#a0d3a2",
+                        "surface-container-highest": "#e2e3dd",
+                        "surface-container-high": "#e7e9e3",
+                        "surface-variant": "#e2e3dd",
+                        "surface-container-low": "#f3f4ee",
+                        "on-background": "#191c19",
+                        "tertiary-container": "#6c3342",
+                        "outline": "#727970",
+                        "tertiary-fixed-dim": "#ffb1c2",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed": "#331200",
+                        "error": "#ba1a1a",
+                        "secondary-fixed": "#ffdbca",
+                        "outline-variant": "#c1c9be",
+                        "surface-bright": "#f9faf4",
+                        "primary-fixed": "#bbf0bd",
+                        "on-primary": "#ffffff",
+                        "primary": "#053715",
+                        "on-tertiary-fixed-variant": "#6e3544",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed": "#ffd9e0",
+                        "background": "#f9faf4",
+                        "on-surface-variant": "#414940",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-container": "#8dbf8f",
+                        "inverse-on-surface": "#f0f1eb",
+                        "inverse-surface": "#2e312d",
+                        "on-secondary": "#ffffff",
+                        "primary-container": "#204e29",
+                        "inverse-primary": "#a0d3a2",
+                        "on-primary-fixed-variant": "#22502b",
+                        "surface": "#f9faf4",
+                        "on-tertiary-fixed": "#380919",
+                        "on-error-container": "#93000a",
+                        "secondary": "#9b4500",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed-dim": "#ffb1c2",
+                        "surface-dim": "#d9dbd5",
+                        "on-surface": "#191c19",
+                        "secondary-container": "#fe8e48"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "32px",
+                        "margin-mobile": "16px",
+                        "xs": "8px",
+                        "base": "4px",
+                        "sm": "16px",
+                        "lg": "40px",
+                        "gutter": "16px",
+                        "xl": "64px",
+                        "md": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "headline-sm": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "800"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="font-body-md text-body-md">
+<!-- Top Navigation Bar -->
+<header class="w-full top-0 sticky z-50 bg-surface border-b border-outline-variant">
+<div class="flex justify-between items-center px-margin-desktop py-base max-w-[1280px] mx-auto h-20">
+<div class="flex items-center gap-md">
+<span class="font-headline-md text-headline-md text-primary">DjidjiMarket</span>
+<nav class="hidden md:flex items-center gap-sm ml-lg">
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Boutiques</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Nourriture</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Restaurants</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Comment ça marche</a>
+</nav>
+</div>
+<div class="flex items-center gap-sm">
+<button class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary active:scale-95">search</button>
+<div class="relative cursor-pointer active:scale-95 group">
+<span class="material-symbols-outlined text-primary font-bold">shopping_cart</span>
+<span class="absolute -top-2 -right-2 bg-secondary text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full">2</span>
+</div>
+<button class="hidden md:block font-label-md text-on-surface-variant hover:text-primary cursor-pointer">Connexion</button>
+<button class="px-md py-xs bg-primary text-on-primary rounded-full font-label-md cursor-pointer hover:opacity-90 active:scale-95 transition-all">S'inscrire</button>
+</div>
+</div>
+</header>
+<main class="max-w-[1280px] mx-auto px-margin-desktop py-lg grid grid-cols-1 lg:grid-cols-12 gap-lg">
+<!-- Left Column: Cart Content -->
+<section class="lg:col-span-8 flex flex-col gap-md">
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Votre panier</h1>
+<!-- Cart Items List -->
+<div class="bg-white border border-outline-variant rounded-[24px] overflow-hidden">
+<div class="p-md flex flex-col gap-sm">
+<!-- Item 1 -->
+<div class="flex items-center gap-md py-sm">
+<div class="w-24 h-24 rounded-xl bg-surface-container overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A premium overhead studio shot of a vibrant bowl of Ivorian Attieke with grilled fish and fresh vegetables. The lighting is soft and warm, emphasizing the textures and organic colors of the meal. The background is a clean, neutral surface that complements the modern, minimalist UI aesthetic of DjidjiMarket. The professional food photography style evokes a fresh and high-quality culinary experience." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_aSBXRnU19tlVIMfVwhstRUqKwXfLRMCYCHcmYgfUNLbkMzInGab-eGQf9twZQODt0gFatbbvnOcr1k9cnM3nFAnc6q33LOERa2_RMTk9mPKzAp7qtZiFrAUC_RVOiVzejwwXXI2WuiLcmE6Yq_SgswTKp7TxFte65Ix6vA5QuD4rmLko6Ow-LrNf_iW8UBAOjT3ooBNVyqPWP0f_TH1O6fSzFH7G2he62lIRErVoCNjMT_fS4EOGhg"/>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Attiéké Poisson Grillé</h3>
+<p class="text-on-surface-variant font-label-md flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">storefront</span> Restaurant L'Escale
+                                    </p>
+</div>
+<span class="font-headline-sm text-headline-sm text-primary">4 500 FCFA</span>
+</div>
+<div class="mt-sm flex justify-between items-center">
+<div class="flex items-center border border-outline-variant rounded-full px-base py-base">
+<button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-surface-container transition-colors" onclick="this.nextElementSibling.innerText = Math.max(1, parseInt(this.nextElementSibling.innerText) - 1)">
+<span class="material-symbols-outlined text-sm">remove</span>
+</button>
+<span class="px-md font-label-md w-8 text-center">1</span>
+<button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-surface-container transition-colors" onclick="this.previousElementSibling.innerText = parseInt(this.previousElementSibling.innerText) + 1">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+<button class="text-error hover:bg-error-container p-2 rounded-full transition-colors flex items-center">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+</div>
+<div class="h-[1px] bg-outline-variant w-full"></div>
+<!-- Item 2 -->
+<div class="flex items-center gap-md py-sm">
+<div class="w-24 h-24 rounded-xl bg-surface-container overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A clean, minimalist product shot of a pack of artisanal roasted coffee beans from Ivory Coast. The packaging is sleek and modern with green and gold accents. The bag sits on a high-contrast white surface with soft studio lighting. The aesthetic is professional and energetic, reflecting the premium quality of local Ivorian produce in a digital marketplace context." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxC8ADvsfmltNbufkmBLZIBjF6ADvM_5mIXmNS83LsS28OBps7YQRX2_cCtf0B8y5sr4CejBftwG7PqE1Iwe0qdX8j0wdvv49-cAS_f0N297uXGTDsQ4HiTEQU_u8LduBv_yN7NP-M7AjDNHqCVSu3C5BpT9DY93XXr0BhzNNzc8je10yR9OObqCFY0XNpxS7Fqlt2g9ETHhpNRLt002i0lQZnkHj87eVtbRcARy8n11mKoqy5QwqlhQ"/>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Café Arabica Excellence</h3>
+<p class="text-on-surface-variant font-label-md flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">storefront</span> Boutique Terroir
+                                    </p>
+</div>
+<span class="font-headline-sm text-headline-sm text-primary">7 200 FCFA</span>
+</div>
+<div class="mt-sm flex justify-between items-center">
+<div class="flex items-center border border-outline-variant rounded-full px-base py-base">
+<button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-surface-container transition-colors" onclick="this.nextElementSibling.innerText = Math.max(1, parseInt(this.nextElementSibling.innerText) - 1)">
+<span class="material-symbols-outlined text-sm">remove</span>
+</button>
+<span class="px-md font-label-md w-8 text-center">2</span>
+<button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-surface-container transition-colors" onclick="this.previousElementSibling.innerText = parseInt(this.previousElementSibling.innerText) + 1">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+<button class="text-error hover:bg-error-container p-2 rounded-full transition-colors flex items-center">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Delivery Address Card -->
+<div class="bg-white border border-outline-variant rounded-[24px] p-md flex flex-col gap-sm">
+<div class="flex justify-between items-center">
+<h2 class="font-headline-sm text-headline-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">location_on</span> Adresse de livraison
+                    </h2>
+<a class="text-secondary font-label-md hover:underline" href="#">Modifier</a>
+</div>
+<div class="flex items-start gap-md p-sm bg-surface-container-low rounded-xl">
+<div class="w-16 h-16 rounded-lg bg-surface-container-high overflow-hidden border border-outline-variant">
+<div class="w-full h-full bg-cover" data-location="Abidjan, Ivory Coast" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDTASZwK-H1TMzXLnR1zHW2TsJ66kHPO1XjlMuw3FDEC15J1g08dvFNLtbs-tIPzgizYMSggUkQNxjbvXJ8i7517-6ZGY-An9vTqYgDHZK2YAkAPFg5FXGCi8KeolfUaDgw8UJ4oIfOwXXd5s3ntTKYhJdq0mfy08mF6RsqyL04SpBV1eYJ_p7fGJHSBGGf7bgO5xzhjbkoe9RLb60ibGvzitCdKy6doxBXUymTO1cI4iG4MdE4kjL3Nw')"></div>
+</div>
+<div>
+<p class="font-label-md text-on-surface">Jean-Marc Kouassi</p>
+<p class="text-on-surface-variant">Cocody Ambassades, Rue du Bélier</p>
+<p class="text-on-surface-variant text-sm">+225 07 00 00 00 00</p>
+</div>
+</div>
+</div>
+<!-- Payment Methods -->
+<div class="bg-white border border-outline-variant rounded-[24px] p-md flex flex-col gap-sm">
+<h2 class="font-headline-sm text-headline-sm">Méthodes de paiement</h2>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-sm">
+<button class="flex flex-col items-center justify-center gap-xs border border-outline-variant rounded-xl active-payment-pill transition-all py-md border-secondary" onclick="selectPayment(this)">
+<span class="material-symbols-outlined text-secondary text-3xl">account_balance_wallet</span>
+<span class="text-[12px] font-bold">Orange Money</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-xs border border-outline-variant rounded-xl hover:bg-surface-container transition-all py-md" onclick="selectPayment(this)" style="border-color: #FFCC00; background-color: rgba(255, 204, 0, 0.05);">
+<span class="material-symbols-outlined text-outline text-3xl">payments</span>
+<span class="text-[12px] font-bold">MTN MoMo</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-xs border border-outline-variant rounded-xl hover:bg-surface-container transition-all py-md" onclick="selectPayment(this)" style="border-color: #0055A4; background-color: rgba(0, 85, 164, 0.05);">
+<span class="material-symbols-outlined text-outline text-3xl">account_balance</span>
+<span class="text-[12px] font-bold">Moov Money</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-xs border border-outline-variant rounded-xl hover:bg-surface-container transition-all py-md" onclick="selectPayment(this)" style="border-color: #1CACE4; background-color: rgba(28, 172, 228, 0.05);">
+<span class="material-symbols-outlined text-outline text-3xl">waves</span>
+<span class="text-[12px] font-bold">Wave</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Right Column: Summary & Checkout -->
+<aside class="lg:col-span-4 flex flex-col gap-md">
+<div class="sticky top-24 flex flex-col gap-md">
+<!-- Order Summary Card -->
+<div class="bg-white border border-outline-variant rounded-[24px] p-md flex flex-col gap-sm">
+<h2 class="font-headline-sm text-headline-sm mb-base">Résumé de la commande</h2>
+<div class="flex justify-between items-center text-on-surface-variant">
+<span>Sous-total</span>
+<span>18 900 FCFA</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant">
+<span>Frais de livraison</span>
+<span>1 500 FCFA</span>
+</div>
+<div class="h-[1px] bg-outline-variant w-full my-base"></div>
+<div class="flex justify-between items-center font-headline-md text-headline-md text-on-surface">
+<span>Total</span>
+<span>20 400 FCFA</span>
+</div>
+<button class="w-full mt-sm py-md bg-secondary text-on-secondary rounded-full font-headline-sm text-center shadow-sm hover:opacity-90 active:scale-95 transition-all">
+                        Payer maintenant
+                    </button>
+</div>
+<!-- Trust Banner -->
+<div class="bg-primary-fixed text-primary px-md py-sm rounded-[24px] flex items-center gap-sm">
+<span class="material-symbols-outlined text-3xl">shield_person</span>
+<p class="font-label-md leading-tight">Votre paiement est protégé par notre garantie DjidjiMarket Sécurité.</p>
+</div>
+<!-- Promo Code -->
+<div class="bg-surface-container-low border border-outline-variant rounded-[24px] p-md flex flex-col gap-xs">
+<label class="font-label-md text-on-surface-variant">Code promo</label>
+<div class="flex gap-xs">
+<input class="flex-grow bg-white border border-outline-variant rounded-lg px-sm py-xs focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="Entrez votre code" type="text"/>
+<button class="px-md py-xs bg-primary text-white rounded-lg font-label-md hover:bg-primary-container transition-colors">Appliquer</button>
+</div>
+</div>
+</div>
+</aside>
+</main>
+<!-- SideNavBar (Used as cart drawer logic guide but as a persistent shell side element if needed, here hidden by default) -->
+<div class="fixed right-0 top-0 h-full w-80 bg-surface border-l border-outline-variant flex flex-col p-md z-40 translate-x-full transition-transform duration-300" id="sideNav">
+<div class="flex justify-between items-center mb-lg">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-primary">Votre Panier</h2>
+<p class="text-label-md font-label-md text-on-surface-variant">Prêt pour le paiement</p>
+</div>
+<button class="material-symbols-outlined cursor-pointer" onclick="toggleSideNav()">close</button>
+</div>
+<div class="flex flex-col gap-sm flex-grow">
+<div class="flex items-center gap-sm p-sm bg-primary-container text-on-primary-container rounded-lg">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="font-label-md">Panier</span>
+</div>
+<div class="flex items-center gap-sm p-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg cursor-pointer">
+<span class="material-symbols-outlined">package_2</span>
+<span class="font-label-md">Mes Commandes</span>
+</div>
+<div class="flex items-center gap-sm p-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg cursor-pointer">
+<span class="material-symbols-outlined">favorite</span>
+<span class="font-label-md">Favoris</span>
+</div>
+<div class="flex items-center gap-sm p-sm text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg cursor-pointer">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md">Paramètres</span>
+</div>
+</div>
+<button class="w-full py-sm bg-primary text-white rounded-full font-label-md mt-auto">Commander maintenant</button>
+</div>
+<!-- Footer -->
+<footer class="w-full mt-lg bg-primary text-on-primary">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-md px-margin-desktop py-xl max-w-[1280px] mx-auto">
+<div class="flex flex-col gap-sm">
+<span class="font-headline-sm text-headline-sm text-on-primary">DjidjiMarket</span>
+<p class="text-body-md opacity-80 leading-relaxed">La meilleure marketplace pour les produits locaux ivoiriens. Livraison rapide et service de qualité.</p>
+</div>
+<div class="flex flex-col gap-sm">
+<h4 class="font-label-md uppercase tracking-wider opacity-60">Entreprise</h4>
+<a class="hover:opacity-100 opacity-80 transition-opacity" href="#">À propos</a>
+<a class="hover:opacity-100 opacity-80 transition-opacity" href="#">Vendeurs</a>
+<a class="hover:opacity-100 opacity-80 transition-opacity" href="#">Aide</a>
+<a class="hover:opacity-100 opacity-80 transition-opacity" href="#">Contact</a>
+</div>
+<div class="flex flex-col gap-sm">
+<h4 class="font-label-md uppercase tracking-wider opacity-60">Légal</h4>
+<a class="hover:opacity-100 opacity-80 transition-opacity" href="#">Confidentialité</a>
+<a class="hover:opacity-100 opacity-80 transition-opacity" href="#">Conditions d'utilisation</a>
+<a class="hover:opacity-100 opacity-80 transition-opacity" href="#">Cookies</a>
+</div>
+<div class="flex flex-col gap-sm">
+<h4 class="font-label-md uppercase tracking-wider opacity-60">Newsletter</h4>
+<p class="text-body-md opacity-80 mb-base">Inscrivez-vous pour nos offres exclusives.</p>
+<div class="flex">
+<input class="bg-primary-container border-none rounded-l-lg p-xs text-white placeholder-white/50 w-full" placeholder="Email" type="email"/>
+<button class="bg-on-primary text-primary rounded-r-lg px-sm font-label-md">Ok</button>
+</div>
+</div>
+</div>
+<div class="border-t border-white/10 py-md px-margin-desktop max-w-[1280px] mx-auto text-center opacity-60 font-label-md">
+            © 2024 DjidjiMarket. Tous droits réservés.
+        </div>
+</footer>
+<script>
+        function selectPayment(element) {
+            // Remove active class from all pills
+            document.querySelectorAll('.active-payment-pill').forEach(pill => {
+                pill.classList.remove('active-payment-pill');
+                pill.classList.add('hover:bg-surface-container');
+                pill.querySelector('span:first-child').classList.replace('text-secondary', 'text-outline');
+            });
+            
+            // Add active class to selected pill
+            element.classList.add('active-payment-pill');
+            element.classList.remove('hover:bg-surface-container');
+            element.querySelector('span:first-child').classList.replace('text-outline', 'text-secondary');
+        }
+
+        function toggleSideNav() {
+            const sideNav = document.getElementById('sideNav');
+            if (sideNav.classList.contains('translate-x-full')) {
+                sideNav.classList.remove('translate-x-full');
+                sideNav.classList.add('translate-x-0');
+            } else {
+                sideNav.classList.remove('translate-x-0');
+                sideNav.classList.add('translate-x-full');
+            }
+        }
+    </script>
+</body></html>

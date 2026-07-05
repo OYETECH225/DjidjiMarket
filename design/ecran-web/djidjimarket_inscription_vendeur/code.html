@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+
+<html lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Vendor Onboarding - IvorianMarket</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-highest": "#e2e3dd",
+                    "primary-container": "#204e29",
+                    "surface": "#f9faf4",
+                    "on-tertiary-fixed-variant": "#6e3544",
+                    "error": "#ba1a1a",
+                    "secondary-fixed-dim": "#ffb68e",
+                    "error-container": "#ffdad6",
+                    "tertiary-fixed-dim": "#ffb1c2",
+                    "tertiary-fixed": "#ffd9e0",
+                    "surface-dim": "#d9dbd5",
+                    "secondary-fixed": "#ffdbca",
+                    "surface-tint": "#3a6841",
+                    "outline": "#727970",
+                    "on-tertiary-container": "#ea9eae",
+                    "surface-variant": "#e2e3dd",
+                    "primary": "#053715",
+                    "on-surface-variant": "#414940",
+                    "outline-variant": "#c1c9be",
+                    "on-surface": "#191c19",
+                    "background": "#f9faf4",
+                    "on-tertiary-fixed": "#380919",
+                    "surface-container-high": "#e7e9e3",
+                    "surface-bright": "#f9faf4",
+                    "primary-fixed-dim": "#a0d3a2",
+                    "on-secondary-container": "#6b2d00",
+                    "on-primary": "#ffffff",
+                    "surface-container-low": "#f3f4ee",
+                    "secondary": "#9b4500",
+                    "tertiary-container": "#6c3342",
+                    "tertiary": "#511d2c",
+                    "on-background": "#191c19",
+                    "on-secondary": "#ffffff",
+                    "inverse-on-surface": "#f0f1eb",
+                    "on-primary-container": "#8dbf8f",
+                    "inverse-surface": "#2e312d",
+                    "primary-fixed": "#bbf0bd",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-fixed-variant": "#22502b",
+                    "on-primary-fixed": "#002108",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-fixed-variant": "#763300",
+                    "on-secondary-fixed": "#331200",
+                    "on-error": "#ffffff",
+                    "inverse-primary": "#a0d3a2",
+                    "secondary-container": "#fe8e48",
+                    "on-error-container": "#93000a",
+                    "surface-container": "#edeee8"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px",
+                    "brand": "24px"
+            },
+            "spacing": {
+                    "sm": "16px",
+                    "gutter": "16px",
+                    "md": "24px",
+                    "lg": "40px",
+                    "base": "4px",
+                    "margin-mobile": "16px",
+                    "xl": "64px",
+                    "margin-desktop": "32px",
+                    "xs": "8px"
+            },
+            "fontFamily": {
+                    "headline-sm": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "label-md": ["Plus Jakarta Sans"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f9faf4;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .stepper-line {
+            height: 2px;
+            flex-grow: 1;
+            background-color: #c1c9be;
+        }
+        .stepper-line.active {
+            background-color: #053715;
+        }
+        .upload-dashed {
+            border: 2px dashed #c1c9be;
+            transition: all 0.2s ease-in-out;
+        }
+        .upload-dashed:hover {
+            border-color: #053715;
+            background-color: #f3f4ee;
+        }
+    </style>
+</head>
+<body class="text-on-surface">
+<!-- TopNavBar (Simulated from Shared Components) -->
+<nav class="bg-surface w-full top-0 sticky border-b border-outline-variant z-50">
+<div class="flex justify-between items-center w-full px-margin-desktop max-w-7xl mx-auto h-20">
+<div class="font-headline-md text-headline-md text-primary">IvorianMarket</div>
+<div class="hidden md:flex gap-md">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="#">Home</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="#">Categories</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="#">Deals</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="#">Sellers</a>
+</div>
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-on-surface-variant">favorite</span>
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional portrait of a business owner in Abidjan, smiling warmly at the camera. The background is a clean, modern workspace with soft sunlight filtering through large windows, creating a bright and trustworthy atmosphere. The overall style is high-end editorial photography with a vibrant color palette of soft greens and warm earth tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxEjO2hiBMg5FMPy_B0pINahuIvXvXvaKN6hSrMv94SrMeUhuTOOTPFMr3e2ymwIycCJ0-slv5H1luxNIqdwgEYXx9b4980VBr0qLAnzrfmJHC78zeRaavxMqpudeBXQixYA4dTxFGq4rP_VslZw7PXgc0TAIFSmw7dpyolarvBnrmppvhElSyn_Ppww9sLDtTPF6bQMRnL6Oy7Thld_sDJJOjqMYcwBI0rtUwc0UWSfAaUTLvybhgTQ"/>
+</div>
+</div>
+</div>
+</nav>
+<main class="max-w-4xl mx-auto px-margin-mobile md:px-0 py-lg">
+<!-- Horizontal Stepper -->
+<div class="flex items-center justify-between mb-xl px-md">
+<!-- Step 1: Done -->
+<div class="flex flex-col items-center gap-xs relative">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[20px]">check</span>
+</div>
+<span class="text-label-md font-label-md text-primary">Informations</span>
+</div>
+<div class="stepper-line active mx-4 mt-[-24px]"></div>
+<!-- Step 2: Active -->
+<div class="flex flex-col items-center gap-xs relative">
+<div class="w-10 h-10 rounded-full border-2 border-primary bg-surface flex items-center justify-center text-primary font-bold">
+                    2
+                </div>
+<span class="text-label-md font-label-md text-primary">Documents</span>
+</div>
+<div class="stepper-line mx-4 mt-[-24px]"></div>
+<!-- Step 3: Pending -->
+<div class="flex flex-col items-center gap-xs relative">
+<div class="w-10 h-10 rounded-full border-2 border-outline-variant bg-surface flex items-center justify-center text-outline">
+                    3
+                </div>
+<span class="text-label-md font-label-md text-outline">Vérification</span>
+</div>
+</div>
+<!-- Wide Centered Form Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-brand p-md md:p-xl">
+<div class="mb-lg">
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-xs">Téléchargement des documents</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Veuillez fournir les documents nécessaires pour valider votre boutique sur IvorianMarket.</p>
+</div>
+<!-- Two Document Upload Zones Side-by-Side -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md mb-lg">
+<!-- Zone 1: ID -->
+<div class="flex flex-col gap-sm">
+<label class="font-label-md text-label-md text-on-surface">Pièce d'identité</label>
+<div class="upload-dashed rounded-xl p-xl flex flex-col items-center justify-center text-center cursor-pointer min-h-[220px]">
+<span class="material-symbols-outlined text-[48px] text-outline mb-sm">file_upload</span>
+<p class="font-body-md text-body-md text-on-surface font-semibold mb-xs">Cliquer ou glisser le fichier</p>
+<p class="font-label-md text-label-md text-on-surface-variant">PNG, JPG ou PDF (Max 5MB)</p>
+</div>
+</div>
+<!-- Zone 2: RCCM -->
+<div class="flex flex-col gap-sm">
+<label class="font-label-md text-label-md text-on-surface">RCCM / DFE</label>
+<div class="upload-dashed rounded-xl p-xl flex flex-col items-center justify-center text-center cursor-pointer min-h-[220px]">
+<span class="material-symbols-outlined text-[48px] text-outline mb-sm">description</span>
+<p class="font-body-md text-body-md text-on-surface font-semibold mb-xs">Cliquer ou glisser le fichier</p>
+<p class="font-label-md text-label-md text-on-surface-variant">Registre du commerce obligatoire</p>
+</div>
+</div>
+</div>
+<!-- Highlighted Info Card -->
+<div class="bg-[#f0f1eb] rounded-xl p-md flex items-start gap-md mb-xl border border-outline-variant">
+<div class="bg-secondary-container p-2 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-on-secondary-container">info</span>
+</div>
+<div class="flex flex-col">
+<p class="font-body-md text-body-md text-on-surface font-semibold">Pas de RCCM ?</p>
+<p class="font-body-md text-body-md text-on-surface-variant">Nous vous accompagnons dans vos démarches administratives pour régulariser votre activité.</p>
+<a class="font-label-md text-label-md text-[#204E29] mt-xs flex items-center gap-1 hover:underline" href="#">
+                        En savoir plus sur l'accompagnement
+                        <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex flex-col md:flex-row justify-between items-center gap-md pt-md border-t border-outline-variant">
+<button class="w-full md:w-auto px-xl py-3 border border-primary text-primary font-label-md text-label-md rounded-full hover:bg-surface-container-low transition-colors">
+                    Précédent
+                </button>
+<button class="w-full md:w-auto px-xl py-3 bg-primary text-on-primary font-label-md text-label-md rounded-full hover:opacity-90 transition-opacity">
+                    Suivant
+                </button>
+</div>
+</div>
+<div class="mt-lg text-center">
+<p class="font-body-md text-body-md text-on-surface-variant">Besoin d'aide ? Contactez notre <a class="text-secondary font-semibold hover:underline" href="#">support vendeur</a></p>
+</div>
+</main>
+<!-- Footer (Simulated from Shared Components) -->
+<footer class="bg-surface-container-high border-t border-outline-variant mt-xl py-xl">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-lg px-margin-desktop max-w-7xl mx-auto">
+<div class="flex flex-col gap-sm">
+<div class="font-headline-sm text-headline-sm text-primary">IvorianMarket</div>
+<p class="font-body-md text-body-md text-on-surface-variant">La plateforme de référence pour les vendeurs ivoiriens en quête d'excellence numérique.</p>
+</div>
+<div class="flex flex-col gap-sm">
+<h4 class="font-label-md text-label-md text-on-surface uppercase">Marketplace</h4>
+<a class="font-body-md text-body-md text-on-surface-variant hover:underline decoration-secondary transition-colors" href="#">About Us</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:underline decoration-secondary transition-colors" href="#">Shipping Policy</a>
+</div>
+<div class="flex flex-col gap-sm">
+<h4 class="font-label-md text-label-md text-on-surface uppercase">Professionnels</h4>
+<a class="font-body-md text-body-md text-on-surface-variant hover:underline decoration-secondary transition-colors" href="#">Vendor Portal</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:underline decoration-secondary transition-colors" href="#">Terms of Service</a>
+</div>
+<div class="flex flex-col gap-sm">
+<h4 class="font-label-md text-label-md text-on-surface uppercase">Contact</h4>
+<a class="font-body-md text-body-md text-on-surface-variant hover:underline decoration-secondary transition-colors" href="#">Contact Support</a>
+<div class="flex gap-sm mt-xs">
+<span class="material-symbols-outlined text-primary">language</span>
+<span class="material-symbols-outlined text-primary">share</span>
+</div>
+</div>
+</div>
+<div class="max-w-7xl mx-auto px-margin-desktop mt-lg pt-md border-t border-outline-variant/30">
+<p class="text-label-md font-label-md text-on-surface-variant">© 2024 IvorianMarket. All rights reserved.</p>
+</div>
+</footer>
+<script>
+        // Micro-interactions for upload zones
+        const uploadZones = document.querySelectorAll('.upload-dashed');
+        uploadZones.forEach(zone => {
+            zone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                zone.classList.add('bg-surface-container-high');
+            });
+            zone.addEventListener('dragleave', () => {
+                zone.classList.remove('bg-surface-container-high');
+            });
+            zone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                zone.classList.remove('bg-surface-container-high');
+                const files = e.dataTransfer.files;
+                if(files.length > 0) {
+                    const textNode = zone.querySelector('p.font-body-md');
+                    textNode.textContent = files[0].name;
+                    textNode.classList.add('text-primary');
+                    zone.querySelector('.material-symbols-outlined').style.color = '#053715';
+                }
+            });
+            zone.addEventListener('click', () => {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.onchange = (e) => {
+                    const file = e.target.files[0];
+                    if(file) {
+                        const textNode = zone.querySelector('p.font-body-md');
+                        textNode.textContent = file.name;
+                        textNode.classList.add('text-primary');
+                        zone.querySelector('.material-symbols-outlined').style.color = '#053715';
+                    }
+                };
+                input.click();
+            });
+        });
+    </script>
+</body></html>

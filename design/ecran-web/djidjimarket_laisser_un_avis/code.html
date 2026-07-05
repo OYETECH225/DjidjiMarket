@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Laisser un avis | IvorianMarket</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-highest": "#e2e3dd",
+                    "primary-container": "#204e29",
+                    "surface": "#f9faf4",
+                    "on-tertiary-fixed-variant": "#6e3544",
+                    "error": "#ba1a1a",
+                    "secondary-fixed-dim": "#ffb68e",
+                    "error-container": "#ffdad6",
+                    "tertiary-fixed-dim": "#ffb1c2",
+                    "tertiary-fixed": "#ffd9e0",
+                    "surface-dim": "#d9dbd5",
+                    "secondary-fixed": "#ffdbca",
+                    "surface-tint": "#3a6841",
+                    "outline": "#727970",
+                    "on-tertiary-container": "#ea9eae",
+                    "surface-variant": "#e2e3dd",
+                    "primary": "#053715",
+                    "on-surface-variant": "#414940",
+                    "outline-variant": "#c1c9be",
+                    "on-surface": "#191c19",
+                    "background": "#f9faf4",
+                    "on-tertiary-fixed": "#380919",
+                    "surface-container-high": "#e7e9e3",
+                    "surface-bright": "#f9faf4",
+                    "primary-fixed-dim": "#a0d3a2",
+                    "on-secondary-container": "#6b2d00",
+                    "on-primary": "#ffffff",
+                    "surface-container-low": "#f3f4ee",
+                    "secondary": "#9b4500",
+                    "tertiary-container": "#6c3342",
+                    "tertiary": "#511d2c",
+                    "on-background": "#191c19",
+                    "on-secondary": "#ffffff",
+                    "inverse-on-surface": "#f0f1eb",
+                    "on-primary-container": "#8dbf8f",
+                    "inverse-surface": "#2e312d",
+                    "primary-fixed": "#bbf0bd",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-fixed-variant": "#22502b",
+                    "on-primary-fixed": "#002108",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-fixed-variant": "#763300",
+                    "on-secondary-fixed": "#331200",
+                    "on-error": "#ffffff",
+                    "inverse-primary": "#a0d3a2",
+                    "secondary-container": "#fe8e48",
+                    "on-error-container": "#93000a",
+                    "surface-container": "#edeee8"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sm": "16px",
+                    "gutter": "16px",
+                    "md": "24px",
+                    "lg": "40px",
+                    "base": "4px",
+                    "margin-mobile": "16px",
+                    "xl": "64px",
+                    "margin-desktop": "32px",
+                    "xs": "8px"
+            },
+            "fontFamily": {
+                    "headline-sm": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "label-md": ["Plus Jakarta Sans"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "800"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            user-select: none;
+        }
+        .star-rating .material-symbols-outlined {
+            cursor: pointer;
+            transition: transform 0.1s ease;
+        }
+        .star-rating .material-symbols-outlined:hover {
+            transform: scale(1.2);
+        }
+        .star-active {
+            font-variation-settings: 'FILL' 1;
+            color: #fe8e48; /* secondary-container / Amber */
+        }
+    </style>
+</head>
+<body class="bg-surface font-body-md text-on-surface min-h-screen flex flex-col">
+<!-- TopNavBar (Derived from JSON) -->
+<nav class="bg-surface w-full top-0 sticky border-b border-outline-variant z-50">
+<div class="flex justify-between items-center w-full px-margin-desktop max-w-7xl mx-auto h-20">
+<div class="flex items-center gap-md">
+<span class="text-headline-md font-headline-md text-primary">IvorianMarket</span>
+<div class="hidden md:flex gap-sm">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="#">Home</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="#">Categories</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="#">Deals</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="#">Sellers</a>
+</div>
+</div>
+<div class="flex items-center gap-sm">
+<button class="material-symbols-outlined p-xs rounded-full hover:bg-surface-container-low transition-all">notifications</button>
+<button class="material-symbols-outlined p-xs rounded-full hover:bg-surface-container-low transition-all">favorite</button>
+<div class="h-10 w-10 rounded-full bg-surface-container-highest overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A clean, professional headshot of a smiling young Ivorian professional with short hair, wearing a stylish modern blazer. The background is a soft-focus minimalist office with bright natural lighting that reflects a high-end light-mode UI aesthetic. The overall mood is approachable, trustworthy, and modern." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEOdW4_ROV0ZRmYew6yPYxfON4TSQzyjUjPjftnVKiRwdyqCGGpDvZQMhQAle_YdkEkMLlHVJdk8MWTrI6eSkWbRBNzQJ3123VY1XQRJfyd0DIy8bA6mvzXTHKSn3GIWIuHewxq9ln1HrKb6Y9LtGpdKdhStSioMsm9Wq42RRwVvG7vik6UY4jtmZ0y9xUcjuC-CdCRrhRNV0wHYTg2Ht1xDZzqYHqPgAlz86w-YM0tOGECTS7RLNmsw"/>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content: Review Card -->
+<main class="flex-grow flex items-center justify-center py-xl px-margin-mobile">
+<div class="w-full max-w-lg bg-surface-container-lowest border border-outline-variant rounded-[24px] p-md transition-all duration-300">
+<!-- Vendor Identity -->
+<div class="flex flex-col items-center mb-lg text-center">
+<div class="w-20 h-20 rounded-full border-2 border-primary-fixed p-1 mb-sm">
+<div class="w-full h-full rounded-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="A vibrant and professional close-up shot of an artisanal coffee vendor branding, featuring a circular logo with a coffee bean and Abidjan skyline silhouette. The lighting is bright and warm, with high-contrast emerald greens and deep orange tones consistent with a premium marketplace identity. The aesthetic is flat, modern, and clean." src="https://lh3.googleusercontent.com/aida-public/AB6AXuASHXpBt4q8dOIUyTehHgc8dnlrvsl5jbK_m8H8Plz_baMrjwmJiMwQ2_6iO5T705Qpxb4-i6ERee3TAa_LpoHT20wl8kXWQ33IC7iriQ_22uTLQ_pVe-f4PoJ6r-MfG1u6Yu5Hv3-guWV127Rs5ynUyfMT999Npgp8avLOA7yPcIxYsBrCOsM4AEoQfvFgm-dudSG8YQm6mQ58w8CBUy_xJ6hptFZ4EGXXVLXyXPsHgiOSUaQGXrzIig"/>
+</div>
+</div>
+<h1 class="font-headline-md text-headline-md text-on-surface">Café d'Abidjan Artisanal</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Avis sur votre commande #8291</p>
+</div>
+<!-- Rating Selectors -->
+<div class="space-y-lg mb-lg">
+<!-- Vendeur Rating -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-xs">Vendeur</label>
+<div class="star-rating flex gap-xs" id="rating-vendor">
+<span class="material-symbols-outlined text-[32px] text-outline-variant" data-rating="1">star</span>
+<span class="material-symbols-outlined text-[32px] text-outline-variant" data-rating="2">star</span>
+<span class="material-symbols-outlined text-[32px] text-outline-variant" data-rating="3">star</span>
+<span class="material-symbols-outlined text-[32px] text-outline-variant" data-rating="4">star</span>
+<span class="material-symbols-outlined text-[32px] text-outline-variant" data-rating="5">star</span>
+</div>
+</div>
+<!-- Livraison Rating -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-xs">Livraison</label>
+<div class="star-rating flex gap-xs" id="rating-delivery">
+<span class="material-symbols-outlined text-[28px] text-outline-variant" data-rating="1">star</span>
+<span class="material-symbols-outlined text-[28px] text-outline-variant" data-rating="2">star</span>
+<span class="material-symbols-outlined text-[28px] text-outline-variant" data-rating="3">star</span>
+<span class="material-symbols-outlined text-[28px] text-outline-variant" data-rating="4">star</span>
+<span class="material-symbols-outlined text-[28px] text-outline-variant" data-rating="5">star</span>
+</div>
+</div>
+</div>
+<!-- Commentary Field -->
+<div class="mb-lg">
+<label class="block font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-xs" for="comments">Commentaires</label>
+<textarea class="w-full bg-surface-container-low border border-outline-variant rounded-lg p-sm font-body-md text-body-md focus:border-2 focus:border-primary-container focus:ring-0 outline-none transition-all resize-none" id="comments" placeholder="Qu'avez-vous pensé de la qualité et du service ?" rows="4"></textarea>
+</div>
+<!-- Submit Action -->
+<button class="w-full py-sm bg-primary-container text-on-primary rounded-full font-label-md text-label-md hover:opacity-90 active:scale-[0.98] transition-all flex justify-center items-center gap-xs">
+                Envoyer mon avis
+                <span class="material-symbols-outlined text-[20px]">send</span>
+</button>
+</div>
+</main>
+<!-- Footer (Derived from JSON) -->
+<footer class="bg-surface-container-high w-full py-xl border-t border-outline-variant">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-lg px-margin-desktop max-w-7xl mx-auto">
+<div class="col-span-1 md:col-span-1">
+<span class="font-headline-sm text-headline-sm text-primary">IvorianMarket</span>
+<p class="mt-sm font-body-md text-body-md text-on-surface-variant">La meilleure place de marché pour les artisans et vendeurs ivoiriens.</p>
+</div>
+<div class="flex flex-col gap-xs">
+<span class="font-label-md text-label-md text-on-surface">Links</span>
+<a class="text-on-surface-variant hover:text-secondary font-body-md text-body-md transition-colors hover:underline decoration-secondary" href="#">About Us</a>
+<a class="text-on-surface-variant hover:text-secondary font-body-md text-body-md transition-colors hover:underline decoration-secondary" href="#">Shipping Policy</a>
+</div>
+<div class="flex flex-col gap-xs">
+<span class="font-label-md text-label-md text-on-surface">Partner</span>
+<a class="text-on-surface-variant hover:text-secondary font-body-md text-body-md transition-colors hover:underline decoration-secondary" href="#">Vendor Portal</a>
+<a class="text-on-surface-variant hover:text-secondary font-body-md text-body-md transition-colors hover:underline decoration-secondary" href="#">Contact</a>
+</div>
+<div class="flex flex-col gap-xs">
+<span class="font-label-md text-label-md text-on-surface">Legal</span>
+<a class="text-on-surface-variant hover:text-secondary font-body-md text-body-md transition-colors hover:underline decoration-secondary" href="#">Terms of Service</a>
+<p class="mt-md font-body-md text-body-md text-on-surface-variant">© 2024 IvorianMarket. All rights reserved.</p>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interaction for Star Rating
+        function setupStarRating(containerId) {
+            const container = document.getElementById(containerId);
+            const stars = container.querySelectorAll('.material-symbols-outlined');
+
+            stars.forEach(star => {
+                star.addEventListener('click', () => {
+                    const rating = parseInt(star.getAttribute('data-rating'));
+                    updateStars(stars, rating);
+                });
+
+                star.addEventListener('mouseenter', () => {
+                    const rating = parseInt(star.getAttribute('data-rating'));
+                    highlightStars(stars, rating);
+                });
+
+                star.addEventListener('mouseleave', () => {
+                    const currentRating = container.getAttribute('data-current-rating') || 0;
+                    updateStars(stars, currentRating);
+                });
+            });
+        }
+
+        function highlightStars(stars, rating) {
+            stars.forEach(s => {
+                const sRating = parseInt(s.getAttribute('data-rating'));
+                if (sRating <= rating) {
+                    s.style.color = '#fe8e48';
+                } else {
+                    s.style.color = '#c1c9be';
+                }
+            });
+        }
+
+        function updateStars(stars, rating) {
+            const container = stars[0].parentElement;
+            container.setAttribute('data-current-rating', rating);
+            stars.forEach(s => {
+                const sRating = parseInt(s.getAttribute('data-rating'));
+                if (sRating <= rating) {
+                    s.classList.add('star-active');
+                    s.style.color = '#fe8e48';
+                    s.style.fontVariationSettings = "'FILL' 1";
+                } else {
+                    s.classList.remove('star-active');
+                    s.style.color = '#c1c9be';
+                    s.style.fontVariationSettings = "'FILL' 0";
+                }
+            });
+        }
+
+        setupStarRating('rating-vendor');
+        setupStarRating('rating-delivery');
+
+        // Form Submission visual feedback
+        const btn = document.querySelector('button.bg-primary-container');
+        btn.addEventListener('click', () => {
+            const originalContent = btn.innerHTML;
+            btn.innerHTML = `<span class="material-symbols-outlined animate-spin">sync</span> Envoi...`;
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                btn.innerHTML = `<span class="material-symbols-outlined">check_circle</span> Avis envoyé !`;
+                btn.classList.replace('bg-primary-container', 'bg-primary');
+            }, 1200);
+        });
+    </script>
+</body></html>

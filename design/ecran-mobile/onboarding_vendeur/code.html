@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>DjidjiMarket - Devenir Vendeur</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-dot {
+            box-shadow: 0 0 0 4px rgba(5, 55, 21, 0.1);
+        }
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        .segmented-control-active {
+            transform: translateX(0);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .step-transition {
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .hidden-step {
+            display: none;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#ffdbca",
+                        "on-tertiary-fixed": "#380919",
+                        "background": "#f9faf4",
+                        "surface-container-highest": "#e2e3dd",
+                        "surface": "#f9faf4",
+                        "on-background": "#191c19",
+                        "primary-fixed-dim": "#a0d3a2",
+                        "outline-variant": "#c1c9be",
+                        "on-surface-variant": "#414940",
+                        "inverse-primary": "#a0d3a2",
+                        "on-tertiary": "#ffffff",
+                        "surface-variant": "#e2e3dd",
+                        "tertiary": "#511d2c",
+                        "secondary-container": "#fe8e48",
+                        "on-surface": "#191c19",
+                        "on-primary": "#ffffff",
+                        "secondary": "#9b4500",
+                        "on-secondary-fixed": "#331200",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed": "#ffd9e0",
+                        "primary-container": "#204e29",
+                        "primary": "#053715",
+                        "outline": "#727970",
+                        "tertiary-fixed-dim": "#ffb1c2",
+                        "on-tertiary-fixed-variant": "#6e3544",
+                        "on-primary-fixed-variant": "#22502b",
+                        "tertiary-container": "#6c3342",
+                        "surface-bright": "#f9faf4",
+                        "inverse-on-surface": "#f0f1eb",
+                        "inverse-surface": "#2e312d",
+                        "surface-container-high": "#e7e9e3",
+                        "surface-dim": "#d9dbd5",
+                        "on-primary-container": "#8dbf8f",
+                        "surface-container-lowest": "#ffffff",
+                        "error": "#ba1a1a",
+                        "surface-container": "#edeee8",
+                        "primary-fixed": "#bbf0bd",
+                        "secondary-fixed-dim": "#ffb68e",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed": "#002108",
+                        "surface-container-low": "#f3f4ee",
+                        "on-tertiary-container": "#ea9eae",
+                        "on-secondary-container": "#6b2d00",
+                        "on-secondary-fixed-variant": "#763300",
+                        "surface-tint": "#3a6841",
+                        "on-secondary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xxl": "48px",
+                        "lg": "24px",
+                        "gutter": "12px",
+                        "base": "4px",
+                        "xs": "8px",
+                        "md": "16px",
+                        "sm": "12px",
+                        "xl": "32px",
+                        "container-margin": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "display": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "label-sm": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "display": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-md antialiased overflow-x-hidden">
+<!-- Top AppBar (from JSON guidance) -->
+<header class="w-full top-0 sticky flex justify-between items-center px-container-margin h-16 w-full bg-surface dark:bg-on-background border-b border-outline-variant dark:border-on-surface-variant z-50">
+<div class="flex items-center gap-md">
+<button class="hover:bg-surface-variant/50 transition-colors duration-200 active:scale-95 p-2 rounded-full">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md-mobile text-primary dark:text-primary-fixed-dim">DjidjiMarket</h1>
+</div>
+<div class="flex items-center">
+<button class="hover:bg-surface-variant/50 transition-colors duration-200 active:scale-95 p-2 rounded-full">
+<span class="material-symbols-outlined text-on-surface-variant dark:text-outline-variant">notifications</span>
+</button>
+</div>
+</header>
+<main class="max-w-md mx-auto min-h-screen pb-xxl px-container-margin">
+<!-- Progress Stepper -->
+<nav class="flex justify-between items-center py-lg px-xs">
+<div class="flex flex-col items-center gap-xs">
+<div class="w-8 h-8 rounded-full flex items-center justify-center bg-primary text-on-primary font-bold active-dot" id="step-indicator-1">1</div>
+<span class="text-label-sm font-label-sm text-primary">Infos</span>
+</div>
+<div class="h-[2px] flex-1 mx-xs bg-outline-variant"></div>
+<div class="flex flex-col items-center gap-xs">
+<div class="w-8 h-8 rounded-full flex items-center justify-center bg-surface-container-highest text-on-surface-variant font-bold" id="step-indicator-2">2</div>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Documents</span>
+</div>
+<div class="h-[2px] flex-1 mx-xs bg-outline-variant"></div>
+<div class="flex flex-col items-center gap-xs">
+<div class="w-8 h-8 rounded-full flex items-center justify-center bg-surface-container-highest text-on-surface-variant font-bold" id="step-indicator-3">3</div>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Statut</span>
+</div>
+</nav>
+<!-- SCREEN 1: Business Info Form -->
+<section class="step-transition" id="step-1">
+<div class="mb-lg">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-background mb-xs">Parlez-nous de vous</h2>
+<p class="text-body-md text-on-surface-variant">Configurez votre identité sur DjidjiMarket pour commencer à vendre.</p>
+</div>
+<form class="space-y-lg">
+<div class="space-y-xs">
+<label class="text-label-md font-label-md px-base">Nom de la boutique</label>
+<input class="w-full h-14 px-md rounded-[24px] border border-outline focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" placeholder="Ex: Boutique de Moussa" type="text"/>
+</div>
+<div class="space-y-xs">
+<label class="text-label-md font-label-md px-base">Type d'activité</label>
+<div class="grid grid-cols-3 gap-xs bg-surface-container-low p-base rounded-[24px]">
+<button class="segment-btn py-sm rounded-[20px] text-label-md font-label-md bg-primary text-on-primary transition-all duration-300" onclick="selectSegment(this)" type="button">Boutique</button>
+<button class="segment-btn py-sm rounded-[20px] text-label-md font-label-md text-on-surface-variant hover:bg-surface-variant/50 transition-all duration-300" onclick="selectSegment(this)" type="button">Nourriture</button>
+<button class="segment-btn py-sm rounded-[20px] text-label-md font-label-md text-on-surface-variant hover:bg-surface-variant/50 transition-all duration-300" onclick="selectSegment(this)" type="button">Restaurant</button>
+</div>
+</div>
+<div class="space-y-xs">
+<label class="text-label-md font-label-md px-base">Adresse de la boutique</label>
+<div class="relative group">
+<input class="w-full h-14 pl-md pr-12 rounded-[24px] border border-outline group-focus-within:border-primary focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" placeholder="Abidjan, Cocody Riviera 3" type="text"/>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-primary" type="button">
+<span class="material-symbols-outlined">location_on</span>
+</button>
+</div>
+</div>
+<!-- Map Picker Mockup -->
+<div class="w-full h-48 rounded-lg overflow-hidden border border-outline-variant relative">
+<div class="w-full h-full bg-surface-container" data-location="Abidjan" style="">
+<img class="w-full h-full object-cover opacity-80" data-alt="A clean, minimalist vector-style map of a neighborhood in Abidjan, Côte d'Ivoire, featuring soft green and pale yellow tones to match the DjidjiMarket brand. A single large, vibrant primary green pin is placed in the center of a crossroad. The style is flat and modern, with no shadows, emphasizing clarity and neighborhood warmth." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUv_NigfcOwhfpMUXixUgZaGju51no1mZ3GhZRDSVR5_G49SWwDN_eY7I2veuXTwGsugJKLAqm60r--hCUQ0-qXy_91uegck7RXTjelo3nA_XH00yfdj2SuJ2_CKsw4-X_3gJnziidQ8TzQ6kPpP8GGZD-OG31jxTRuOQCed4xnIcDELYL1bHeCMlVeeXEbsU3wGpr8r5l4XWftB4DyyqbFRyXjUoUOE5UKzv3NvVRwiGwLG8OfXQE"/>
+</div>
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center animate-pulse">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">location_on</span>
+</div>
+</div>
+</div>
+<button class="w-full h-14 bg-secondary text-on-secondary rounded-full font-label-md text-label-md uppercase tracking-wider hover:opacity-90 active:scale-95 transition-all mt-xl" onclick="nextStep(2)" type="button">
+                    Continuer
+                </button>
+</form>
+</section>
+<!-- SCREEN 2: Document Upload -->
+<section class="step-transition hidden-step" id="step-2">
+<div class="mb-lg">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-background mb-xs">Documents légaux</h2>
+<p class="text-body-md text-on-surface-variant">Nous devons vérifier votre entreprise pour assurer la confiance des clients.</p>
+</div>
+<div class="space-y-md">
+<!-- CNI Card -->
+<div class="p-lg rounded-lg border border-outline-variant bg-surface-container-lowest flex items-center justify-between">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed">
+<span class="material-symbols-outlined">badge</span>
+</div>
+<div>
+<p class="font-label-md text-on-background">Pièce d'identité (CNI)</p>
+<p class="text-label-sm text-on-surface-variant">Obligatoire</p>
+</div>
+</div>
+<button class="bg-secondary text-on-secondary px-md py-xs rounded-full text-label-sm font-semibold active:scale-95 transition-transform">
+                        Ajouter
+                    </button>
+</div>
+<!-- RCCM Card -->
+<div class="p-lg rounded-lg border border-outline-variant bg-surface-container-lowest flex items-center justify-between">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-full bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed">
+<span class="material-symbols-outlined">description</span>
+</div>
+<div>
+<p class="font-label-md text-on-background">RCCM / DFE</p>
+<p class="text-label-sm text-on-surface-variant">Optionnel</p>
+</div>
+</div>
+<button class="bg-secondary text-on-secondary px-md py-xs rounded-full text-label-sm font-semibold active:scale-95 transition-transform">
+                        Ajouter
+                    </button>
+</div>
+<!-- Info Card -->
+<div class="p-lg rounded-lg bg-primary-fixed/30 border border-primary-fixed-dim flex gap-md">
+<span class="material-symbols-outlined text-primary-container">info</span>
+<div>
+<p class="font-label-md text-primary-container">Pas de RCCM ?</p>
+<p class="text-body-md text-on-primary-fixed-variant mb-xs">DjidjiMarket vous aide dans vos démarches d'immatriculation au CEPICI.</p>
+<a class="text-primary font-bold text-label-md flex items-center gap-xs" href="#">
+                            En savoir plus <span class="material-symbols-outlined text-sm">open_in_new</span>
+</a>
+</div>
+</div>
+</div>
+<div class="flex gap-md mt-xl">
+<button class="flex-1 h-14 bg-surface-container-high text-on-surface-variant rounded-full font-label-md text-label-md active:scale-95 transition-all" onclick="nextStep(1)" type="button">
+                    Retour
+                </button>
+<button class="flex-[2] h-14 bg-secondary text-on-secondary rounded-full font-label-md text-label-md uppercase tracking-wider hover:opacity-90 active:scale-95 transition-all" onclick="nextStep(3)" type="button">
+                    Vérifier mon dossier
+                </button>
+</div>
+</section>
+<!-- SCREEN 3: Verification Status -->
+<section class="step-transition hidden-step" id="step-3">
+<div class="text-center mb-xl">
+<div class="w-20 h-20 bg-primary-fixed rounded-full flex items-center justify-center mx-auto mb-md">
+<span class="material-symbols-outlined text-primary text-4xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-background mb-xs">Dossier en cours</h2>
+<div class="inline-flex items-center px-md py-xs bg-primary/10 text-primary rounded-full gap-xs">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="text-label-sm font-bold">Statut : identité confirmée</span>
+</div>
+</div>
+<!-- Vertical Progress Tracker -->
+<div class="relative pl-8 space-y-xl before:content-[''] before:absolute before:left-[15px] before:top-2 before:bottom-2 before:w-[2px] before:bg-outline-variant">
+<!-- Status 1 -->
+<div class="relative">
+<div class="absolute -left-[25px] top-1 w-5 h-5 rounded-full bg-primary flex items-center justify-center z-10">
+<span class="material-symbols-outlined text-on-primary text-xs font-bold">check</span>
+</div>
+<div>
+<p class="font-headline-md text-on-background">Dossier reçu</p>
+<p class="text-body-md text-on-surface-variant">Votre profil de base a été validé par nos services.</p>
+<p class="text-label-sm text-outline font-medium mt-xs">Aujourd'hui, 09:42</p>
+</div>
+</div>
+<!-- Status 2 -->
+<div class="relative">
+<div class="absolute -left-[25px] top-1 w-5 h-5 rounded-full bg-secondary-container flex items-center justify-center z-10 ring-4 ring-background">
+<div class="w-2 h-2 rounded-full bg-on-secondary-container animate-pulse"></div>
+</div>
+<div>
+<p class="font-headline-md text-on-background">Déposé au CEPICI</p>
+<p class="text-body-md text-on-surface-variant">Nous avons transmis vos documents pour l'obtention du RCCM.</p>
+</div>
+</div>
+<!-- Status 3 -->
+<div class="relative">
+<div class="absolute -left-[25px] top-1 w-5 h-5 rounded-full bg-outline-variant flex items-center justify-center z-10 ring-4 ring-background"></div>
+<div>
+<p class="font-headline-md text-outline">RCCM obtenu</p>
+<p class="text-body-md text-outline">Le document final sera disponible en téléchargement ici.</p>
+</div>
+</div>
+</div>
+<button class="w-full h-14 bg-primary text-on-primary rounded-full font-label-md text-label-md uppercase tracking-wider hover:opacity-90 active:scale-95 transition-all mt-xl" type="button">
+                Accéder au Dashboard
+            </button>
+</section>
+</main>
+<!-- Bottom Nav Bar (Suppressed on transactional/onboarding flow per JSON guidance) -->
+<!-- Note: Following "Shell Visibility & Relevance (THE FILTER)" rules, 
+         the BottomNavBar is excluded because this is a Transactional/Onboarding screen. -->
+<script>
+        function selectSegment(btn) {
+            const container = btn.parentElement;
+            const buttons = container.querySelectorAll('.segment-btn');
+            
+            buttons.forEach(b => {
+                b.classList.remove('bg-primary', 'text-on-primary');
+                b.classList.add('text-on-surface-variant');
+            });
+            
+            btn.classList.remove('text-on-surface-variant');
+            btn.classList.add('bg-primary', 'text-on-primary');
+        }
+
+        function nextStep(stepNumber) {
+            // Hide all steps
+            const steps = [1, 2, 3];
+            steps.forEach(s => {
+                const stepEl = document.getElementById(`step-${s}`);
+                stepEl.classList.add('hidden-step');
+                stepEl.style.display = 'none';
+                
+                const indicator = document.getElementById(`step-indicator-${s}`);
+                indicator.classList.remove('bg-primary', 'text-on-primary', 'active-dot');
+                indicator.classList.add('bg-surface-container-highest', 'text-on-surface-variant');
+            });
+
+            // Show current step
+            const currentStep = document.getElementById(`step-${stepNumber}`);
+            currentStep.style.display = 'block';
+            setTimeout(() => {
+                currentStep.classList.remove('hidden-step');
+            }, 50);
+
+            // Update indicators up to current step
+            for(let i=1; i<=stepNumber; i++) {
+                const indicator = document.getElementById(`step-indicator-${i}`);
+                if(i === stepNumber) {
+                    indicator.classList.remove('bg-surface-container-highest', 'text-on-surface-variant');
+                    indicator.classList.add('bg-primary', 'text-on-primary', 'active-dot');
+                } else {
+                    indicator.classList.remove('bg-surface-container-highest', 'text-on-surface-variant');
+                    indicator.classList.add('bg-primary-container', 'text-on-primary-container');
+                    indicator.innerHTML = '<span class="material-symbols-outlined text-sm">check</span>';
+                }
+            }
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Initialize view
+        document.addEventListener('DOMContentLoaded', () => {
+            // Screen 1 is visible by default
+        });
+    </script>
+</body></html>

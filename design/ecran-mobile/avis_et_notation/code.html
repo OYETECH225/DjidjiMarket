@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>DjidjiMarket - Avis et Notation</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+        }
+        .star-active {
+            font-variation-settings: 'FILL' 1;
+            color: #fe8e48; /* secondary-container / Accent Orange logic from style guide */
+        }
+        .star-inactive {
+            color: #c1c9be; /* outline-variant */
+        }
+        /* Custom hide scrollbar */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#ffdbca",
+                        "on-tertiary-fixed": "#380919",
+                        "background": "#f9faf4",
+                        "surface-container-highest": "#e2e3dd",
+                        "surface": "#f9faf4",
+                        "on-background": "#191c19",
+                        "primary-fixed-dim": "#a0d3a2",
+                        "outline-variant": "#c1c9be",
+                        "on-surface-variant": "#414940",
+                        "inverse-primary": "#a0d3a2",
+                        "on-tertiary": "#ffffff",
+                        "surface-variant": "#e2e3dd",
+                        "tertiary": "#511d2c",
+                        "secondary-container": "#fe8e48",
+                        "on-surface": "#191c19",
+                        "on-primary": "#ffffff",
+                        "secondary": "#9b4500",
+                        "on-secondary-fixed": "#331200",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed": "#ffd9e0",
+                        "primary-container": "#204e29",
+                        "primary": "#053715",
+                        "outline": "#727970",
+                        "tertiary-fixed-dim": "#ffb1c2",
+                        "on-tertiary-fixed-variant": "#6e3544",
+                        "on-primary-fixed-variant": "#22502b",
+                        "tertiary-container": "#6c3342",
+                        "surface-bright": "#f9faf4",
+                        "inverse-on-surface": "#f0f1eb",
+                        "inverse-surface": "#2e312d",
+                        "surface-container-high": "#e7e9e3",
+                        "surface-dim": "#d9dbd5",
+                        "on-primary-container": "#8dbf8f",
+                        "surface-container-lowest": "#ffffff",
+                        "error": "#ba1a1a",
+                        "surface-container": "#edeee8",
+                        "primary-fixed": "#bbf0bd",
+                        "secondary-fixed-dim": "#ffb68e",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed": "#002108",
+                        "surface-container-low": "#f3f4ee",
+                        "on-tertiary-container": "#ea9eae",
+                        "on-secondary-container": "#6b2d00",
+                        "on-secondary-fixed-variant": "#763300",
+                        "surface-tint": "#3a6841",
+                        "on-secondary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xxl": "48px",
+                        "lg": "24px",
+                        "gutter": "12px",
+                        "base": "4px",
+                        "xs": "8px",
+                        "md": "16px",
+                        "sm": "12px",
+                        "xl": "32px",
+                        "container-margin": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "display": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "label-sm": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "display": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-on-background w-full top-0 sticky z-50 border-b border-outline-variant dark:border-on-surface-variant flex justify-between items-center px-container-margin h-16 w-full">
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined text-primary dark:text-primary-fixed-dim transition-colors duration-200 active:scale-95 hover:bg-surface-variant/50 dark:hover:bg-on-surface-variant/20 p-2 rounded-full">arrow_back</button>
+<h1 class="font-headline-md text-headline-md-mobile md:text-headline-md text-primary dark:text-primary-fixed-dim">DjidjiMarket</h1>
+</div>
+<button class="material-symbols-outlined text-primary dark:text-primary-fixed-dim transition-colors duration-200 active:scale-95 hover:bg-surface-variant/50 dark:hover:bg-on-surface-variant/20 p-2 rounded-full">notifications</button>
+</header>
+<main class="max-w-md mx-auto px-container-margin py-xl">
+<!-- Welcome Section -->
+<div class="mb-xl text-center">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-background mb-sm">Comment était votre commande?</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Votre avis aide la communauté et nos vendeurs de proximité.</p>
+</div>
+<!-- Vendor Profile Card -->
+<div class="bg-surface border border-outline-variant rounded-lg p-md mb-xl flex items-center gap-md">
+<div class="w-16 h-16 rounded-full overflow-hidden border border-outline-variant flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A professional studio portrait of a friendly West African merchant, smiling warmly. She is wearing a vibrant, traditional patterned kente cloth headwrap. The lighting is soft and natural, emphasizing a trustworthy and local vendor vibe for a modern marketplace. The background is a clean, neutral cream color that matches the app's light mode aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzPFfDpP3IItz0IZhaZcgntW4Msvf1LT3enJj4Y4tA9Wv64U0sBdbk3LZjISEVOGmixF5Sob3QC05jh6WphV1WLGTBOl9OAxu7WVVF4KuUZ3oJYD51MtiitwJ4NFaTnkPVxskRtUlHNhFE-AN9yi0OhUAdIuJdxH6jNkjByhLT8BJfJywWdzw639dn__GknMNLTVwoBl9YDlXu7wK14YzxwfpeW0jJP5KvnL6LnA3APSco4mfZTAKN"/>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-wider mb-base">Commerçant Vérifié</p>
+<h3 class="font-headline-md text-headline-md text-on-background">Le Palais de l'Attiéké</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Vente de produits frais • Abidjan</p>
+</div>
+</div>
+<!-- Rating Section: Main -->
+<section class="mb-xl text-center">
+<p class="font-label-md text-label-md text-on-surface mb-md">Notez le vendeur</p>
+<div class="flex justify-center gap-xs" id="main-stars">
+<button class="material-symbols-outlined text-4xl star-inactive transition-all duration-200 active:scale-90" onclick="setRating('main', 1)">star</button>
+<button class="material-symbols-outlined text-4xl star-inactive transition-all duration-200 active:scale-90" onclick="setRating('main', 2)">star</button>
+<button class="material-symbols-outlined text-4xl star-inactive transition-all duration-200 active:scale-90" onclick="setRating('main', 3)">star</button>
+<button class="material-symbols-outlined text-4xl star-inactive transition-all duration-200 active:scale-90" onclick="setRating('main', 4)">star</button>
+<button class="material-symbols-outlined text-4xl star-inactive transition-all duration-200 active:scale-90" onclick="setRating('main', 5)">star</button>
+</div>
+</section>
+<!-- Rating Section: Delivery -->
+<section class="mb-xl bg-surface-container-low border border-outline-variant p-md rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-on-surface-variant">delivery_dining</span>
+<span class="font-body-md text-body-md text-on-surface">Livraison</span>
+</div>
+<div class="flex gap-1" id="delivery-stars">
+<button class="material-symbols-outlined text-2xl star-inactive transition-all duration-200 active:scale-90" onclick="setRating('delivery', 1)">star</button>
+<button class="material-symbols-outlined text-2xl star-inactive transition-all duration-200 active:scale-90" onclick="setRating('delivery', 2)">star</button>
+<button class="material-symbols-outlined text-2xl star-inactive transition-all duration-200 active:scale-90" onclick="setRating('delivery', 3)">star</button>
+<button class="material-symbols-outlined text-2xl star-inactive transition-all duration-200 active:scale-90" onclick="setRating('delivery', 4)">star</button>
+<button class="material-symbols-outlined text-2xl star-inactive transition-all duration-200 active:scale-90" onclick="setRating('delivery', 5)">star</button>
+</div>
+</section>
+<!-- Comment Section -->
+<div class="mb-xl">
+<label class="block font-label-md text-label-md text-on-surface mb-xs" for="comment">Laisser un commentaire (optionnel)</label>
+<textarea class="w-full bg-surface border border-outline-variant rounded-lg p-md font-body-md focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-200 resize-none" id="comment" placeholder="Dites-nous ce que vous avez aimé..." rows="4"></textarea>
+</div>
+<!-- Quick Tags -->
+<div class="mb-xxl">
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-sm">Tags populaires</p>
+<div class="flex flex-wrap gap-xs">
+<button class="bg-surface-variant/30 text-on-surface-variant border border-outline-variant px-md py-xs rounded-full font-label-sm transition-all duration-200 active:scale-95" onclick="this.classList.toggle('bg-primary'); this.classList.toggle('text-white')">Qualité exceptionnelle</button>
+<button class="bg-surface-variant/30 text-on-surface-variant border border-outline-variant px-md py-xs rounded-full font-label-sm transition-all duration-200 active:scale-95" onclick="this.classList.toggle('bg-primary'); this.classList.toggle('text-white')">Rapide</button>
+<button class="bg-surface-variant/30 text-on-surface-variant border border-outline-variant px-md py-xs rounded-full font-label-sm transition-all duration-200 active:scale-95" onclick="this.classList.toggle('bg-primary'); this.classList.toggle('text-white')">Bien emballé</button>
+</div>
+</div>
+<!-- Submit Button -->
+<button class="w-full bg-primary-container text-white py-md rounded-full font-headline-md transition-all duration-200 active:scale-[0.98] hover:bg-primary-container/90 flex items-center justify-center gap-sm">
+<span>Envoyer mon avis</span>
+<span class="material-symbols-outlined">send</span>
+</button>
+</main>
+<!-- BottomNavBar (Suppressed if this was transactional, but kept as it sits within primary app ecosystem for profile/history context) -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 px-2 pb-safe bg-surface border-t border-outline-variant z-50">
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 transition-transform duration-200 active:scale-90">
+<span class="material-symbols-outlined">storefront</span>
+<span class="font-label-md text-label-md">Boutique</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 transition-transform duration-200 active:scale-90">
+<span class="material-symbols-outlined">favorite</span>
+<span class="font-label-md text-label-md">Favoris</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 transition-transform duration-200 active:scale-90">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="font-label-md text-label-md">Panier</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 transition-transform duration-200 active:scale-90">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="font-label-md text-label-md">DjidjiPay</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 transition-transform duration-200 active:scale-90">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-label-md text-label-md">Profil</span>
+</div>
+</nav>
+<script>
+        function setRating(type, value) {
+            const containerId = type === 'main' ? 'main-stars' : 'delivery-stars';
+            const container = document.getElementById(containerId);
+            const stars = container.getElementsByTagName('button');
+            
+            for (let i = 0; i < stars.length; i++) {
+                if (i < value) {
+                    stars[i].classList.remove('star-inactive');
+                    stars[i].classList.add('star-active');
+                    stars[i].style.fontVariationSettings = "'FILL' 1";
+                } else {
+                    stars[i].classList.add('star-inactive');
+                    stars[i].classList.remove('star-active');
+                    stars[i].style.fontVariationSettings = "'FILL' 0";
+                }
+            }
+            
+            // Haptic feedback simulation
+            if (window.navigator.vibrate) {
+                window.navigator.vibrate(20);
+            }
+        }
+
+        // Handle placeholder interaction for buttons
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.classList.add('scale-95');
+                setTimeout(() => btn.classList.remove('scale-95'), 100);
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DjidjiMarket - Services Partenaires</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#ffdbca",
+                        "on-tertiary-fixed": "#380919",
+                        "background": "#f9faf4",
+                        "surface-container-highest": "#e2e3dd",
+                        "surface": "#f9faf4",
+                        "on-background": "#191c19",
+                        "primary-fixed-dim": "#a0d3a2",
+                        "outline-variant": "#c1c9be",
+                        "on-surface-variant": "#414940",
+                        "inverse-primary": "#a0d3a2",
+                        "on-tertiary": "#ffffff",
+                        "surface-variant": "#e2e3dd",
+                        "tertiary": "#511d2c",
+                        "secondary-container": "#fe8e48",
+                        "on-surface": "#191c19",
+                        "on-primary": "#ffffff",
+                        "secondary": "#9b4500",
+                        "on-secondary-fixed": "#331200",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed": "#ffd9e0",
+                        "primary-container": "#204e29",
+                        "primary": "#053715",
+                        "outline": "#727970",
+                        "tertiary-fixed-dim": "#ffb1c2",
+                        "on-tertiary-fixed-variant": "#6e3544",
+                        "on-primary-fixed-variant": "#22502b",
+                        "tertiary-container": "#6c3342",
+                        "surface-bright": "#f9faf4",
+                        "inverse-on-surface": "#f0f1eb",
+                        "inverse-surface": "#2e312d",
+                        "surface-container-high": "#e7e9e3",
+                        "surface-dim": "#d9dbd5",
+                        "on-primary-container": "#8dbf8f",
+                        "surface-container-lowest": "#ffffff",
+                        "error": "#ba1a1a",
+                        "surface-container": "#edeee8",
+                        "primary-fixed": "#bbf0bd",
+                        "secondary-fixed-dim": "#ffb68e",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed": "#002108",
+                        "surface-container-low": "#f3f4ee",
+                        "on-tertiary-container": "#ea9eae",
+                        "on-secondary-container": "#6b2d00",
+                        "on-secondary-fixed-variant": "#763300",
+                        "surface-tint": "#3a6841",
+                        "on-secondary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xxl": "48px",
+                        "lg": "24px",
+                        "gutter": "12px",
+                        "base": "4px",
+                        "xs": "8px",
+                        "md": "16px",
+                        "sm": "12px",
+                        "xl": "32px",
+                        "container-margin": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "display": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "label-sm": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "display": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #c1c9be;
+            border-radius: 10px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen pb-32">
+<!-- TopAppBar Section -->
+<header class="w-full top-0 sticky z-50 bg-surface dark:bg-on-background border-b border-outline-variant dark:border-on-surface-variant flex justify-between items-center px-container-margin h-16">
+<div class="flex items-center gap-md">
+<button class="transition-colors duration-200 active:scale-95 hover:bg-surface-variant/50 p-2 rounded-full text-primary">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="font-display text-display text-primary dark:text-primary-fixed-dim leading-none" style="font-size: 24px;">DjidjiMarket</h1>
+</div>
+<div class="flex items-center gap-xs">
+<button class="transition-colors duration-200 active:scale-95 hover:bg-surface-variant/50 p-2 rounded-full text-on-surface-variant">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</header>
+<main class="max-w-5xl mx-auto px-container-margin pt-lg">
+<!-- Header Text -->
+<section class="mb-xl">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-xs">Services Partenaires</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">Propulsez votre activité avec nos solutions financières et logistiques adaptées aux entrepreneurs ivoiriens.</p>
+</section>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-lg">
+<!-- Partner Cards Section (Bento Style) -->
+<div class="lg:col-span-5 flex flex-col gap-md">
+<h3 class="font-headline-md text-headline-md text-on-surface-variant mb-base">Offres Disponibles</h3>
+<!-- Micro-crédit Card -->
+<div class="group relative bg-surface-container-low border border-outline-variant rounded-lg p-md overflow-hidden transition-all duration-300 hover:border-primary">
+<div class="flex items-start justify-between mb-md">
+<div class="bg-primary-fixed text-on-primary-fixed p-3 rounded-full">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">payments</span>
+</div>
+<span class="bg-primary/10 text-primary font-label-md text-label-md px-sm py-1 rounded-full">Partenaire Élite</span>
+</div>
+<h4 class="font-headline-md text-headline-md text-on-surface mb-xs">Micro-crédit boutique</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mb-lg">Besoin de stock ? Obtenez jusqu'à 5.000.000 FCFA avec un remboursement flexible.</p>
+<a class="inline-flex items-center gap-xs text-primary font-label-md text-label-md hover:underline" href="#">
+                        Découvrir
+                        <span class="material-symbols-outlined text-[18px]">open_in_new</span>
+</a>
+<!-- Decorative background element -->
+<div class="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-opacity">
+<span class="material-symbols-outlined text-[120px]">account_balance</span>
+</div>
+</div>
+<!-- Logistics Card -->
+<div class="group bg-surface-container-low border border-outline-variant rounded-lg p-md transition-all duration-300 hover:border-secondary">
+<div class="flex items-start justify-between mb-md">
+<div class="bg-secondary-fixed text-on-secondary-fixed p-3 rounded-full">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">local_shipping</span>
+</div>
+</div>
+<h4 class="font-headline-md text-headline-md text-on-surface mb-xs">Logistique Djidji</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mb-lg">Optimisez vos livraisons partout à Abidjan et en province.</p>
+<a class="inline-flex items-center gap-xs text-secondary font-label-md text-label-md hover:underline" href="#">
+                        Consulter
+                        <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</a>
+</div>
+</div>
+<!-- Lead Form Section -->
+<div class="lg:col-span-7">
+<div class="bg-white border border-outline-variant rounded-lg p-lg">
+<div class="mb-xl">
+<h3 class="font-headline-md text-headline-md text-primary mb-xs">Formulaire de demande</h3>
+<div class="h-1 w-16 bg-secondary-container rounded-full"></div>
+</div>
+<form class="space-y-lg" id="partnerForm">
+<!-- Offer Title -->
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant px-1">Offre sélectionnée</label>
+<div class="bg-surface-container-highest px-md py-sm rounded-[24px] border border-outline-variant flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">verified</span>
+<span class="font-body-md text-body-md text-on-surface font-semibold">Micro-crédit boutique</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<!-- Read-only Field 1 -->
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant px-1">Chiffre d'affaires (Mensuel)</label>
+<div class="bg-surface-container-low px-md py-sm rounded-[24px] border border-outline-variant/50 text-outline flex items-center gap-sm cursor-not-allowed">
+<span class="material-symbols-outlined text-[20px]">trending_up</span>
+<span class="font-body-md text-body-md">Calculé automatiquement</span>
+</div>
+</div>
+<!-- Read-only Field 2 -->
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant px-1">Ancienneté</label>
+<div class="bg-surface-container-low px-md py-sm rounded-[24px] border border-outline-variant/50 text-outline flex items-center gap-sm cursor-not-allowed">
+<span class="material-symbols-outlined text-[20px]">calendar_today</span>
+<span class="font-body-md text-body-md">1 an et 4 mois</span>
+</div>
+</div>
+</div>
+<!-- Empty Field -->
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant px-1" for="phone">Numéro de téléphone à contacter</label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-md flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-on-surface-variant">call</span>
+</div>
+<input class="w-full pl-xl pr-md py-sm bg-white border border-outline-variant rounded-[24px] focus:ring-2 focus:ring-primary/20 focus:border-primary font-body-md text-body-md outline-none transition-all" id="phone" placeholder="07 00 00 00 00" type="tel"/>
+</div>
+</div>
+<!-- Checkbox -->
+<label class="flex items-start gap-sm cursor-pointer group">
+<div class="mt-1">
+<input class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary transition-colors" type="checkbox"/>
+</div>
+<span class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                                J'accepte que mes données de vente soient partagées avec le partenaire financier pour l'étude de mon dossier.
+                            </span>
+</label>
+<!-- Submit Button -->
+<div class="pt-md">
+<button class="w-full bg-[#D56E2B] text-white py-sm rounded-full font-label-md text-label-md tracking-wide shadow-lg shadow-secondary/20 hover:brightness-110 active:scale-[0.98] transition-all flex justify-center items-center gap-sm" type="submit">
+<span>Envoyer ma demande</span>
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+<!-- Footer Visual -->
+<section class="mt-xxl mb-xl rounded-lg overflow-hidden relative h-48 md:h-64">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="A cinematic, wide shot of a bustling local market street in Abidjan, Côte d'Ivoire during the golden hour. The scene is filled with colorful stalls, vibrant West African fabrics, and friendly entrepreneurs engaging in trade. The lighting is warm and inviting, highlighting the community spirit and economic vitality of the neighborhood market. The image is clean and high-definition." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBCD7KtvsYF6wKRNNO5EUE2nKsTRcJXRMNrOoZd0PiemMlzyQoJLNppLDHXcrmSF7xZWDYvV7ZoLBDHpMlTJ61CLLcObli0KBGR2VkQfOd8EEpTU0U-VrlJ3wHT4tscADrdsKLPVE17dDPm2J1RAXg1cbHRWkyFMTPsKlx_kDs9qx6Oe-pfsE53UyZtlpSYCcq3l_GzaZf4mxGy1Ba52f7qkrrTuQRvkBHH6HrscL9VLtuRJ2xpmgZJ')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex items-end p-lg">
+<div class="text-white">
+<p class="font-headline-md text-headline-md mb-xs">Partenariat de Confiance</p>
+<p class="font-body-md text-body-md opacity-90">Plus de 1,200 boutiques nous font confiance chaque jour.</p>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar Section -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 px-2 pb-safe bg-surface dark:bg-on-background border-t border-outline-variant dark:border-on-surface-variant z-50">
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 transition-transform duration-200 active:scale-90 hover:text-primary">
+<span class="material-symbols-outlined">storefront</span>
+<span class="font-label-md text-label-md">Boutique</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 transition-transform duration-200 active:scale-90 hover:text-primary">
+<span class="material-symbols-outlined">favorite</span>
+<span class="font-label-md text-label-md">Favoris</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 transition-transform duration-200 active:scale-90 hover:text-primary">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="font-label-md text-label-md">Panier</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 transition-transform duration-200 active:scale-90 hover:text-primary">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="font-label-md text-label-md">DjidjiPay</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 transition-transform duration-200 active:scale-90">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-label-md text-label-md">Profil</span>
+</button>
+</nav>
+<script>
+        // Simple form interaction logic
+        document.getElementById('partnerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = this.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            
+            // Animation de chargement fictive
+            btn.innerHTML = '<span class="material-symbols-outlined animate-spin">sync</span> Envoi en cours...';
+            btn.disabled = true;
+            btn.classList.add('opacity-80');
+
+            setTimeout(() => {
+                btn.innerHTML = '<span class="material-symbols-outlined">check_circle</span> Demande envoyée !';
+                btn.classList.remove('bg-[#D56E2B]');
+                btn.classList.add('bg-primary');
+                
+                // Show success feedback
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.classList.remove('bg-primary');
+                    btn.classList.add('bg-[#D56E2B]');
+                    btn.disabled = false;
+                    btn.classList.remove('opacity-80');
+                    alert('Votre demande de Micro-crédit a été soumise avec succès. Un conseiller vous contactera sous 24h.');
+                }, 2000);
+            }, 1500);
+        });
+
+        // Hover animation for partner cards
+        const cards = document.querySelectorAll('.group');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-4px)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body></html>

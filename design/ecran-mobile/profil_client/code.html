@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DjidjiMarket - Profil Client</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed": "#ffdbca",
+                    "on-tertiary-fixed": "#380919",
+                    "background": "#f9faf4",
+                    "surface-container-highest": "#e2e3dd",
+                    "surface": "#f9faf4",
+                    "on-background": "#191c19",
+                    "primary-fixed-dim": "#a0d3a2",
+                    "outline-variant": "#c1c9be",
+                    "on-surface-variant": "#414940",
+                    "inverse-primary": "#a0d3a2",
+                    "on-tertiary": "#ffffff",
+                    "surface-variant": "#e2e3dd",
+                    "tertiary": "#511d2c",
+                    "secondary-container": "#fe8e48",
+                    "on-surface": "#191c19",
+                    "on-primary": "#ffffff",
+                    "secondary": "#9b4500",
+                    "on-secondary-fixed": "#331200",
+                    "on-error": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "tertiary-fixed": "#ffd9e0",
+                    "primary-container": "#204e29",
+                    "primary": "#053715",
+                    "outline": "#727970",
+                    "tertiary-fixed-dim": "#ffb1c2",
+                    "on-tertiary-fixed-variant": "#6e3544",
+                    "on-primary-fixed-variant": "#22502b",
+                    "tertiary-container": "#6c3342",
+                    "surface-bright": "#f9faf4",
+                    "inverse-on-surface": "#f0f1eb",
+                    "inverse-surface": "#2e312d",
+                    "surface-container-high": "#e7e9e3",
+                    "surface-dim": "#d9dbd5",
+                    "on-primary-container": "#8dbf8f",
+                    "surface-container-lowest": "#ffffff",
+                    "error": "#ba1a1a",
+                    "surface-container": "#edeee8",
+                    "primary-fixed": "#bbf0bd",
+                    "secondary-fixed-dim": "#ffb68e",
+                    "error-container": "#ffdad6",
+                    "on-primary-fixed": "#002108",
+                    "surface-container-low": "#f3f4ee",
+                    "on-tertiary-container": "#ea9eae",
+                    "on-secondary-container": "#6b2d00",
+                    "on-secondary-fixed-variant": "#763300",
+                    "surface-tint": "#3a6841",
+                    "on-secondary": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xxl": "48px",
+                    "lg": "24px",
+                    "gutter": "12px",
+                    "base": "4px",
+                    "xs": "8px",
+                    "md": "16px",
+                    "sm": "12px",
+                    "xl": "32px",
+                    "container-margin": "16px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "display": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "label-sm": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "label-md": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "display": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky z-40 bg-surface border-b border-outline-variant flex justify-between items-center px-container-margin h-16">
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined p-xs hover:bg-surface-variant/50 rounded-full transition-colors active:scale-95 text-primary">arrow_back</button>
+<h1 class="font-display text-headline-md text-primary">DjidjiMarket</h1>
+</div>
+<button class="material-symbols-outlined p-xs hover:bg-surface-variant/50 rounded-full transition-colors active:scale-95 text-on-surface-variant">notifications</button>
+</header>
+<!-- Content Canvas -->
+<main class="max-w-3xl mx-auto px-container-margin pb-32 pt-lg">
+<!-- Header Section: Profile Identity -->
+<section class="flex flex-col items-center mb-xl">
+<div class="relative mb-md">
+<div class="w-24 h-24 rounded-full border border-outline-variant overflow-hidden bg-surface-container-low">
+<img class="w-full h-full object-cover" data-alt="A professional studio portrait of a confident West African man with a friendly smile, Moussa Traoré. He is dressed in a clean, minimalist ivory-colored shirt. The background is a soft, blurred lime-green gradient that reflects the DjidjiMarket brand colors. High-key lighting highlights his warm features, conveying reliability and trustworthiness in a modern digital marketplace context." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAYUu9HHKpV8q8XcWtsRxXNWBzMVZ0pUF4fkXR5Vnl4oj3zZAbXQDQ3Yq1gL6GrwmBf0sCsecPQIf92owXm2fVotxGfnajG4c3nRSiuZgqA--JCmAlECQpaeRytbPydIENt2lcxy3S0LnbydrZUEHERYIIqj0encNDb8sEgfhy7rL7sDs8uI8BvJs7oRyLPdraO_jkpPuY52Skxx9pxgacQ52CUwyc-Ha2CgYZmmbBP5-o74NTXXs8"/>
+</div>
+<button class="absolute bottom-0 right-0 bg-primary text-on-primary p-xs rounded-full border-2 border-surface active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Moussa Traoré</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-xs">+225 07 08 09 10 11</p>
+</section>
+<!-- Bento Grid / Asymmetric Navigation Rows -->
+<nav class="space-y-sm">
+<!-- Seller Conversion Card (Highlighted Orange) -->
+<button class="w-full bg-secondary-container text-on-secondary-container p-lg rounded-lg flex items-center justify-between transition-transform active:scale-[0.98] text-left">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-on-secondary-container">storefront</span>
+<div>
+<span class="font-label-md text-label-md block">Devenir vendeur sur DjidjiMarket</span>
+<span class="font-label-sm text-label-sm opacity-80">Ouvrez votre boutique dès aujourd'hui</span>
+</div>
+</div>
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+<!-- Standard Rows with Tonal Layering -->
+<div class="bg-surface-container-low border border-outline-variant rounded-lg overflow-hidden mt-md">
+<!-- Row Item -->
+<button class="w-full flex items-center justify-between px-lg py-md hover:bg-surface-variant/50 transition-colors border-b border-outline-variant last:border-b-0 group">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">location_on</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Mes adresses</span>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</button>
+<!-- Row Item -->
+<button class="w-full flex items-center justify-between px-lg py-md hover:bg-surface-variant/50 transition-colors border-b border-outline-variant last:border-b-0 group">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">payments</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Moyens de paiement</span>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</button>
+<!-- Row Item -->
+<button class="w-full flex items-center justify-between px-lg py-md hover:bg-surface-variant/50 transition-colors border-b border-outline-variant last:border-b-0 group">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">receipt_long</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Mes commandes</span>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</button>
+<!-- Row Item -->
+<button class="w-full flex items-center justify-between px-lg py-md hover:bg-surface-variant/50 transition-colors border-b border-outline-variant last:border-b-0 group">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">notifications_active</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Notifications</span>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</button>
+<!-- Row Item -->
+<button class="w-full flex items-center justify-between px-lg py-md hover:bg-surface-variant/50 transition-colors border-b border-outline-variant last:border-b-0 group">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">help</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Aide</span>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</button>
+</div>
+<!-- Logout Link -->
+<div class="mt-xl flex justify-center">
+<button class="flex items-center gap-xs px-lg py-sm text-error font-label-md text-label-md hover:bg-error-container/20 rounded-full transition-colors active:scale-95">
+<span class="material-symbols-outlined">logout</span>
+                    Se déconnecter
+                </button>
+</div>
+</nav>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 px-2 pb-safe bg-surface border-t border-outline-variant z-50">
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary transition-transform duration-200 active:scale-90">
+<span class="material-symbols-outlined">storefront</span>
+<span class="font-label-md text-label-md mt-1">Boutique</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary transition-transform duration-200 active:scale-90">
+<span class="material-symbols-outlined">favorite</span>
+<span class="font-label-md text-label-md mt-1">Favoris</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary transition-transform duration-200 active:scale-90">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="font-label-md text-label-md mt-1">Panier</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-primary transition-transform duration-200 active:scale-90">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="font-label-md text-label-md mt-1">DjidjiPay</span>
+</button>
+<!-- ACTIVE ITEM -->
+<button class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 transition-transform duration-200 active:scale-90">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-label-md text-label-md mt-1">Profil</span>
+</button>
+</nav>
+<!-- Micro-interaction script -->
+<script>
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                // Ripple effect could be added here
+                console.log('Action triggered:', this.innerText.trim());
+            });
+        });
+
+        // Theme check (if system is dark, we follow light as requested by instructions)
+        document.documentElement.classList.add('light');
+    </script>
+</body></html>

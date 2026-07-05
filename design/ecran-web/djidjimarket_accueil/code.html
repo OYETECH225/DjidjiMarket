@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DjidjiMarket | Le vrai marché, en toute confiance</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed-variant": "#763300",
+                    "surface-tint": "#3a6841",
+                    "on-tertiary-container": "#ea9eae",
+                    "tertiary": "#511d2c",
+                    "surface-container": "#edeee8",
+                    "on-secondary-container": "#6b2d00",
+                    "on-primary-fixed": "#002108",
+                    "primary-fixed-dim": "#a0d3a2",
+                    "surface-container-highest": "#e2e3dd",
+                    "surface-container-high": "#e7e9e3",
+                    "surface-variant": "#e2e3dd",
+                    "surface-container-low": "#f3f4ee",
+                    "on-background": "#191c19",
+                    "tertiary-container": "#6c3342",
+                    "outline": "#727970",
+                    "tertiary-fixed-dim": "#ffb1c2",
+                    "on-error": "#ffffff",
+                    "on-secondary-fixed": "#331200",
+                    "error": "#ba1a1a",
+                    "secondary-fixed": "#ffdbca",
+                    "outline-variant": "#c1c9be",
+                    "surface-bright": "#f9faf4",
+                    "primary-fixed": "#bbf0bd",
+                    "on-primary": "#ffffff",
+                    "primary": "#053715",
+                    "on-tertiary-fixed-variant": "#6e3544",
+                    "error-container": "#ffdad6",
+                    "tertiary-fixed": "#ffd9e0",
+                    "background": "#f9faf4",
+                    "on-surface-variant": "#414940",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-container": "#8dbf8f",
+                    "inverse-on-surface": "#f0f1eb",
+                    "inverse-surface": "#2e312d",
+                    "on-secondary": "#ffffff",
+                    "primary-container": "#204e29",
+                    "inverse-primary": "#a0d3a2",
+                    "on-primary-fixed-variant": "#22502b",
+                    "surface": "#f9faf4",
+                    "on-tertiary-fixed": "#380919",
+                    "on-error-container": "#93000a",
+                    "secondary": "#9b4500",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed-dim": "#ffb68e",
+                    "surface-dim": "#d9dbd5",
+                    "on-surface": "#191c19",
+                    "secondary-container": "#fe8e48"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px",
+                    "card": "24px"
+            },
+            "spacing": {
+                    "margin-desktop": "32px",
+                    "margin-mobile": "16px",
+                    "xs": "8px",
+                    "base": "4px",
+                    "sm": "16px",
+                    "lg": "40px",
+                    "gutter": "24px",
+                    "xl": "64px",
+                    "md": "24px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "headline-sm": ["Plus Jakarta Sans"],
+                    "label-md": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f9faf4;
+        }
+        .clean-card {
+            background-color: #ffffff;
+            border: 1px solid #E5E7EB;
+            border-radius: 24px;
+            transition: border-color 0.2s ease;
+        }
+    </style>
+</head>
+<body class="text-on-background">
+<!-- TopNavBar (Shared Component) -->
+<header class="w-full top-0 sticky z-50 bg-surface border-b border-outline-variant">
+<div class="flex justify-between items-center px-margin-desktop py-base max-w-[1280px] mx-auto">
+<div class="flex items-center gap-md">
+<span class="font-headline-md text-headline-md text-primary">DjidjiMarket</span>
+<nav class="hidden md:flex gap-sm">
+<a class="font-body-md text-body-md text-primary font-bold border-b-2 border-primary pb-1" href="#">Boutiques</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Nourriture</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Restaurants</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Comment ça marche</a>
+</nav>
+</div>
+<div class="flex items-center gap-sm">
+<div class="hidden md:flex items-center gap-xs text-on-surface-variant px-sm py-base rounded-full bg-surface-container-low border border-outline-variant">
+<span class="material-symbols-outlined">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-label-md w-32" placeholder="Rechercher..." type="text"/>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer active:scale-95">location_on</span>
+<button class="font-body-md text-body-md text-on-surface-variant px-sm py-base hover:text-primary">Connexion</button>
+<button class="font-body-md text-body-md bg-primary text-on-primary px-sm py-base rounded-full hover:opacity-90 active:scale-95 transition-all">S'inscrire</button>
+</div>
+</div>
+</header>
+<main class="max-w-[1280px] mx-auto px-margin-mobile md:px-margin-desktop space-y-xl mt-md">
+<!-- Hero Section -->
+<section class="bg-primary-container text-on-primary rounded-[24px] overflow-hidden relative min-h-[500px] flex items-center">
+<div class="grid md:grid-cols-2 gap-md p-md md:p-xl items-center w-full z-10">
+<div class="space-y-md">
+<h1 class="font-headline-lg text-headline-lg md:text-display-lg leading-tight">Le vrai marché, en toute confiance</h1>
+<p class="font-body-lg text-body-lg text-on-primary-container max-w-md">Commandez vos produits locaux préférés. Livraison sécurisée et vendeurs 100% vérifiés en Côte d'Ivoire.</p>
+<div class="flex flex-wrap gap-sm">
+<button class="bg-secondary-container text-on-secondary-container font-label-md text-label-md px-xl py-md rounded-full hover:opacity-90 active:scale-95 transition-all">Découvrir les boutiques</button>
+<button class="border border-on-primary text-on-primary font-label-md text-label-md px-xl py-md rounded-full hover:bg-white/10 active:scale-95 transition-all">Comment ça marche</button>
+</div>
+</div>
+<div class="hidden md:grid grid-cols-2 gap-sm">
+<div class="space-y-sm">
+<div class="h-48 rounded-[24px] bg-cover bg-center border border-white/20" data-alt="A vibrant close-up shot of fresh colorful Ivorian peppers and market vegetables in a high-quality food photography style. The lighting is warm and natural, emphasizing textures and vibrant greens and reds. This professional culinary image fits a modern, clean light-mode UI design for a West African market." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBdgiVA4yIU1GpOc490qgBfvQJqpJX75Nt5-bKtl-1TSxOduyophBFpKo7ydSYyqHJr4UiGiG79ejgx2CbflacFxlumnqit3cNELM5FLTrncWejyqDUCtFjoWJQXJboFM9VhUeduQR_quiixhMaMDSlGQwZK8cC1vywiGVqbqm-Ylog2FuHvo7pySpL73FuLYP1tPa9viNraQ68aG39i7oecdpZpqTUBKRK3PqffGtf84Mv5In9cMeJKA')"></div>
+<div class="h-64 rounded-[24px] bg-cover bg-center border border-white/20" data-alt="An artisanal presentation of Ivorian cocoa beans and chocolate bars on a clean wooden surface. The visual style is premium and minimalist with soft shadows and high contrast, highlighting the rich brown tones of the cocoa. This captures the essence of high-quality local produce for a professional digital storefront." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB_Kcu1Zx2ywc5L_5xWY856PgW5cRDQTNJUnP03229T90zzMwwyIfs10l1nYyLU_sIltj61n3h93R97bBFi3yIFH9yTBWNqRCYzmAsPIusBVY95qjqztlSIe_SMtLvRH5002-LzK04gg8tAUuUuc749dO5P3LUyFuVZnRGA8btC8XYR2K2fZVsKdixJLVJZLm2EvV8jCgM4Y-Oxjwv2jx74BnUijI9OTWy5z1pq_FpKc74YqFgO7xzYCw')"></div>
+</div>
+<div class="space-y-sm pt-md">
+<div class="h-64 rounded-[24px] bg-cover bg-center border border-white/20" data-alt="A beautiful spread of traditional Ivorian dishes like Garba or Attiéké with grilled fish, presented in a modern ceramic bowl. The lighting is bright and airy, typical of a high-end food magazine, with vibrant orange and gold accents. This professional food photography elevates traditional cuisine for a digital marketplace." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDmfvqr3NFaaN-scfs9myr2eR05gmf_4903b4lxhRo5B4wEcdlh8U_hqBD8-pVqPxWBJwAxhUBFrN9PlRVTQ--XlSps-FgF-oRBwaYoYk1dwSbG96ngN0DCVGe5difSY13bK0LbSWUJuT4u-st9zVExzwpoIeZGbmuATb8V3AXreSLlbei-mcI8JhcFtmNTtIZ1Z91GVNBzb_q3pI22pbhBC24hrbzW2hKYsGcBtfoLcAsLGAWiJguUyQ')"></div>
+<div class="h-48 rounded-[24px] bg-cover bg-center border border-white/20" data-alt="A collection of handmade Ivorian textiles and crafts featuring intricate patterns and bold colors like deep green and sunny orange. The composition is clean and organized, set against a neutral background that allows the fabric textures to pop. This imagery represents the artisanal quality of the marketplace." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuClzLLyXDgFti4lR5Hkta89-iJ3ps8sbhpr0igSmCfwChqc0OmDW9nBY9BdmhdYkIem1ikqER0aO5Q28krsEOpjm_p4UHC5sNoiqknmteU5PYuucXw9yfdmfBhBbMBnZRhDiu_VqaFOULyhY9vp2qbffFYF2LvYkNyOBQXms9Xd0CFmrLVy8Ttb_O5vbN1oQMvQfcx7vShrtayAWcx8wmDI0A7eb9xQoq5g_w4nIYbGK11ZWZsOrZfEUA')"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Trust Bar -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-md">
+<div class="clean-card p-md flex items-center gap-sm">
+<div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm">Paiement protégé</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Transactions sécurisées par escrow</p>
+</div>
+</div>
+<div class="clean-card p-md flex items-center gap-sm">
+<div class="w-12 h-12 rounded-full bg-secondary-fixed/50 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm">Vendeurs vérifiés</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Chaque boutique est inspectée</p>
+</div>
+</div>
+<div class="clean-card p-md flex items-center gap-sm">
+<div class="w-12 h-12 rounded-full bg-surface-tint/10 flex items-center justify-center text-surface-tint">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">local_shipping</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm">Livraison rapide</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Livraison garantie sous 24-48h</p>
+</div>
+</div>
+</section>
+<!-- Category Grid -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-md">
+<div class="h-80 clean-card relative group overflow-hidden cursor-pointer">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" data-alt="A sophisticated boutique interior showcasing modern West African fashion and accessories. The setting is minimalist with high-end lighting that highlights the textures of the fabrics. The aesthetic is clean and modern, representing the diverse product offerings of the marketplace." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD1UC-VObwvagjm3Ct43ulS4f4uNfKM31aYhEDV_pu2duSgcCPlHh5_16Qd6oz-7PSYL1ygcu8JG2FIMUDhvoyp8EaQ4qGEH41s7ZbDN75Rnu9Pft-brpDwLKHppxWHG9Dfg9EnFq2NHM-u7JS-dA1nsieXSd0h9dQTLLRis0vcWLpun344fJtghDJUGttSX0ugmY5znyV_zGaa98wlHExm4SvK0w8ikRXdXbqylGT4CyHy57B5tL4Y6w')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<div class="absolute bottom-md left-md">
+<span class="bg-white px-md py-xs rounded-full font-label-md text-label-md text-primary">Boutiques</span>
+</div>
+</div>
+<div class="h-80 clean-card relative group overflow-hidden cursor-pointer">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" data-alt="A lush and vibrant selection of tropical fruits and fresh agricultural products from Ivory Coast. Pineapples, mangoes, and bananas are artfully arranged in a bright, sun-drenched outdoor setting. The photography is crisp and professional, emphasizing the freshness and natural quality of the food category." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDRjBPYkFixs6ufioy8OZl4LKgKVFrNOJ8R8niI8qxfGJMbwv_5edkaQS0Gf4siJcqGcMhmZqtoUS6FCCppP3H0DSXsUC08_Em3WbJk2PzboJ7ZKdegj__qQ0uzztsPQ1xe1ACHSR0cy8WUurvrMx5KFgzbp0Iaw4ix1uT6T2SbBGHQwsoHq1lar8P2-meK029ForTkZzXLbhALBiOPURVsHS4WzYE7aowjY0GEpyiDOcpaAxN73mc4KQ')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<div class="absolute bottom-md left-md">
+<span class="bg-white px-md py-xs rounded-full font-label-md text-label-md text-primary">Nourriture</span>
+</div>
+</div>
+<div class="h-80 clean-card relative group overflow-hidden cursor-pointer">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" data-alt="A modern upscale restaurant interior in Abidjan with warm ambient lighting and contemporary decor. The scene captures a chef finishing a beautifully plated contemporary Ivorian dish. The visual style is premium and inviting, perfectly categorizing the restaurant section of the digital marketplace." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCwNUUbIeDS_sg-LGDaoTovdrwdRd-UgorBpPymMGOniCtyBhH2n4VWEeuzeXEUEX6uBpbxwwlYMeRpnyqBW1lH9PtamCxOTzyBAumIQrZfJjGW-poBM3hWAsdQSrSqp6gwFLEc3vIsM-XvcTBYeyS-RsQKPW2MRSZMd5kh43MQVWkHv9j1hXrPBy7uX0gaPgoiRqlZlBg0petH2ekgYK7L2Cs5Pgb-KbXQ-LRkhGu8pc6v4p8kaPIsjg')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<div class="absolute bottom-md left-md">
+<span class="bg-white px-md py-xs rounded-full font-label-md text-label-md text-primary">Restaurants</span>
+</div>
+</div>
+</section>
+<!-- Featured Vendors -->
+<section class="space-y-md">
+<div class="flex justify-between items-end">
+<div>
+<h2 class="font-headline-md text-headline-md text-primary">Vendeurs en vedette</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Les boutiques les plus fiables de la semaine</p>
+</div>
+<a class="font-label-md text-label-md text-secondary hover:underline flex items-center gap-base" href="#">
+                    Voir tout <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-md">
+<!-- Vendor 1 -->
+<div class="clean-card overflow-hidden hover:border-primary/50 transition-colors group">
+<div class="h-32 bg-cover bg-center" data-alt="A professional portrait of a smiling female Ivorian entrepreneur in a modern shop environment. She is surrounded by neatly organized boutique items. The lighting is soft and flattering, creating a sense of trust and approachability for the vendor profile on a clean digital platform." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDJzuHOVyyfmEIMnkOm7fiNQe5kGa6xfR3dEGO6gKboOPfFcwb1m0cVBTGHWbFTy5N1hUV1ljyNcrCYahOTNZ6Ze4EmaOxJDldiDnqCzIzktwDcoaU-6M2IlPjZAIm9JR_xL4po05q8MyL2rwBvB9J_HD5ZyaWa0hR7Lc8JH_n9bWlKu3t97YZr89xB0Qi5dKpzQPJ7IZ-AMr5FrhkQ6c2OAq6KGmQdvDuib6ylUNLptUtgXcXiIcatlA')"></div>
+<div class="p-sm space-y-base">
+<div class="flex items-center gap-xs">
+<h4 class="font-label-md text-label-md truncate">Aya Confection</h4>
+<span class="material-symbols-outlined text-secondary text-[16px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<div class="flex items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs">4.9 (120 avis)</span>
+</div>
+</div>
+</div>
+<!-- Vendor 2 -->
+<div class="clean-card overflow-hidden hover:border-primary/50 transition-colors group">
+<div class="h-32 bg-cover bg-center" data-alt="A storefront shot of a gourmet food stall in an upscale Ivorian market, showing beautifully packaged spices and local delicacies. The branding is professional and modern. The photo uses shallow depth of field to focus on the premium products, fitting a clean modernist UI." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDEg2qO79FDR4ndVLkjEDc_ID8tYr4Aa3TVQIO40WDXZsZDYkZcQRHlxHF1PYuGaw-NKRnHhg75D2I9CCFuOMYo48REj3ommiwwyMSct0vNKXoazBN-73WjJ93ES9ieEqYxcpuAwB1fOsCv6NifOaqIJKQF5595uqOjEQaDvXlzIrcv9z9WtyYNVndq7UYI1Z-4ZVWq0Flv0ujIQpl50Ypt4_ML727BGAv8ND5-BnqdJx27jd3OVCOK2A')"></div>
+<div class="p-sm space-y-base">
+<div class="flex items-center gap-xs">
+<h4 class="font-label-md text-label-md truncate">Épices du Plateau</h4>
+<span class="material-symbols-outlined text-secondary text-[16px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<div class="flex items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs">4.8 (85 avis)</span>
+</div>
+</div>
+</div>
+<!-- Vendor 3 -->
+<div class="clean-card overflow-hidden hover:border-primary/50 transition-colors group">
+<div class="h-32 bg-cover bg-center" data-alt="A clean, minimalist kitchen setting where a chef is preparing fresh local ingredients. The focus is on the cleanliness and organization of the workspace. The lighting is bright and professional, conveying hygiene and quality for a restaurant vendor on the DjidjiMarket platform." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCRvia9lqCNr3CQ3gQOQJ3ucxO4-1fINQTs-HAFB2H4QXHGpjluV4x1o6gPrPIMXRefhK6CPGigVxDCcE-M272RKXVJzD-uo3T2BDA04MjvcU3TMYv-Dz8f9EBku88QuXvRt7fHOX8722NGD2EIGj5y_YWnj9chsY2albPJcV_MjVeR2dqjJMxzUimBIQmdie-KWsCaeYbwRMMTFjPBxorujN1pigaXN_FLFxXBamEZlCz71P83s1G1eg')"></div>
+<div class="p-sm space-y-base">
+<div class="flex items-center gap-xs">
+<h4 class="font-label-md text-label-md truncate">Chez Tonton Marc</h4>
+<span class="material-symbols-outlined text-secondary text-[16px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<div class="flex items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs">5.0 (210 avis)</span>
+</div>
+</div>
+</div>
+<!-- Vendor 4 -->
+<div class="clean-card overflow-hidden hover:border-primary/50 transition-colors group">
+<div class="h-32 bg-cover bg-center" data-alt="A display of handcrafted organic soaps and beauty products made from local Ivorian ingredients like shea butter and cocoa. The items are presented on a clean marble surface with natural light. The aesthetic is spa-like and premium, appealing to health-conscious users of a modern marketplace." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuALLuun7dJ2mrCP1hXNBreR8mPkVR4gTVIpVJHJFyUpvY2trax9_9zR7osTr0NRAncaKixKkpMq0Y07nYlGaGAoEy5sh9hoM0AU88NcK-w0JhETAYdi5wPnSOIYp0mHvm237bDpKIUgAfPRATEQH9BN7XrVeHY-Zzbm68JY0vqy3wLm7Ab34f4x6td_JFzxJZplxul8n3m01NliZCWHjwb8yMLw5irkzVaalRVpAgsiLOTm4pawdR0gjQ')"></div>
+<div class="p-sm space-y-base">
+<div class="flex items-center gap-xs">
+<h4 class="font-label-md text-label-md truncate">Naturel d'Ivoire</h4>
+<span class="material-symbols-outlined text-secondary text-[16px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<div class="flex items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs">4.7 (54 avis)</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Dishes of the Day -->
+<section class="space-y-md">
+<h2 class="font-headline-md text-headline-md text-primary">Plats du jour</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-md">
+<!-- Dish 1 -->
+<div class="clean-card overflow-hidden">
+<div class="h-48 bg-cover bg-center" data-alt="A mouth-watering close-up of a traditional Ivorian Garba dish, featuring fried tuna and fermented cassava semolina (attiéké) with chopped peppers. The colors are vibrant and the textures are rich, shot in high resolution for a food delivery interface. The background is a clean neutral surface." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB87__tBCSuNv1Zmffm7fpeNTBV-XfGEH4vQ6iEBn4xjtMqeeKRhBFfADBq2-nxbDPkufUZPj6koyJ3P98Rc4sjIZy2-io0zlSZSwawVpCFAJPVij3JdPQ1lPFHI5tpBZO4NDlls8El7qZT-5Ef48QAaS3mJ-i8FNiSOvY_iT0ZZSZLMjQUrrh9azrlvyzMjI-NJocj6Idj31iAd22y_CzMNJKshJ-pZePaoy14V0JnoJRz0yeBe8fJiA')"></div>
+<div class="p-md space-y-sm">
+<div>
+<h4 class="font-headline-sm text-headline-sm">Garba Spécial</h4>
+<p class="text-xs text-on-surface-variant">Par Chez Tonton Marc</p>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-headline-sm text-secondary">2.500 CFA</span>
+<button class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center hover:bg-primary-container active:scale-95 transition-all">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Dish 2 -->
+<div class="clean-card overflow-hidden">
+<div class="h-48 bg-cover bg-center" data-alt="A gourmet presentation of Poisson Braisé (grilled fish) with a side of plantains (alloco) and fresh onion salsa. The fish is perfectly charred, and the overall composition is balanced and elegant. Professional lighting emphasizes the steaming hot and appetizing nature of the dish." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBe5y3uSnKGES1hgsPl30qAvn6rPZzajEm_DopMIWjaO9hPHuE_uOontGJm1e6koDnqQ-jOeds17N72cq-oSkg6jl2vkO0iYcTQPewjnePr82_APU8A82eFGqvvSjjesOR4BnD25Nm3lPJi8qyQSoNNn5bYQEiJxBtRmRvnzkKGrfEYrmooG_o8atsNR0N7pXLoEC0YlupSXkFnlEKYrjYcQZxWXz18fZ6MNfN9ML9_cXr8GxQ84kJuQg')"></div>
+<div class="p-md space-y-sm">
+<div>
+<h4 class="font-headline-sm text-headline-sm">Poisson Braisé</h4>
+<p class="text-xs text-on-surface-variant">Restaurant Le Toit</p>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-headline-sm text-secondary">4.500 CFA</span>
+<button class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center hover:bg-primary-container active:scale-95 transition-all">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Dish 3 -->
+<div class="clean-card overflow-hidden">
+<div class="h-48 bg-cover bg-center" data-alt="A vibrant bowl of Sauce Graine with fufu, traditional West African palm nut soup with assorted meats. The rich, deep red color of the soup contrasts beautifully with the white fufu. The image captures the authentic and hearty nature of Ivorian home-style cooking." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC_g1VZbb880EckEhz2Xcr0SHoqEvA8QYejKNIya_VP-yM9ecf4PsqRJbP1IoGKruFoQmbXNZFW4zeSYdHa-1tlMUQ_97DDyhfsdXZ3AgzC0f11nOabIeP_hJqXEdRK2CpnkTXLMEcXUm8QzzDnaNoDz1aTDnJRcWgOLWJS6QqoN9gFGn7gIu_v98eECRUzOpTDcvOIQaHsM2MrQBHJ5yFXhJbw4Dp32a_n4mwfylr_WrN85HY2liKwnw')"></div>
+<div class="p-md space-y-sm">
+<div>
+<h4 class="font-headline-sm text-headline-sm">Sauce Graine</h4>
+<p class="text-xs text-on-surface-variant">La Marmite d'Or</p>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-headline-sm text-secondary">3.000 CFA</span>
+<button class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center hover:bg-primary-container active:scale-95 transition-all">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Dish 4 -->
+<div class="clean-card overflow-hidden">
+<div class="h-48 bg-cover bg-center" data-alt="A beautifully layered portion of Kedjenou de Poulet, a slow-cooked spicy chicken stew, served in a traditional earthenware pot. The image emphasizes the rustic yet premium presentation of the dish, with steam rising and fresh herbs as a garnish. Perfect for a high-end food marketplace." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuATmQb6-rHgFN-mnl5PFX1oOH_H-jH81BAcCbPOrxCu-UH8c2xk41sq-ot-saS6St-pWZcsYk8S9R92YNSC2TzSGCgzas1m_oPAyZ7Jgxhbs3F-gDNSFDIV2XW7xfNDA3I_R9WdNaZE1VneUjA3FHqJuYY2L7VT1Tt3WFr1n6t2AqBY5ehNf6uirAqvtimmDQ0qa5RgAGezz5ARp1rVwN_zRwoOfNjvK3ehkb0nFJq16RyPT44HsE8_vw')"></div>
+<div class="p-md space-y-sm">
+<div>
+<h4 class="font-headline-sm text-headline-sm">Kedjenou Poulet</h4>
+<p class="text-xs text-on-surface-variant">Maquis Laurent</p>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-headline-sm text-secondary">3.500 CFA</span>
+<button class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center hover:bg-primary-container active:scale-95 transition-all">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- TikTok Banner -->
+<section class="bg-secondary-container/20 rounded-[24px] border border-secondary/20 p-lg flex flex-col md:flex-row items-center justify-between gap-md overflow-hidden relative">
+<div class="absolute -right-12 -top-12 w-64 h-64 bg-secondary/10 rounded-full blur-3xl"></div>
+<div class="flex items-center gap-md z-10">
+<div class="w-16 h-16 bg-white rounded-full flex items-center justify-center border border-outline-variant">
+<svg class="w-8 h-8" fill="currentColor" viewbox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.17-2.89-.6-4.13-1.47-.13-.08-.26-.17-.38-.26v5.48c.01 1.89-.4 3.81-1.58 5.2-1.32 1.58-3.41 2.37-5.41 2.4-2.09.05-4.22-.59-5.72-2.03-1.76-1.64-2.42-4.22-1.84-6.52.5-2.02 1.89-3.83 3.76-4.66 1.05-.48 2.22-.67 3.37-.62V11c-.72-.07-1.47.05-2.12.38-.99.47-1.75 1.4-2.01 2.44-.27 1.05-.09 2.22.48 3.12.59.95 1.64 1.57 2.75 1.7 1.13.14 2.32-.14 3.22-.84.95-.73 1.44-1.92 1.46-3.11V.02z"></path></svg>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-primary">Codes promo en direct</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Rejoignez nos lives TikTok quotidiens pour des remises exclusives</p>
+</div>
+</div>
+<button class="bg-white text-primary border border-outline-variant font-label-md text-label-md px-xl py-md rounded-full hover:bg-primary hover:text-white transition-all z-10 active:scale-95">Rejoindre le Live</button>
+</section>
+</main>
+<!-- Footer (Shared Component) -->
+<footer class="w-full mt-lg bg-primary">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-md px-margin-desktop py-xl text-on-primary max-w-[1280px] mx-auto">
+<div class="space-y-md">
+<span class="font-headline-sm text-headline-sm text-on-primary">DjidjiMarket</span>
+<p class="font-body-md text-body-md opacity-80">La première plateforme de marché local en Côte d'Ivoire, connectant vendeurs et acheteurs en toute sécurité.</p>
+<div class="flex gap-sm">
+<!-- Payment Icons -->
+<div class="w-10 h-6 bg-white rounded-sm flex items-center justify-center overflow-hidden">
+<img alt="Orange Money" class="h-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8AwKj5QUQ980KuPfoi_aTprsGb8skQJGSwYlG3p3odV0owsLJQtXNutqfrSivTznV-nDW0sHCKQCNxO6JRnHbaqqTJPI2pofbuFpWcDdaoNp3NpKN0oaq9kfaZPmH8XWy4qqL-dN3bPlE8WbV2h4y1IlJwmD1-lhFytoFop4v5iaLw47h3umQ-RALOXpi43Lz127dw4TI-6xyjyqOP94J48FjpGHOJXbh3aoKOYVrryf-NoSYvzrbWQ"/>
+</div>
+<div class="w-10 h-6 bg-white rounded-sm flex items-center justify-center overflow-hidden">
+<img alt="MTN Money" class="h-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA80w278SnGLk9Ufv4T4eAWLFL9h-UEE4hwaRS6xrymAGeVf8NZ3ntTM0vgDV6UpEUSxCXRjTCsD58D2dDD2-5hCuZ5O8RgiMLMqFSKKNWtqt7m8to64yndI_sZZb2h0WVl8x4-MD9_RobM20R9cGeqqK2VtT7irhqDktJlOUPCqX55JyDQMuyXlg47A5nfQKIwqx_k0G0a2qA1ZWy5-SELc_RSwQla8Fd__zuVGjbUYnrJ11mUx1N1tw"/>
+</div>
+<div class="w-10 h-6 bg-white rounded-sm flex items-center justify-center overflow-hidden">
+<img alt="Moov Money" class="h-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCv-hm3VjP69bZhdoaiBwcSRegegKQdNKHCo7O5m0dGNOF6fdpPL1FGzQc4ce_k_ylxMqi5DX2rzLA4d4yQSpJk6XeB2O82bgTZXpSt8IGGhA1EDHJM_kM0xy5nDtT4rMmykjCzGSGpedIKMWJXXU5XI9cjMK1L6AhH9BKJhWWR39KNSMDFbBOSIK_dSPvy7zGwxWX4V_aE6vQCPPGs4ZduZ3Sw_b87OUC2KPOWrSFxpnhh45t5f0Plxw"/>
+</div>
+<div class="w-10 h-6 bg-white rounded-sm flex items-center justify-center overflow-hidden p-1">
+<svg fill="#00ADEF" viewbox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"></path></svg>
+</div>
+</div>
+</div>
+<div>
+<h4 class="font-label-md text-label-md mb-md">Navigation</h4>
+<ul class="space-y-xs">
+<li><a class="opacity-80 hover:opacity-100 transition-opacity" href="#">À propos</a></li>
+<li><a class="opacity-80 hover:opacity-100 transition-opacity" href="#">Vendeurs</a></li>
+<li><a class="opacity-80 hover:opacity-100 transition-opacity" href="#">Aide</a></li>
+<li><a class="opacity-80 hover:opacity-100 transition-opacity" href="#">Contact</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-md text-label-md mb-md">Légal</h4>
+<ul class="space-y-xs">
+<li><a class="opacity-80 hover:opacity-100 transition-opacity" href="#">Conditions d'utilisation</a></li>
+<li><a class="opacity-80 hover:opacity-100 transition-opacity" href="#">Confidentialité</a></li>
+<li><a class="opacity-80 hover:opacity-100 transition-opacity" href="#">Politique de retour</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-md text-label-md mb-md">Newsletter</h4>
+<p class="font-body-md text-body-md opacity-80 mb-sm">Recevez nos meilleures offres.</p>
+<div class="flex">
+<input class="bg-white/10 border-white/20 text-white rounded-l-lg focus:ring-0 focus:border-white/40 w-full" placeholder="Email" type="email"/>
+<button class="bg-white text-primary px-sm rounded-r-lg font-label-md">Go</button>
+</div>
+</div>
+</div>
+<div class="max-w-[1280px] mx-auto px-margin-desktop py-md border-t border-white/10 text-center opacity-60 font-body-md text-body-md">
+            © 2024 DjidjiMarket. Tous droits réservés.
+        </div>
+</footer>
+<!-- SideNavBar (Shared Component - Initially Hidden) -->
+<aside class="fixed right-0 top-0 h-full w-80 bg-surface border-l border-outline-variant flex flex-col p-md z-[60] translate-x-full transition-transform duration-300" id="side-nav">
+<div class="flex justify-between items-start mb-lg">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-primary">Votre Panier</h2>
+<p class="font-label-md text-label-md text-on-surface-variant">Prêt pour le paiement</p>
+</div>
+<button class="p-base hover:bg-surface-container-high rounded-full" onclick="toggleSideNav()">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<nav class="flex-1 space-y-xs">
+<div class="bg-primary-container text-on-primary-container rounded-lg p-sm flex items-center gap-sm cursor-pointer">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="font-label-md text-label-md">Panier</span>
+</div>
+<div class="text-on-surface-variant hover:bg-surface-container-high rounded-lg p-sm flex items-center gap-sm cursor-pointer transition-all">
+<span class="material-symbols-outlined">package_2</span>
+<span class="font-label-md text-label-md">Mes Commandes</span>
+</div>
+<div class="text-on-surface-variant hover:bg-surface-container-high rounded-lg p-sm flex items-center gap-sm cursor-pointer transition-all">
+<span class="material-symbols-outlined">favorite</span>
+<span class="font-label-md text-label-md">Favoris</span>
+</div>
+<div class="text-on-surface-variant hover:bg-surface-container-high rounded-lg p-sm flex items-center gap-sm cursor-pointer transition-all">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Paramètres</span>
+</div>
+</nav>
+<div class="mt-auto pt-md border-t border-outline-variant">
+<button class="w-full bg-primary text-on-primary py-md rounded-full font-label-md text-label-md hover:opacity-90 active:scale-95 transition-all">
+                Commander maintenant
+            </button>
+</div>
+</aside>
+<script>
+        function toggleSideNav() {
+            const nav = document.getElementById('side-nav');
+            nav.classList.toggle('translate-x-full');
+        }
+
+        // Add to cart interaction
+        document.querySelectorAll('button .material-symbols-outlined').forEach(icon => {
+            if (icon.innerText === 'add') {
+                icon.parentElement.addEventListener('click', () => {
+                    toggleSideNav();
+                });
+            }
+        });
+    </script>
+</body></html>

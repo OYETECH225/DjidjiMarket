@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Connexion | IvorianMarket</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .otp-input:focus {
+            border-color: #3a6841; /* Primary */
+            border-width: 2px;
+            outline: none;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-highest": "#e2e3dd",
+                      "primary-container": "#204e29",
+                      "surface": "#f9faf4",
+                      "on-tertiary-fixed-variant": "#6e3544",
+                      "error": "#ba1a1a",
+                      "secondary-fixed-dim": "#ffb68e",
+                      "error-container": "#ffdad6",
+                      "tertiary-fixed-dim": "#ffb1c2",
+                      "tertiary-fixed": "#ffd9e0",
+                      "surface-dim": "#d9dbd5",
+                      "secondary-fixed": "#ffdbca",
+                      "surface-tint": "#3a6841",
+                      "outline": "#727970",
+                      "on-tertiary-container": "#ea9eae",
+                      "surface-variant": "#e2e3dd",
+                      "primary": "#053715",
+                      "on-surface-variant": "#414940",
+                      "outline-variant": "#c1c9be",
+                      "on-surface": "#191c19",
+                      "background": "#f9faf4",
+                      "on-tertiary-fixed": "#380919",
+                      "surface-container-high": "#e7e9e3",
+                      "surface-bright": "#f9faf4",
+                      "primary-fixed-dim": "#a0d3a2",
+                      "on-secondary-container": "#6b2d00",
+                      "on-primary": "#ffffff",
+                      "surface-container-low": "#f3f4ee",
+                      "secondary": "#9b4500",
+                      "tertiary-container": "#6c3342",
+                      "tertiary": "#511d2c",
+                      "on-background": "#191c19",
+                      "on-secondary": "#ffffff",
+                      "inverse-on-surface": "#f0f1eb",
+                      "on-primary-container": "#8dbf8f",
+                      "inverse-surface": "#2e312d",
+                      "primary-fixed": "#bbf0bd",
+                      "on-tertiary": "#ffffff",
+                      "on-primary-fixed-variant": "#22502b",
+                      "on-primary-fixed": "#002108",
+                      "surface-container-lowest": "#ffffff",
+                      "on-secondary-fixed-variant": "#763300",
+                      "on-secondary-fixed": "#331200",
+                      "on-error": "#ffffff",
+                      "inverse-primary": "#a0d3a2",
+                      "secondary-container": "#fe8e48",
+                      "on-error-container": "#93000a",
+                      "surface-container": "#edeee8",
+                      "accent-orange": "#D56E2B"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px",
+                      "card": "24px"
+              },
+              "spacing": {
+                      "sm": "16px",
+                      "gutter": "16px",
+                      "md": "24px",
+                      "lg": "40px",
+                      "base": "4px",
+                      "margin-mobile": "16px",
+                      "xl": "64px",
+                      "margin-desktop": "32px",
+                      "xs": "8px"
+              },
+              "fontFamily": {
+                      "headline-sm": ["Plus Jakarta Sans"],
+                      "body-md": ["Plus Jakarta Sans"],
+                      "headline-md": ["Plus Jakarta Sans"],
+                      "headline-lg": ["Plus Jakarta Sans"],
+                      "label-md": ["Plus Jakarta Sans"],
+                      "display-lg": ["Plus Jakarta Sans"],
+                      "body-lg": ["Plus Jakarta Sans"],
+                      "headline-lg-mobile": ["Plus Jakarta Sans"]
+              },
+              "fontSize": {
+                      "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "800"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "800"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-surface font-body-md text-on-surface min-h-screen flex flex-col">
+<!-- Main Content Canvas -->
+<main class="flex-grow flex items-center justify-center px-margin-mobile md:px-margin-desktop py-xl">
+<div class="max-w-[480px] w-full bg-surface-container-lowest border border-outline-variant rounded-card p-md md:p-lg flex flex-col items-center">
+<!-- Logo Section -->
+<div class="mb-lg w-full flex justify-center">
+<img alt="DjidjiMarket" class="h-16 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AP1WRLsEaS103_j9jaE6TL2Z2MXhH8fzlWoGMNo8KLX-2JDbUHzvy-mtHRDJxrvUBZMcerhK6W_ONFaQMMR7aAXNnWaeZaIZ70ZMMjcyn-o9RWwg4odGhUy-_KifQQTOSrxI3HUAx0tpTwRbjGLu8vqZ8dtdTK0EFbGjeF8y5sRjtrMZVSW09YOTKyxUtpfFoaayEz29zK2oEMtHdOkW1JWnSTXat4HXRBbwUJzXOmICMtfqLnwQbWlXP9OME302"/>
+</div>
+<!-- Role Selection Tabs -->
+<div class="flex w-full bg-surface-container rounded-full p-xs mb-lg">
+<button class="flex-1 py-xs rounded-full font-label-md text-label-md transition-all duration-200 bg-surface-container-lowest text-primary border border-outline-variant" id="tab-client" onclick="switchTab('client')">
+                    Client
+                </button>
+<button class="flex-1 py-xs rounded-full font-label-md text-label-md transition-all duration-200 text-on-surface-variant hover:bg-surface-variant/50" id="tab-vendeur" onclick="switchTab('vendeur')">
+                    Vendeur
+                </button>
+</div>
+<!-- Authentication Form -->
+<form class="w-full flex flex-col gap-md" onsubmit="event.preventDefault();">
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant ml-xs">Numéro de téléphone</label>
+<div class="relative flex items-center">
+<div class="absolute left-md flex items-center pointer-events-none gap-xs">
+<span class="font-body-md text-body-md text-on-surface-variant">+225</span>
+<div class="h-4 w-[1px] bg-outline-variant"></div>
+</div>
+<input class="w-full pl-20 pr-md py-md border border-outline-variant rounded-lg bg-surface-container-lowest font-body-md text-body-md focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all" placeholder="07 00 00 00 00" type="tel"/>
+</div>
+</div>
+<button class="w-full py-md bg-[#D56E2B] hover:bg-[#b85a1f] text-white font-label-md text-label-md rounded-full transition-all duration-200 active:scale-[0.98]">
+                    Recevoir le code
+                </button>
+<div class="h-[1px] bg-outline-variant w-full my-xs"></div>
+<!-- OTP Section -->
+<div class="space-y-md">
+<div class="text-center">
+<p class="font-body-md text-body-md text-on-surface-variant">Saisissez le code à 6 chiffres</p>
+</div>
+<div class="flex justify-between gap-xs">
+<input class="otp-input w-12 h-14 text-center border border-outline-variant rounded-lg text-headline-sm font-headline-sm bg-surface-container-lowest" maxlength="1" type="text"/>
+<input class="otp-input w-12 h-14 text-center border border-outline-variant rounded-lg text-headline-sm font-headline-sm bg-surface-container-lowest" maxlength="1" type="text"/>
+<input class="otp-input w-12 h-14 text-center border border-outline-variant rounded-lg text-headline-sm font-headline-sm bg-surface-container-lowest" maxlength="1" type="text"/>
+<input class="otp-input w-12 h-14 text-center border border-outline-variant rounded-lg text-headline-sm font-headline-sm bg-surface-container-lowest" maxlength="1" type="text"/>
+<input class="otp-input w-12 h-14 text-center border border-outline-variant rounded-lg text-headline-sm font-headline-sm bg-surface-container-lowest" maxlength="1" type="text"/>
+<input class="otp-input w-12 h-14 text-center border border-outline-variant rounded-lg text-headline-sm font-headline-sm bg-surface-container-lowest" maxlength="1" type="text"/>
+</div>
+<button class="w-full py-md bg-primary hover:bg-primary-container text-white font-label-md text-label-md rounded-full transition-all duration-200 active:scale-[0.98]">
+                        Vérifier
+                    </button>
+</div>
+</form>
+<!-- Secondary Footer Action -->
+<div class="mt-lg pt-lg border-t border-outline-variant w-full text-center">
+<a class="inline-flex items-center gap-xs font-label-md text-label-md text-secondary hover:underline group" href="#">
+<span class="material-symbols-outlined text-[18px]">directions_bike</span>
+<span>Vous êtes livreur ? Téléchargez l'app mobile</span>
+</a>
+</div>
+</div>
+</main>
+<!-- Footer from Shared Components -->
+<footer class="w-full py-xl bg-surface-container-high dark:bg-surface-dim border-t border-outline-variant">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-lg px-margin-desktop max-w-7xl mx-auto">
+<div class="flex flex-col gap-xs">
+<span class="font-headline-sm text-headline-sm text-primary">IvorianMarket</span>
+<p class="font-body-md text-body-md text-on-surface-variant">© 2024 IvorianMarket. All rights reserved.</p>
+</div>
+<div class="flex flex-col gap-xs">
+<h4 class="font-label-md text-label-md text-on-surface">Legal</h4>
+<nav class="flex flex-col gap-xs">
+<a class="text-on-surface-variant hover:underline decoration-secondary transition-colors font-body-md text-body-md" href="#">About Us</a>
+<a class="text-on-surface-variant hover:underline decoration-secondary transition-colors font-body-md text-body-md" href="#">Shipping Policy</a>
+</nav>
+</div>
+<div class="flex flex-col gap-xs">
+<h4 class="font-label-md text-label-md text-on-surface">Support</h4>
+<nav class="flex flex-col gap-xs">
+<a class="text-on-surface-variant hover:underline decoration-secondary transition-colors font-body-md text-body-md" href="#">Terms of Service</a>
+<a class="text-on-surface-variant hover:underline decoration-secondary transition-colors font-body-md text-body-md" href="#">Contact</a>
+</nav>
+</div>
+<div class="flex flex-col gap-xs">
+<h4 class="font-label-md text-label-md text-on-surface">Partenaires</h4>
+<nav class="flex flex-col gap-xs">
+<a class="text-on-surface-variant hover:underline decoration-secondary transition-colors font-body-md text-body-md" href="#">Vendor Portal</a>
+</nav>
+</div>
+</div>
+</footer>
+<script>
+        function switchTab(role) {
+            const clientTab = document.getElementById('tab-client');
+            const vendeurTab = document.getElementById('tab-vendeur');
+            
+            if (role === 'client') {
+                clientTab.classList.add('bg-surface-container-lowest', 'text-primary', 'border', 'border-outline-variant');
+                clientTab.classList.remove('text-on-surface-variant', 'hover:bg-surface-variant/50');
+                
+                vendeurTab.classList.remove('bg-surface-container-lowest', 'text-primary', 'border', 'border-outline-variant');
+                vendeurTab.classList.add('text-on-surface-variant', 'hover:bg-surface-variant/50');
+            } else {
+                vendeurTab.classList.add('bg-surface-container-lowest', 'text-primary', 'border', 'border-outline-variant');
+                vendeurTab.classList.remove('text-on-surface-variant', 'hover:bg-surface-variant/50');
+                
+                clientTab.classList.remove('bg-surface-container-lowest', 'text-primary', 'border', 'border-outline-variant');
+                clientTab.classList.add('text-on-surface-variant', 'hover:bg-surface-variant/50');
+            }
+        }
+
+        // Auto-focus logic for OTP
+        const otpInputs = document.querySelectorAll('.otp-input');
+        otpInputs.forEach((input, index) => {
+            input.addEventListener('input', (e) => {
+                if (e.target.value.length === 1 && index < otpInputs.length - 1) {
+                    otpInputs[index + 1].focus();
+                }
+            });
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && !e.target.value && index > 0) {
+                    otpInputs[index - 1].focus();
+                }
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mes commandes | IvorianMarket</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .order-card-hover {
+            transition: all 0.2s ease-in-out;
+        }
+        .order-card-hover:hover {
+            border-color: #727970;
+            background-color: #f3f4ee;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                "surface-container-highest": "#e2e3dd",
+                "primary-container": "#204e29",
+                "surface": "#f9faf4",
+                "on-tertiary-fixed-variant": "#6e3544",
+                "error": "#ba1a1a",
+                "secondary-fixed-dim": "#ffb68e",
+                "error-container": "#ffdad6",
+                "tertiary-fixed-dim": "#ffb1c2",
+                "tertiary-fixed": "#ffd9e0",
+                "surface-dim": "#d9dbd5",
+                "secondary-fixed": "#ffdbca",
+                "surface-tint": "#3a6841",
+                "outline": "#727970",
+                "on-tertiary-container": "#ea9eae",
+                "surface-variant": "#e2e3dd",
+                "primary": "#053715",
+                "on-surface-variant": "#414940",
+                "outline-variant": "#c1c9be",
+                "on-surface": "#191c19",
+                "background": "#f9faf4",
+                "on-tertiary-fixed": "#380919",
+                "surface-container-high": "#e7e9e3",
+                "surface-bright": "#f9faf4",
+                "primary-fixed-dim": "#a0d3a2",
+                "on-secondary-container": "#6b2d00",
+                "on-primary": "#ffffff",
+                "surface-container-low": "#f3f4ee",
+                "secondary": "#9b4500",
+                "tertiary-container": "#6c3342",
+                "tertiary": "#511d2c",
+                "on-background": "#191c19",
+                "on-secondary": "#ffffff",
+                "inverse-on-surface": "#f0f1eb",
+                "on-primary-container": "#8dbf8f",
+                "inverse-surface": "#2e312d",
+                "primary-fixed": "#bbf0bd",
+                "on-tertiary": "#ffffff",
+                "on-primary-fixed-variant": "#22502b",
+                "on-primary-fixed": "#002108",
+                "surface-container-lowest": "#ffffff",
+                "on-secondary-fixed-variant": "#763300",
+                "on-secondary-fixed": "#331200",
+                "on-error": "#ffffff",
+                "inverse-primary": "#a0d3a2",
+                "secondary-container": "#fe8e48",
+                "on-error-container": "#93000a",
+                "surface-container": "#edeee8"
+              },
+              "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+              },
+              "spacing": {
+                "sm": "16px",
+                "gutter": "16px",
+                "md": "24px",
+                "lg": "40px",
+                "base": "4px",
+                "margin-mobile": "16px",
+                "xl": "64px",
+                "margin-desktop": "32px",
+                "xs": "8px"
+              },
+              "fontFamily": {
+                "headline-sm": ["Plus Jakarta Sans"],
+                "body-md": ["Plus Jakarta Sans"],
+                "headline-md": ["Plus Jakarta Sans"],
+                "headline-lg": ["Plus Jakarta Sans"],
+                "label-md": ["Plus Jakarta Sans"],
+                "display-lg": ["Plus Jakarta Sans"],
+                "body-lg": ["Plus Jakarta Sans"],
+                "headline-lg-mobile": ["Plus Jakarta Sans"]
+              },
+              "fontSize": {
+                "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "800"}],
+                "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "800"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- TopNavBar -->
+<header class="w-full top-0 sticky z-50 bg-surface border-b border-outline-variant transition-all duration-200 ease-in-out">
+<div class="flex justify-between items-center w-full px-margin-desktop max-w-7xl mx-auto h-20">
+<div class="flex items-center gap-lg">
+<span class="text-headline-md font-headline-md text-primary">IvorianMarket</span>
+<nav class="hidden md:flex items-center gap-md">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="#">Home</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="#">Categories</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="#">Deals</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="#">Sellers</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<div class="flex items-center gap-sm pr-sm border-r border-outline-variant">
+<button class="p-xs text-on-surface-variant hover:bg-surface-container-low rounded-full transition-all">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-xs text-on-surface-variant hover:bg-surface-container-low rounded-full transition-all">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+</button>
+<button class="flex items-center gap-xs p-xs text-on-surface-variant hover:bg-surface-container-low rounded-full transition-all">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+</button>
+</div>
+<div class="flex items-center gap-xs">
+<img class="w-10 h-10 rounded-full border-2 border-primary-fixed p-0.5 object-cover" data-alt="Close-up professional portrait of a stylish user for a modern e-commerce platform. The subject has a warm expression with natural lighting. The background is a soft-focus minimalist interior with ivory and deep green tones matching the IvorianMarket brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAupZEFupTIl9OYZ3GNgWQ0bzt7pn7rrbdePBHYHpl6cFrhxUyk3BtBd5v8Gniev6811hMV1zV4w97gMkVlkBI7pjD-N4JdwOwWC6s8UhMedzTC60MRSj0F3YimwCWZeLFdf4Ier6RecN3Z8KJqynwFxXUz7FRs5C1Ff9cb0A1VPDaG18f4tBXaQK1quFJApH41KGtj2FwWWqVb21q_J-ObLCMY3AidrlKAapcWUoMOuAnCs1Rv4imL4g"/>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-margin-desktop py-lg">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-md mb-lg">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Mes commandes</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-base">Gérez vos achats et suivez l'état de vos colis.</p>
+</div>
+<!-- Pill Tabs -->
+<div class="inline-flex p-1 bg-surface-container-high rounded-full w-fit">
+<button class="px-md py-xs rounded-full font-label-md text-label-md transition-all duration-200 bg-primary text-on-primary" id="tab-en-cours" onclick="switchTab('en-cours')">
+                    En cours
+                </button>
+<button class="px-md py-xs rounded-full font-label-md text-label-md transition-all duration-200 text-on-surface-variant hover:text-on-surface" id="tab-terminees" onclick="switchTab('terminees')">
+                    Terminées
+                </button>
+</div>
+</div>
+<!-- Orders Container -->
+<div class="space-y-sm">
+<!-- Order Card 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-[24px] p-md order-card-hover group">
+<div class="flex flex-col md:flex-row gap-md items-center">
+<!-- Thumbnail -->
+<div class="w-full md:w-32 h-32 flex-shrink-0 rounded-xl overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="A premium quality leather bag crafted in Côte d'Ivoire, showcased with soft studio lighting. The texture of the rich brown leather is detailed and inviting. High-contrast photography on a clean off-white background consistent with a modern minimalist Ivorian digital marketplace." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6khMCpnNqm07suQncaCv2uC5Ndm-qp0D_uKujXIiq_a8HWyXq8yBA10isAJGfRAkrLcUuGMtSnGRyQwTIB8VbH82CRqN9InZ7LFQW-zlWZGDq0NBFBQ6IkZDtApP-8n4feGOuaRNmNzUTPGOFooSp3HHZSuHh8WU48w5PWXCInp-YKNTJY-8bySM6dYQw8hBt8NrbYCVMxUuA1YedXM4b3GsPd1cPbWjsxl7vmMtS1wbbnk-8vrzQ4Q"/>
+</div>
+<!-- Details Grid -->
+<div class="flex-grow grid grid-cols-2 md:grid-cols-4 gap-md w-full">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface-variant mb-base">Vendeur</span>
+<span class="font-body-md text-body-md font-bold text-on-surface">Artisanat d'Abidjan</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface-variant mb-base">Date</span>
+<span class="font-body-md text-body-md text-on-surface">14 Oct. 2024</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface-variant mb-base">Total</span>
+<span class="font-body-md text-body-md font-extrabold text-primary">45.000 CFA</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface-variant mb-base">Statut</span>
+<div class="w-fit px-sm py-1 bg-secondary-container/20 text-on-secondary-fixed-variant rounded-full font-label-md text-[12px] flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                                Expédié
+                            </div>
+</div>
+</div>
+<!-- Action -->
+<div class="w-full md:w-auto flex justify-end">
+<a class="flex items-center gap-xs text-primary font-label-md text-label-md hover:underline decoration-2 underline-offset-4" href="#">
+                            Voir détails
+                            <span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Order Card 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-[24px] p-md order-card-hover group">
+<div class="flex flex-col md:flex-row gap-md items-center">
+<div class="w-full md:w-32 h-32 flex-shrink-0 rounded-xl overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="High-end organic coffee beans from the Man region in Côte d'Ivoire, packaged in a minimalist eco-friendly bag. Professional product photography with natural morning light streaming across a white marble surface, highlighting the vibrant green and orange brand accents of the packaging." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB99EUWpYbx1KScDA5J_E5WwC0wjm_W8IzePKAIHdAR8ewKer8pktv9UBieMe8EppZuv79mv0SalrxG0yHfLbhWqnwsNrkjenjVDay1hvu4FSBfXGCNvamDFzQPkSfZa1hScuJkwo-Mhgq8fUplrLfMnXX1SV7sckBPYQbyki8wpjY7-3u8TL5ajgH5HWDKqgiQE5MfLx3oS-tqURsyT_f_u_clOl1-0BIJCfdTLlL5uD6FflRze2_Kxw"/>
+</div>
+<div class="flex-grow grid grid-cols-2 md:grid-cols-4 gap-md w-full">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface-variant mb-base">Vendeur</span>
+<span class="font-body-md text-body-md font-bold text-on-surface">Saveurs de l'Ouest</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface-variant mb-base">Date</span>
+<span class="font-body-md text-body-md text-on-surface">12 Oct. 2024</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface-variant mb-base">Total</span>
+<span class="font-body-md text-body-md font-extrabold text-primary">12.500 CFA</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface-variant mb-base">Statut</span>
+<div class="w-fit px-sm py-1 bg-primary-fixed/30 text-on-primary-fixed-variant rounded-full font-label-md text-[12px] flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                                En livraison
+                            </div>
+</div>
+</div>
+<div class="w-full md:w-auto flex justify-end">
+<a class="flex items-center gap-xs text-primary font-label-md text-label-md hover:underline decoration-2 underline-offset-4" href="#">
+                            Voir détails
+                            <span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Order Card 3 (Completed Example) -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-[24px] p-md order-card-hover group opacity-75">
+<div class="flex flex-col md:flex-row gap-md items-center">
+<div class="w-full md:w-32 h-32 flex-shrink-0 rounded-xl overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="A set of handcrafted ceramic bowls with traditional Ivorian patterns in modern monochrome. The lighting is crisp and clean, reflecting off the smooth glaze. The composition is artistic yet commercial, fitting for a premium marketplace order history page." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSyeXX4HjV9rnvwDWnBmExivwMsCiD9bAmnYWGA7EQBHhboooa0CQecMLSnchIgz5ZCu6RQ2DRqNXsVed2oqg5bd5cSv-ZXyw_a9kCKd-k2Y85gz8ZjwYdRiojDjoss3gKH9yz9scShcYv-IL_zWrdFLdD3KErN9Sew76sULcuWBH-wv2NP8fGvwuGbZZXsnesnb-sREXH9tbEzwPPsnbcACgFoU3IU3nhRLtotMkzhJLm_M_cgqb4Zg"/>
+</div>
+<div class="flex-grow grid grid-cols-2 md:grid-cols-4 gap-md w-full">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface-variant mb-base">Vendeur</span>
+<span class="font-body-md text-body-md font-bold text-on-surface">Maison de l'Argile</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface-variant mb-base">Date</span>
+<span class="font-body-md text-body-md text-on-surface">05 Oct. 2024</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface-variant mb-base">Total</span>
+<span class="font-body-md text-body-md font-extrabold text-primary">28.000 CFA</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface-variant mb-base">Statut</span>
+<div class="w-fit px-sm py-1 bg-surface-container-highest text-on-surface-variant rounded-full font-label-md text-[12px] flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="check_circle">check_circle</span>
+                                Terminée
+                            </div>
+</div>
+</div>
+<div class="w-full md:w-auto flex justify-end">
+<a class="flex items-center gap-xs text-primary font-label-md text-label-md hover:underline decoration-2 underline-offset-4" href="#">
+                            Voir détails
+                            <span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-xl bg-surface-container-high border-t border-outline-variant mt-xl">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-lg px-margin-desktop max-w-7xl mx-auto">
+<div class="col-span-1 md:col-span-1">
+<span class="font-headline-sm text-headline-sm text-primary mb-md block">IvorianMarket</span>
+<p class="font-body-md text-body-md text-on-surface-variant pr-md">Le pont numérique entre les artisans Ivoiriens et le monde.</p>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-primary uppercase tracking-wider mb-sm">Achat</h4>
+<ul class="space-y-xs">
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors hover:underline decoration-secondary" href="#">About Us</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors hover:underline decoration-secondary" href="#">Shipping Policy</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors hover:underline decoration-secondary" href="#">Terms of Service</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-primary uppercase tracking-wider mb-sm">Vente</h4>
+<ul class="space-y-xs">
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors hover:underline decoration-secondary" href="#">Vendor Portal</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors hover:underline decoration-secondary" href="#">Seller Guide</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors hover:underline decoration-secondary" href="#">Success Stories</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-primary uppercase tracking-wider mb-sm">Support</h4>
+<ul class="space-y-xs">
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors hover:underline decoration-secondary" href="#">Contact</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors hover:underline decoration-secondary" href="#">FAQ</a></li>
+<li class="pt-sm">
+<div class="flex gap-sm">
+<span class="material-symbols-outlined text-primary cursor-pointer" data-icon="facebook">face_nod</span>
+<span class="material-symbols-outlined text-primary cursor-pointer" data-icon="instagram">infrared</span>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="max-w-7xl mx-auto px-margin-desktop pt-xl border-t border-outline-variant mt-lg flex flex-col md:flex-row justify-between items-center gap-md">
+<p class="font-body-md text-body-md text-on-surface-variant opacity-60">© 2024 IvorianMarket. All rights reserved.</p>
+<div class="flex gap-md">
+<span class="material-symbols-outlined text-on-surface-variant opacity-60" data-icon="payments">payments</span>
+<span class="material-symbols-outlined text-on-surface-variant opacity-60" data-icon="shield">shield</span>
+</div>
+</div>
+</footer>
+<script>
+        function switchTab(tab) {
+            const btnEnCours = document.getElementById('tab-en-cours');
+            const btnTerminees = document.getElementById('tab-terminees');
+            
+            if(tab === 'en-cours') {
+                btnEnCours.classList.add('bg-primary', 'text-on-primary');
+                btnEnCours.classList.remove('text-on-surface-variant');
+                btnTerminees.classList.remove('bg-primary', 'text-on-primary');
+                btnTerminees.classList.add('text-on-surface-variant');
+            } else {
+                btnTerminees.classList.add('bg-primary', 'text-on-primary');
+                btnTerminees.classList.remove('text-on-surface-variant');
+                btnEnCours.classList.remove('bg-primary', 'text-on-primary');
+                btnEnCours.classList.add('text-on-surface-variant');
+            }
+        }
+    </script>
+</body></html>

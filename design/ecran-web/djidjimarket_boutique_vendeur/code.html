@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f9faf4;
+        }
+        .bento-card {
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 24px;
+            transition: all 0.3s ease;
+        }
+        .bento-card:hover {
+            border-color: #3a6841;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #c1c9be;
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary-fixed-variant": "#763300",
+                      "surface-tint": "#3a6841",
+                      "on-tertiary-container": "#ea9eae",
+                      "tertiary": "#511d2c",
+                      "surface-container": "#edeee8",
+                      "on-secondary-container": "#6b2d00",
+                      "on-primary-fixed": "#002108",
+                      "primary-fixed-dim": "#a0d3a2",
+                      "surface-container-highest": "#e2e3dd",
+                      "surface-container-high": "#e7e9e3",
+                      "surface-variant": "#e2e3dd",
+                      "surface-container-low": "#f3f4ee",
+                      "on-background": "#191c19",
+                      "tertiary-container": "#6c3342",
+                      "outline": "#727970",
+                      "tertiary-fixed-dim": "#ffb1c2",
+                      "on-error": "#ffffff",
+                      "on-secondary-fixed": "#331200",
+                      "error": "#ba1a1a",
+                      "secondary-fixed": "#ffdbca",
+                      "outline-variant": "#c1c9be",
+                      "surface-bright": "#f9faf4",
+                      "primary-fixed": "#bbf0bd",
+                      "on-primary": "#ffffff",
+                      "primary": "#053715",
+                      "on-tertiary-fixed-variant": "#6e3544",
+                      "error-container": "#ffdad6",
+                      "tertiary-fixed": "#ffd9e0",
+                      "background": "#f9faf4",
+                      "on-surface-variant": "#414940",
+                      "on-tertiary": "#ffffff",
+                      "on-primary-container": "#8dbf8f",
+                      "inverse-on-surface": "#f0f1eb",
+                      "inverse-surface": "#2e312d",
+                      "on-secondary": "#ffffff",
+                      "primary-container": "#204e29",
+                      "inverse-primary": "#a0d3a2",
+                      "on-primary-fixed-variant": "#22502b",
+                      "surface": "#f9faf4",
+                      "on-tertiary-fixed": "#380919",
+                      "on-error-container": "#93000a",
+                      "secondary": "#9b4500",
+                      "surface-container-lowest": "#ffffff",
+                      "secondary-fixed-dim": "#ffb1c2",
+                      "surface-dim": "#d9dbd5",
+                      "on-surface": "#191c19",
+                      "secondary-container": "#fe8e48"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-desktop": "32px",
+                      "margin-mobile": "16px",
+                      "xs": "8px",
+                      "base": "4px",
+                      "sm": "16px",
+                      "lg": "40px",
+                      "gutter": "16px",
+                      "xl": "64px",
+                      "md": "24px"
+              },
+              "fontFamily": {
+                      "headline-lg-mobile": ["Plus Jakarta Sans"],
+                      "headline-lg": ["Plus Jakarta Sans"],
+                      "body-md": ["Plus Jakarta Sans"],
+                      "display-lg": ["Plus Jakarta Sans"],
+                      "headline-sm": ["Plus Jakarta Sans"],
+                      "label-md": ["Plus Jakarta Sans"],
+                      "headline-md": ["Plus Jakarta Sans"],
+                      "body-lg": ["Plus Jakarta Sans"]
+              },
+              "fontSize": {
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "800"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "800"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                      "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+      </script>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- TopNavBar -->
+<header class="bg-surface dark:bg-surface-container w-full top-0 sticky z-50 border-b border-outline-variant dark:border-outline">
+<nav class="flex justify-between items-center px-margin-desktop py-base max-w-[1280px] mx-auto">
+<div class="flex items-center gap-md">
+<span class="font-headline-md text-headline-md text-primary dark:text-primary-fixed-dim">DjidjiMarket</span>
+<div class="hidden md:flex items-center gap-sm font-body-md text-body-md ml-md">
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200 cursor-pointer active:scale-95" href="#">Boutiques</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200 cursor-pointer active:scale-95" href="#">Nourriture</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200 cursor-pointer active:scale-95" href="#">Restaurants</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200 cursor-pointer active:scale-95" href="#">Comment ça marche</a>
+</div>
+</div>
+<div class="flex items-center gap-sm">
+<div class="hidden md:flex items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined cursor-pointer hover:text-primary transition-all p-2 rounded-full hover:bg-surface-container">search</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-primary transition-all p-2 rounded-full hover:bg-surface-container">location_on</span>
+</div>
+<button class="font-label-md text-label-md px-md py-xs rounded-full border border-primary text-primary hover:bg-primary/5 transition-all">Connexion</button>
+<button class="font-label-md text-label-md px-md py-xs rounded-full bg-primary text-on-primary hover:opacity-90 transition-all">S'inscrire</button>
+</div>
+</nav>
+</header>
+<main class="max-w-[1280px] mx-auto px-margin-mobile md:px-margin-desktop">
+<!-- Cover Banner & Shop Avatar -->
+<section class="relative mt-sm">
+<div class="w-full h-48 md:h-80 bg-cover bg-center rounded-b-[40px] overflow-hidden" data-alt="A panoramic wide shot of a vibrant, upscale West African marketplace boutique at sunrise. The architectural details feature modern clean lines with local artisanal touches like carved wood and patterned textiles. Soft morning sunlight filters through open-air structures, casting long, elegant shadows across organized displays of high-end local products. The color palette is dominated by lush greens and warm earthy tones, reflecting a premium Ivory Coast tech-modern aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCN9TLg6iJAH9xyazH2NeEkxuU0Ctp82LP5VqyGQSNQx8IAgrFThYFYagDMET2ReXnfNaB-4HOfOaXe8_UfF6rLXLVzCRfYqpYbqQqplu6o4AetfPS7GUgT5gxqAGa2VzM0vdewcarAdC1uSGYunaH7gIbAy7hG9EdHNmMCy0jSiw6G3iBspbGgvMsjipvzamfoSe3azbzGfX4Qho98lSo4wXpEsFAPCC7--JQyPeng37yI2y1Ls3JswQ')">
+</div>
+<div class="absolute -bottom-12 left-margin-mobile md:left-margin-desktop flex items-end gap-sm md:gap-md">
+<div class="w-24 h-24 md:w-40 md:h-40 rounded-full border-4 border-surface bg-white overflow-hidden shadow-sm">
+<img class="w-full h-full object-cover" data-alt="A professional circular brand mark for an Ivorian boutique. The logo is minimalist and modern, featuring an abstract geometric symbol that suggests growth and connectivity. It uses a high-contrast palette of deep primary green and bright accent orange against a clean white background. The visual style is crisp, professional, and trustworthy, perfectly centered and balanced for a high-end digital storefront identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKCDzdRkcQj9m14B-J3TeoqO2jLGQK_PwF1zRyrcUJHcGwpGRQR4rxYCbBp5VaisteY2jbAQhsLtVVPcwBunBz5Xu6DsVK72DgjgZx2nMZ_sOhzuwH7YCNVNTwZOXr72ic9M8aKlzLcnsoI2UjjDGr-TUUr1XPB1-daChSrDeM08R_7FWFyk4FK7OVfduqUoBiZeDNhYOcfZeM9sPuxg290joto5-VbrnnYeSH19ZLWonKNwJaemRwLg"/>
+</div>
+<div class="pb-base md:pb-xs hidden md:block">
+<span class="bg-primary/10 text-primary px-sm py-xs rounded-full font-label-md text-label-md flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+                        Vérifié
+                    </span>
+</div>
+</div>
+</section>
+<!-- Vendor Info Section -->
+<section class="mt-16 md:mt-16 flex flex-col md:flex-row justify-between items-start gap-md pb-md border-b border-outline-variant">
+<div class="flex-1">
+<div class="flex items-center gap-sm flex-wrap">
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Maison de la Mode Abidjan</h1>
+<span class="md:hidden bg-primary/10 text-primary px-sm py-xs rounded-full font-label-md text-label-md flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+                        Vérifié
+                    </span>
+</div>
+<div class="flex items-center gap-md mt-xs text-on-surface-variant font-body-md text-body-md flex-wrap">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-bold text-on-surface">4.9</span>
+<span>(128 avis)</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined">location_on</span>
+<span>Cocody, Angré 7ème Tranche</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined">schedule</span>
+<span>Réponse en &lt; 15 min</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-sm w-full md:w-auto">
+<button class="flex-1 md:flex-none px-xl py-xs rounded-full border border-primary text-primary font-label-md text-label-md hover:bg-primary/5 transition-all flex items-center justify-center gap-sm">
+<span class="material-symbols-outlined text-[20px]">chat</span>
+                    Contacter
+                </button>
+<button class="p-xs rounded-full border border-outline-variant hover:bg-surface-container transition-all">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+</section>
+<!-- Main Content Area with Sidebar -->
+<div class="flex flex-col lg:flex-row gap-lg py-lg">
+<!-- Left Side: Content -->
+<div class="flex-1">
+<!-- Live Order Row -->
+<div class="bento-card p-md mb-lg overflow-hidden bg-gradient-to-r from-primary/5 to-transparent border-l-4 border-l-primary">
+<div class="flex items-center justify-between mb-sm">
+<div class="flex items-center gap-sm">
+<div class="w-3 h-3 rounded-full bg-error animate-pulse"></div>
+<h2 class="font-headline-sm text-headline-sm">Commandez par numéro pendant nos lives</h2>
+</div>
+<span class="text-label-md text-on-surface-variant hidden md:block">Cliquez sur un numéro pour commander</span>
+</div>
+<div class="flex gap-sm overflow-x-auto pb-base custom-scrollbar">
+<!-- Numbers 1-15 -->
+<div class="flex gap-sm">
+<button class="w-12 h-12 flex-shrink-0 rounded-full bg-white border border-outline-variant flex items-center justify-center font-bold text-primary hover:bg-primary hover:text-on-primary transition-all active:scale-90">1</button>
+<button class="w-12 h-12 flex-shrink-0 rounded-full bg-white border border-outline-variant flex items-center justify-center font-bold text-primary hover:bg-primary hover:text-on-primary transition-all active:scale-90">2</button>
+<button class="w-12 h-12 flex-shrink-0 rounded-full bg-white border border-outline-variant flex items-center justify-center font-bold text-primary hover:bg-primary hover:text-on-primary transition-all active:scale-90">3</button>
+<button class="w-12 h-12 flex-shrink-0 rounded-full bg-white border border-outline-variant flex items-center justify-center font-bold text-primary hover:bg-primary hover:text-on-primary transition-all active:scale-90">4</button>
+<button class="w-12 h-12 flex-shrink-0 rounded-full bg-white border border-outline-variant flex items-center justify-center font-bold text-primary hover:bg-primary hover:text-on-primary transition-all active:scale-90">5</button>
+<button class="w-12 h-12 flex-shrink-0 rounded-full bg-white border border-outline-variant flex items-center justify-center font-bold text-primary hover:bg-primary hover:text-on-primary transition-all active:scale-90">6</button>
+<button class="w-12 h-12 flex-shrink-0 rounded-full bg-white border border-outline-variant flex items-center justify-center font-bold text-primary hover:bg-primary hover:text-on-primary transition-all active:scale-90">7</button>
+<button class="w-12 h-12 flex-shrink-0 rounded-full bg-white border border-outline-variant flex items-center justify-center font-bold text-primary hover:bg-primary hover:text-on-primary transition-all active:scale-90">8</button>
+<button class="w-12 h-12 flex-shrink-0 rounded-full bg-white border border-outline-variant flex items-center justify-center font-bold text-primary hover:bg-primary hover:text-on-primary transition-all active:scale-90">9</button>
+<button class="w-12 h-12 flex-shrink-0 rounded-full bg-white border border-outline-variant flex items-center justify-center font-bold text-primary hover:bg-primary hover:text-on-primary transition-all active:scale-90">10</button>
+</div>
+</div>
+</div>
+<!-- Product Grid -->
+<div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-md">
+<!-- Product Card 1 -->
+<div class="bento-card overflow-hidden group">
+<div class="aspect-square relative overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="A high-quality studio product shot of a luxury handcrafted leather handbag. The bag features intricate Ivorian patterns embossed on premium chocolate brown leather. It is presented against a neutral, high-key white background with soft, professional three-point lighting. The visual style is clean, modern, and high-end, emphasizing the texture and artisanal quality of the craftsmanship." src="https://lh3.googleusercontent.com/aida-public/AB6AXuANyWHOVbVar32IWTixeGdcxTnWaeOf8vI76XBS6TyfdJllhnpNcD_cMtPgXgGmvh95r1FoYpA85qTGkzYMP6VcvvzRHuy2uxq21YSKVrXyT-5JiXH5CQNpLcy2H96S-u3zuwCIIYZZcpzkh1nVUXkTqcsLRLfNVQLlVFaaWnfQkuGBUm9cDPzxniquhzavO-Mqmn-cil6eP616Lr5l9voshLwxaWodFgPXfT6VfHtlPmFP4jbbgLcBLg"/>
+<button class="absolute top-sm right-sm w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-primary hover:bg-primary hover:text-on-primary transition-all">
+<span class="material-symbols-outlined text-[20px]">favorite</span>
+</button>
+</div>
+<div class="p-sm">
+<h3 class="font-label-md text-label-md text-on-surface line-clamp-1">Sac 'Kente Luxe' Édition Limitée</h3>
+<div class="flex items-center justify-between mt-xs">
+<span class="font-headline-sm text-secondary font-bold">45,000 FCFA</span>
+</div>
+<button class="w-full mt-sm py-xs rounded-full bg-primary/5 text-primary border border-primary/20 font-label-md text-label-md hover:bg-primary hover:text-on-primary transition-all flex items-center justify-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">add_shopping_cart</span>
+                                Ajouter
+                            </button>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="bento-card overflow-hidden group">
+<div class="aspect-square relative overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="A vibrant and modern fashion photography shot of a tailored African wax print blazer. The blazer features bold, energetic orange and deep green geometric patterns. It is displayed on a minimalist white mannequin in a bright, airy studio environment. The lighting is crisp and modern, highlighting the vibrant colors and sharp tailoring of the garment. The overall aesthetic is professional, upbeat, and fashion-forward." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwuZj5B9UuY0VXWy9R3r33YFJZYeRTk3w0OEcZrFvP7nWb7h2S4GMrb7VzH8QNqzZRPYbHMkAwxQtcWxxRt-LIFrjtsxMIEvdml6o8g1OeaKJc9Rl8P-pz6O3UPpP0zhe22OF8-buDEDiP9aOpRR-LKbUpva4eThp9i0zCB3kqVMxGIxK8Qcz1x427YMuJDA6ATiE_F4vlqNGfanzSHvAwXJjO0HrHhIKe9paeqL6ptVbRpa6ItxLInA"/>
+<button class="absolute top-sm right-sm w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-primary hover:bg-primary hover:text-on-primary transition-all">
+<span class="material-symbols-outlined text-[20px]">favorite</span>
+</button>
+</div>
+<div class="p-sm">
+<h3 class="font-label-md text-label-md text-on-surface line-clamp-1">Blazer Wax 'Énergie'</h3>
+<div class="flex items-center justify-between mt-xs">
+<span class="font-headline-sm text-secondary font-bold">32,500 FCFA</span>
+</div>
+<button class="w-full mt-sm py-xs rounded-full bg-primary/5 text-primary border border-primary/20 font-label-md text-label-md hover:bg-primary hover:text-on-primary transition-all flex items-center justify-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">add_shopping_cart</span>
+                                Ajouter
+                            </button>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="bento-card overflow-hidden group">
+<div class="aspect-square relative overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="A set of handcrafted contemporary African ceramic vases arranged artistically. The vases feature minimalist shapes with matte earthy finishes and subtle traditional etched motifs. They are placed on a clean white surface with long, elegant natural light shadows. The aesthetic is extremely modern and sophisticated, blending traditional craft with a clean, high-end gallery vibe." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPz0CWMZGAynOEt297rEvpehCplU_FEeXHc6QRvfcXXHqQRMSrHJAK3Y81g9qX6qvcQmuSQA2LzJeSRVXWBK5BrETy1fO2eS-gi1WGrZK9ZrPRhOvs5hRFRSYSAp7fvnt6egwOT2-zcBj0oBgnp-JDheqb3HXnLjZL802RjKs35hA0WB0YL64MTZ4WihdMa_u1UR1QdkTxYzbePq9BvkuoYA6chkRPzwCna23ypMGwgRlqmNkLaT6loA"/>
+<button class="absolute top-sm right-sm w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-primary hover:bg-primary hover:text-on-primary transition-all">
+<span class="material-symbols-outlined text-[20px]">favorite</span>
+</button>
+</div>
+<div class="p-sm">
+<h3 class="font-label-md text-label-md text-on-surface line-clamp-1">Ensemble Céramique 'Terre'</h3>
+<div class="flex items-center justify-between mt-xs">
+<span class="font-headline-sm text-secondary font-bold">18,000 FCFA</span>
+</div>
+<button class="w-full mt-sm py-xs rounded-full bg-primary/5 text-primary border border-primary/20 font-label-md text-label-md hover:bg-primary hover:text-on-primary transition-all flex items-center justify-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">add_shopping_cart</span>
+                                Ajouter
+                            </button>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="bento-card overflow-hidden group">
+<div class="aspect-square relative overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="A detailed close-up shot of artisanal gold-plated jewelry inspired by Akan symbolism. The pieces include a bold necklace and matching earrings, laid out on a dark green velvet fabric that provides a rich, high-contrast backdrop. The lighting is dramatic and focused, highlighting the gleaming metallic surface and the intricate detailed engraving. The mood is luxurious, premium, and deeply cultural yet modern." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0ZGtGvKzuQ1qeuFCjysnMMJJoj4BY9YhrKspHl0YGN3AtyZ6Qc41xXtnipdiHRCmlxAbAHCD4-sL8ZImE-_uXbwBFMvDkgUPWbYvU9DQ6Nx-zvtoy4RxocGnUNv0AJpn92kDZl7kQ5bzIiJ-WukxYnabcdaiRirms6NL1vOGYFNyHOa-7Wj8hoHY20j5DJ8VwWZap9F51T7OBWv--1cbPQgEVKOnWwg8E5O_F-V0mXk5M2wpKEasGTQ"/>
+<button class="absolute top-sm right-sm w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-primary hover:bg-primary hover:text-on-primary transition-all">
+<span class="material-symbols-outlined text-[20px]">favorite</span>
+</button>
+</div>
+<div class="p-sm">
+<h3 class="font-label-md text-label-md text-on-surface line-clamp-1">Collier Akan Doré à l'Or</h3>
+<div class="flex items-center justify-between mt-xs">
+<span class="font-headline-sm text-secondary font-bold">55,000 FCFA</span>
+</div>
+<button class="w-full mt-sm py-xs rounded-full bg-primary/5 text-primary border border-primary/20 font-label-md text-label-md hover:bg-primary hover:text-on-primary transition-all flex items-center justify-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">add_shopping_cart</span>
+                                Ajouter
+                            </button>
+</div>
+</div>
+<!-- Duplicate for more grid items -->
+<div class="bento-card overflow-hidden group">
+<div class="aspect-square relative overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Modern organic skincare set featuring African ingredients like shea butter and moringa. The packaging is minimalist and sleek with dark glass bottles and cream labels. Shot in a bright, clean light-mode bathroom setting with a touch of botanical greenery. High-end, trustworthy, and natural aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_CLxxSqix9U9YhJ1EUQ_2Yf3XBs2G9uetBfj0Vj2GAyeYJdWK3gXFDxblL8maJvFygK9MDv_ysnp-_OmDQer-vWlN1yzWqeNJ9Q8uTc_lCshuV-DLbZG1B4MKWkS02Bq3d4w2NnxxOF5hzioH3XqIpRlEL6nA-7f9QLfguWdtoUCvZajqpB35lJFOvRv4PHMXob4YjzNzBYV70VjsO18iI-rWtv1kw3K2aXylGl5F25wGhgJVmiY2gw"/>
+</div>
+<div class="p-sm">
+<h3 class="font-label-md text-label-md text-on-surface line-clamp-1">Coffret Soin Visage Bio</h3>
+<div class="flex items-center justify-between mt-xs">
+<span class="font-headline-sm text-secondary font-bold">12,500 FCFA</span>
+</div>
+<button class="w-full mt-sm py-xs rounded-full bg-primary/5 text-primary border border-primary/20 font-label-md text-label-md hover:bg-primary hover:text-on-primary transition-all flex items-center justify-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">add_shopping_cart</span>
+                                Ajouter
+                            </button>
+</div>
+</div>
+<div class="bento-card overflow-hidden group">
+<div class="aspect-square relative overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="High-end leather men's loafers in a deep burgundy color, featuring traditional woven accents. Displayed on a polished wooden floor in a modern, luxury loft apartment. The lighting is soft and warm, emphasizing the quality of the leather and the sophisticated design. Premium fashion photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsFOQ7zh-c_EfJPwGCt5qr_tBgS6Mwl9n4pNpuPw_g_bWVyu1jS7968VNFVuslT8v2ZYVAGJ-o7x_JScEWlZ0GNLNXMEiudH2kKRSn3PlAUZtv0E5WNhLB_zTqBAqUEP5AF_63my-Nl-1g4k85K11FTTD8cPkJnLcB3PbkWdpA1nwLGxvM1V9hbF9cSj3WF4FPWwW0QparFSCzN9olBDaPGrsJkWflbfv_lkDiYy1MxmwgIkjregVtXQ"/>
+</div>
+<div class="p-sm">
+<h3 class="font-label-md text-label-md text-on-surface line-clamp-1">Mocassins Cuir Artisanal</h3>
+<div class="flex items-center justify-between mt-xs">
+<span class="font-headline-sm text-secondary font-bold">38,000 FCFA</span>
+</div>
+<button class="w-full mt-sm py-xs rounded-full bg-primary/5 text-primary border border-primary/20 font-label-md text-label-md hover:bg-primary hover:text-on-primary transition-all flex items-center justify-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">add_shopping_cart</span>
+                                Ajouter
+                            </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Sticky Sidebar: Cart Summary -->
+<aside class="w-full lg:w-80 flex-shrink-0">
+<div class="sticky top-24 bento-card p-md flex flex-col bg-surface-container-low">
+<div class="flex items-center justify-between mb-md">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">shopping_basket</span>
+<h2 class="font-headline-sm text-headline-sm">Votre Panier</h2>
+</div>
+<span class="bg-primary text-on-primary text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center">2</span>
+</div>
+<div class="space-y-sm mb-lg">
+<!-- Item 1 -->
+<div class="flex items-center gap-sm">
+<div class="w-12 h-12 rounded-lg bg-surface-container overflow-hidden flex-shrink-0 border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="Thumbnail of a luxury leather handbag for a cart summary." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0aQZEXc-La2ryzbCalKQ3-iceJd_W9v9O2WyVkFjIkpjvffhExUpnyszALflIV7nIuyNS34IOWoo46hpLXaNv-ESdyDF_edUrdUpHLnAV7n83j1ANJOEje_44A77xWEYqI_uTfxPucHh9xfLMzWg9ey_Fgw01dMyu8BM5SCS8VCX99TKk_mf9GbepQFRWDl1n5U3i-P8RfzYQJEPE9sefnrds032p5XVb6vWx3LFCOxT60j-Qbg85eg"/>
+</div>
+<div class="flex-1">
+<h4 class="text-label-md font-bold text-on-surface line-clamp-1">Sac 'Kente Luxe'</h4>
+<p class="text-[12px] text-on-surface-variant">1 x 45,000 FCFA</p>
+</div>
+<button class="text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+<!-- Item 2 -->
+<div class="flex items-center gap-sm">
+<div class="w-12 h-12 rounded-lg bg-surface-container overflow-hidden flex-shrink-0 border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="Thumbnail of a tailored wax print blazer for a cart summary." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDv04ChH_253nwv3iPp-QIGSm_RM7sAm_o1d-eUzhiLTsHSGIqz6lVG8abbdA_Bw_NoWzqnSRFqoY4SDhc7TDoGsKR_ywCHlN3xgNtHHgrWgZ8hVnHpVmU9Xpornl7wX0K1ZxS3esi9pH6X5OuUYpGiboNxY9MXOVNughGPbO3NUi7FQP7m3jYkfAAyw_Evqz2ad2iSJ6RkZ6FAHyfQpSVUH80Z26IgJHWUcsHB-S70eUpqdAVAmjNoNA"/>
+</div>
+<div class="flex-1">
+<h4 class="text-label-md font-bold text-on-surface line-clamp-1">Blazer Wax</h4>
+<p class="text-[12px] text-on-surface-variant">1 x 32,500 FCFA</p>
+</div>
+<button class="text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</div>
+<div class="pt-md border-t border-outline-variant">
+<div class="flex justify-between items-center mb-xs">
+<span class="text-body-md text-on-surface-variant">Sous-total</span>
+<span class="text-body-md font-bold text-on-surface">77,500 FCFA</span>
+</div>
+<div class="flex justify-between items-center mb-md">
+<span class="text-body-md text-on-surface-variant">Livraison</span>
+<span class="text-body-md font-bold text-primary">Gratuite</span>
+</div>
+<button class="w-full py-md rounded-full bg-secondary text-on-primary font-headline-sm flex items-center justify-center gap-sm hover:opacity-90 transition-all active:scale-95">
+                            Voir le panier
+                            <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+<div class="mt-md p-sm bg-primary/5 rounded-xl flex items-start gap-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">info</span>
+<p class="text-[12px] text-on-primary-fixed-variant leading-tight">La livraison express est disponible pour votre zone (Cocody).</p>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-primary dark:bg-primary-container w-full mt-lg">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-md px-margin-desktop py-xl text-on-primary max-w-[1280px] mx-auto">
+<div class="flex flex-col gap-sm">
+<span class="font-headline-sm text-headline-sm text-on-primary">DjidjiMarket</span>
+<p class="font-body-md text-body-md opacity-80">Le meilleur du commerce Ivoirien, livré chez vous.</p>
+</div>
+<div class="flex flex-col gap-sm">
+<h4 class="font-label-md text-label-md uppercase tracking-wider opacity-60">Navigation</h4>
+<ul class="flex flex-col gap-xs font-body-md">
+<li><a class="hover:opacity-100 opacity-80 transition-opacity" href="#">À propos</a></li>
+<li><a class="hover:opacity-100 opacity-80 transition-opacity" href="#">Vendeurs</a></li>
+<li><a class="hover:opacity-100 opacity-80 transition-opacity" href="#">Aide</a></li>
+<li><a class="hover:opacity-100 opacity-80 transition-opacity" href="#">Contact</a></li>
+</ul>
+</div>
+<div class="flex flex-col gap-sm">
+<h4 class="font-label-md text-label-md uppercase tracking-wider opacity-60">Legal</h4>
+<ul class="flex flex-col gap-xs font-body-md">
+<li><a class="hover:opacity-100 opacity-80 transition-opacity" href="#">Confidentialité</a></li>
+<li><a class="hover:opacity-100 opacity-80 transition-opacity" href="#">Conditions</a></li>
+</ul>
+</div>
+<div class="flex flex-col gap-sm">
+<h4 class="font-label-md text-label-md uppercase tracking-wider opacity-60">Social</h4>
+<div class="flex gap-sm">
+<span class="material-symbols-outlined cursor-pointer opacity-80 hover:opacity-100 transition-opacity">face_nod</span>
+<span class="material-symbols-outlined cursor-pointer opacity-80 hover:opacity-100 transition-opacity">brand_awareness</span>
+<span class="material-symbols-outlined cursor-pointer opacity-80 hover:opacity-100 transition-opacity">alternate_email</span>
+</div>
+</div>
+</div>
+<div class="px-margin-desktop py-md border-t border-on-primary/10 max-w-[1280px] mx-auto flex flex-col md:flex-row justify-between items-center gap-sm">
+<p class="font-body-md text-body-md opacity-80">© 2024 DjidjiMarket. Tous droits réservés.</p>
+<div class="flex gap-md items-center grayscale opacity-50">
+<span class="material-symbols-outlined">payments</span>
+<span class="material-symbols-outlined">credit_card</span>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interactions and simple cart logic
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                if(this.innerText.includes('Ajouter')) {
+                    const originalText = this.innerHTML;
+                    this.innerHTML = '<span class="material-symbols-outlined text-[18px]">check</span> Ajouté';
+                    this.classList.add('bg-primary', 'text-on-primary');
+                    setTimeout(() => {
+                        this.innerHTML = originalText;
+                        this.classList.remove('bg-primary', 'text-on-primary');
+                    }, 2000);
+                }
+            });
+        });
+
+        // Sticky header behavior
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 0) {
+                header.classList.add('shadow-md');
+            } else {
+                header.classList.remove('shadow-md');
+            }
+        });
+    </script>
+</body></html>

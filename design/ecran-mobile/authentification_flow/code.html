@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f9faf4;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .otp-input:focus {
+            border-color: #053715;
+            box-shadow: none;
+            outline: none;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#ffdbca",
+                        "on-tertiary-fixed": "#380919",
+                        "background": "#f9faf4",
+                        "surface-container-highest": "#e2e3dd",
+                        "surface": "#f9faf4",
+                        "on-background": "#191c19",
+                        "primary-fixed-dim": "#a0d3a2",
+                        "outline-variant": "#c1c9be",
+                        "on-surface-variant": "#414940",
+                        "inverse-primary": "#a0d3a2",
+                        "on-tertiary": "#ffffff",
+                        "surface-variant": "#e2e3dd",
+                        "tertiary": "#511d2c",
+                        "secondary-container": "#fe8e48",
+                        "on-surface": "#191c19",
+                        "on-primary": "#ffffff",
+                        "secondary": "#9b4500",
+                        "on-secondary-fixed": "#331200",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed": "#ffd9e0",
+                        "primary-container": "#204e29",
+                        "primary": "#053715",
+                        "outline": "#727970",
+                        "tertiary-fixed-dim": "#ffb1c2",
+                        "on-tertiary-fixed-variant": "#6e3544",
+                        "on-primary-fixed-variant": "#22502b",
+                        "tertiary-container": "#6c3342",
+                        "surface-bright": "#f9faf4",
+                        "inverse-on-surface": "#f0f1eb",
+                        "inverse-surface": "#2e312d",
+                        "surface-container-high": "#e7e9e3",
+                        "surface-dim": "#d9dbd5",
+                        "on-primary-container": "#8dbf8f",
+                        "surface-container-lowest": "#ffffff",
+                        "error": "#ba1a1a",
+                        "surface-container": "#edeee8",
+                        "primary-fixed": "#bbf0bd",
+                        "secondary-fixed-dim": "#ffb68e",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed": "#002108",
+                        "surface-container-low": "#f3f4ee",
+                        "on-tertiary-container": "#ea9eae",
+                        "on-secondary-container": "#6b2d00",
+                        "on-secondary-fixed-variant": "#763300",
+                        "surface-tint": "#3a6841",
+                        "on-secondary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xxl": "48px",
+                        "lg": "24px",
+                        "gutter": "12px",
+                        "base": "4px",
+                        "xs": "8px",
+                        "md": "16px",
+                        "sm": "12px",
+                        "xl": "32px",
+                        "container-margin": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "display": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "label-sm": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "display": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface">
+<div class="min-h-screen flex items-center justify-center p-md overflow-x-hidden">
+<div class="flex flex-col md:flex-row gap-xl max-w-7xl w-full" id="flow-container">
+<!-- SCREEN 1: Welcome -->
+<section class="flex-shrink-0 w-full md:w-[380px] bg-white border border-outline-variant rounded-lg p-xl flex flex-col items-center justify-between min-h-[600px] transition-all duration-500" id="screen-welcome">
+<div class="flex flex-col items-center gap-xl w-full mt-xl">
+<div class="w-32 h-32 flex items-center justify-center">
+<img alt="DjidjiMarket Logo" class="w-full h-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuByVpiAnmUubwoQKFhf9x_KRdK8uNcBjA7kSumGTTkgM2WIXr9zPTtFsAVWzTswKLAPsoHSSnz0LP_lHtAaeKubkUfomXCmvLLrvv5Msj_oqvBOHWSQWI5jbIlv1Q5MUy9LqDX7mV8GYlWF9rIrfK2J64GAf4ipZXqGHY6dokZncJ9pNYqnT4QbJfvxUraNwynnXVvpzfT6FcB9_7tnWLbjTifff3i-74kjUv0_tP5jBc6zlTmG3CQ0DOfJRwqtokjX8w"/>
+</div>
+<div class="text-center">
+<h1 class="font-headline-md text-headline-md text-primary mb-xs">Bienvenue</h1>
+<p class="font-body-md text-body-md text-on-surface-variant px-md">Le vrai marché, en toute confiance</p>
+</div>
+</div>
+<div class="w-full flex flex-col gap-md mb-xl">
+<button class="w-full bg-[#D56E2B] text-white py-4 rounded-full font-label-md text-label-md transition-transform active:scale-95 shadow-sm" onclick="navigateTo('screen-login')">
+                        Continuer en tant que client
+                    </button>
+<button class="w-full border-2 border-[#204E29] text-[#204E29] py-4 rounded-full font-label-md text-label-md transition-all hover:bg-[#204E29]/5 active:scale-95">
+                        Je suis vendeur
+                    </button>
+</div>
+</section>
+<!-- SCREEN 2: Phone Login -->
+<section class="flex-shrink-0 w-full md:w-[380px] bg-white border border-outline-variant rounded-lg p-xl flex flex-col items-start min-h-[600px] transition-all duration-500" id="screen-login">
+<button class="mb-xl p-xs rounded-full hover:bg-surface-variant transition-colors" onclick="navigateTo('screen-welcome')">
+<span class="material-symbols-outlined text-on-surface">arrow_back</span>
+</button>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface mb-xs">Votre numéro</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-xl">Entrez votre numéro pour recevoir un code de confirmation par SMS.</p>
+<div class="w-full space-y-md">
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 flex items-center pl-md pointer-events-none gap-xs">
+<span class="text-xl">🇨🇮</span>
+<span class="font-body-md text-on-surface">+225</span>
+</div>
+<input class="w-full pl-28 pr-md py-4 border border-outline rounded-lg bg-surface-container-low focus:ring-2 focus:ring-primary focus:border-primary outline-none font-body-md transition-all" placeholder="00 00 00 00 00" type="tel"/>
+</div>
+<button class="w-full bg-[#D56E2B] text-white py-4 rounded-full font-label-md text-label-md transition-transform active:scale-95 mt-lg" onclick="navigateTo('screen-otp')">
+                        Recevoir le code
+                    </button>
+</div>
+<div class="mt-auto w-full text-center">
+<p class="font-label-sm text-label-sm text-on-surface-variant">
+                        En continuant, vous acceptez nos <span class="text-primary font-semibold underline">Conditions d'Utilisation</span>.
+                    </p>
+</div>
+</section>
+<!-- SCREEN 3: OTP Verification -->
+<section class="flex-shrink-0 w-full md:w-[380px] bg-white border border-outline-variant rounded-lg p-xl flex flex-col items-start min-h-[600px] transition-all duration-500" id="screen-otp">
+<button class="mb-xl p-xs rounded-full hover:bg-surface-variant transition-colors" onclick="navigateTo('screen-login')">
+<span class="material-symbols-outlined text-on-surface">arrow_back</span>
+</button>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface mb-xs">Vérification</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-xl">Nous avons envoyé un code de 6 chiffres au <span class="font-semibold text-on-surface">+225 07...45</span></p>
+<div class="w-full space-y-xl">
+<div class="flex justify-between gap-xs">
+<input class="otp-input w-12 h-14 text-center text-headline-md font-bold border border-outline rounded-md bg-surface-container-low transition-all" maxlength="1" type="text"/>
+<input class="otp-input w-12 h-14 text-center text-headline-md font-bold border border-outline rounded-md bg-surface-container-low transition-all" maxlength="1" type="text"/>
+<input class="otp-input w-12 h-14 text-center text-headline-md font-bold border border-outline rounded-md bg-surface-container-low transition-all" maxlength="1" type="text"/>
+<input class="otp-input w-12 h-14 text-center text-headline-md font-bold border border-outline rounded-md bg-surface-container-low transition-all" maxlength="1" type="text"/>
+<input class="otp-input w-12 h-14 text-center text-headline-md font-bold border border-outline rounded-md bg-surface-container-low transition-all" maxlength="1" type="text"/>
+<input class="otp-input w-12 h-14 text-center text-headline-md font-bold border border-outline rounded-md bg-surface-container-low transition-all" maxlength="1" type="text"/>
+</div>
+<div class="text-center w-full">
+<p class="font-body-md text-body-md text-on-surface-variant" id="timer">Renvoyer le code dans <span class="font-semibold text-primary">00:45</span></p>
+</div>
+<button class="w-full bg-[#D56E2B] text-white py-4 rounded-full font-label-md text-label-md transition-transform active:scale-95">
+                        Vérifier
+                    </button>
+</div>
+</section>
+</div>
+</div>
+<!-- Micro-interactions Script -->
+<script>
+        function navigateTo(screenId) {
+            const screens = ['screen-welcome', 'screen-login', 'screen-otp'];
+            
+            // On desktop we keep side-by-side if they fit, 
+            // but on mobile we focus the current one
+            if (window.innerWidth < 768) {
+                screens.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (id === screenId) {
+                        el.classList.remove('hidden');
+                        el.classList.add('flex');
+                    } else {
+                        el.classList.add('hidden');
+                        el.classList.remove('flex');
+                    }
+                });
+            } else {
+                // Highlights the active screen subtly on desktop
+                screens.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (id === screenId) {
+                        el.style.transform = 'scale(1.02)';
+                        el.style.borderColor = '#053715';
+                        el.style.opacity = '1';
+                    } else {
+                        el.style.transform = 'scale(0.98)';
+                        el.style.borderColor = '#c1c9be';
+                        el.style.opacity = '0.7';
+                    }
+                });
+            }
+        }
+
+        // Initialize state
+        window.addEventListener('load', () => {
+            if (window.innerWidth < 768) {
+                navigateTo('screen-welcome');
+            } else {
+                navigateTo('screen-welcome');
+            }
+        });
+
+        // OTP inputs auto-focus logic
+        const inputs = document.querySelectorAll('.otp-input');
+        inputs.forEach((input, index) => {
+            input.addEventListener('input', (e) => {
+                if (e.target.value.length === 1 && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+            });
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && !e.target.value && index > 0) {
+                    inputs[index - 1].focus();
+                }
+            });
+        });
+
+        // Simple Countdown Timer
+        let time = 45;
+        const timerEl = document.querySelector('#timer span');
+        const countdown = setInterval(() => {
+            if (time <= 0) {
+                document.getElementById('timer').innerHTML = '<span class="text-primary font-semibold cursor-pointer">Renvoyer le code maintenant</span>';
+                clearInterval(countdown);
+                return;
+            }
+            time--;
+            const mins = Math.floor(time / 60);
+            const secs = time % 60;
+            timerEl.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }, 1000);
+    </script>
+</body></html>

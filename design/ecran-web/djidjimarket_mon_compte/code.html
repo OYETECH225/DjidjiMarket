@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mon Profil - IvorianMarket</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f9faf4;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-highest": "#e2e3dd",
+                      "primary-container": "#204e29",
+                      "surface": "#f9faf4",
+                      "on-tertiary-fixed-variant": "#6e3544",
+                      "error": "#ba1a1a",
+                      "secondary-fixed-dim": "#ffb68e",
+                      "error-container": "#ffdad6",
+                      "tertiary-fixed-dim": "#ffb1c2",
+                      "tertiary-fixed": "#ffd9e0",
+                      "surface-dim": "#d9dbd5",
+                      "secondary-fixed": "#ffdbca",
+                      "surface-tint": "#3a6841",
+                      "outline": "#727970",
+                      "on-tertiary-container": "#ea9eae",
+                      "surface-variant": "#e2e3dd",
+                      "primary": "#053715",
+                      "on-surface-variant": "#414940",
+                      "outline-variant": "#c1c9be",
+                      "on-surface": "#191c19",
+                      "background": "#f9faf4",
+                      "on-tertiary-fixed": "#380919",
+                      "surface-container-high": "#e7e9e3",
+                      "surface-bright": "#f9faf4",
+                      "primary-fixed-dim": "#a0d3a2",
+                      "on-secondary-container": "#6b2d00",
+                      "on-primary": "#ffffff",
+                      "surface-container-low": "#f3f4ee",
+                      "secondary": "#9b4500",
+                      "tertiary-container": "#6c3342",
+                      "tertiary": "#511d2c",
+                      "on-background": "#191c19",
+                      "on-secondary": "#ffffff",
+                      "inverse-on-surface": "#f0f1eb",
+                      "on-primary-container": "#8dbf8f",
+                      "inverse-surface": "#2e312d",
+                      "primary-fixed": "#bbf0bd",
+                      "on-tertiary": "#ffffff",
+                      "on-primary-fixed-variant": "#22502b",
+                      "on-primary-fixed": "#002108",
+                      "surface-container-lowest": "#ffffff",
+                      "on-secondary-fixed-variant": "#763300",
+                      "on-secondary-fixed": "#331200",
+                      "on-error": "#ffffff",
+                      "inverse-primary": "#a0d3a2",
+                      "secondary-container": "#fe8e48",
+                      "on-error-container": "#93000a",
+                      "surface-container": "#edeee8"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px",
+                      "card": "24px"
+              },
+              "spacing": {
+                      "sm": "16px",
+                      "gutter": "16px",
+                      "md": "24px",
+                      "lg": "40px",
+                      "base": "4px",
+                      "margin-mobile": "16px",
+                      "xl": "64px",
+                      "margin-desktop": "32px",
+                      "xs": "8px"
+              },
+              "fontFamily": {
+                      "headline-sm": ["Plus Jakarta Sans"],
+                      "body-md": ["Plus Jakarta Sans"],
+                      "headline-md": ["Plus Jakarta Sans"],
+                      "headline-lg": ["Plus Jakarta Sans"],
+                      "label-md": ["Plus Jakarta Sans"],
+                      "display-lg": ["Plus Jakarta Sans"],
+                      "body-lg": ["Plus Jakarta Sans"],
+                      "headline-lg-mobile": ["Plus Jakarta Sans"]
+              },
+              "fontSize": {
+                      "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "800"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "800"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-surface min-h-screen text-on-surface">
+<!-- TopNavBar -->
+<header class="w-full top-0 sticky z-50 bg-surface border-b border-outline-variant">
+<div class="flex justify-between items-center w-full px-margin-desktop max-w-7xl mx-auto h-20">
+<div class="flex items-center gap-lg">
+<span class="text-headline-md font-headline-md text-primary">IvorianMarket</span>
+<nav class="hidden md:flex items-center gap-md">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="#">Home</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="#">Categories</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="#">Deals</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="#">Sellers</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<div class="flex items-center gap-sm pr-md border-r border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:bg-surface-container-low p-2 rounded-full transition-all">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:bg-surface-container-low p-2 rounded-full transition-all">favorite</span>
+</div>
+<div class="flex items-center gap-xs cursor-pointer hover:bg-surface-container-low p-xs rounded-lg transition-all">
+<img class="w-10 h-10 rounded-full object-cover" data-alt="A professional headshot of a young Ivorian woman with a warm, confident expression. She has neatly styled hair and wears a professional green business suit that matches the brand colors. The lighting is soft and studio-quality against a clean, off-white background, reflecting a high-end corporate aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-g310HlHhaxA1r_PlXBjHOxtpDU7uilbtwqCHDbETpJpeIF8B-PUTjxPtHALt093opxvavCeOjDSHEIjOd_YFqjlLTW8cMGbTBmX-aVQ9pj_pqM56tL00kE8sxuZZN-zp_Q8O3F4cpdq4WUa2TY6vinmBz97SZNW60o3r84QSfTJBwnQ3fr7Xqj1eb6IFgS4x7gfboYD3MaPjOF2RNe4O22-ZNAuQ4NMHlQ4T7vbuKfPUTK0q6YnNzQ"/>
+<span class="hidden md:block font-label-md text-label-md text-primary">Kouassi A.</span>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-margin-desktop py-lg flex flex-col md:flex-row gap-lg">
+<!-- Sidebar Navigation -->
+<aside class="w-full md:w-72 flex flex-col gap-md">
+<nav class="bg-surface-container-lowest border border-outline-variant rounded-card p-sm flex flex-col gap-xs">
+<a class="flex items-center gap-sm px-md py-sm bg-primary-container text-on-primary-container rounded-lg transition-transform active:scale-95" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-md text-label-md">Profil</span>
+</a>
+<a class="flex items-center gap-sm px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">location_on</span>
+<span class="font-label-md text-label-md">Adresses</span>
+</a>
+<a class="flex items-center gap-sm px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-label-md text-label-md">Paiements</span>
+</a>
+<a class="flex items-center gap-sm px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="font-label-md text-label-md">Commandes</span>
+</a>
+<a class="flex items-center gap-sm px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">notifications</span>
+<span class="font-label-md text-label-md">Notifications</span>
+</a>
+</nav>
+<!-- Seller CTA Card -->
+<div class="relative overflow-hidden bg-primary-container text-on-primary-container rounded-card p-md border border-primary transition-all hover:border-secondary-container">
+<div class="relative z-10 flex flex-col gap-xs">
+<h3 class="font-headline-sm text-headline-sm text-white">Vendez sur DjidjiMarket</h3>
+<p class="font-body-md text-body-md text-primary-fixed opacity-90">Ouvrez votre boutique en ligne et atteignez des millions de clients dès aujourd'hui.</p>
+<button class="mt-sm bg-secondary-container text-on-secondary-container font-label-md text-label-md py-xs px-md rounded-full w-fit hover:brightness-110 transition-all">Devenir vendeur</button>
+</div>
+<!-- Abstract Pattern background using Tailwind -->
+<div class="absolute -right-8 -bottom-8 w-32 h-32 bg-primary-fixed-dim opacity-10 rounded-full blur-2xl"></div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<section class="flex-1">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-card p-md md:p-xl">
+<div class="mb-lg">
+<h1 class="font-headline-lg text-headline-lg text-primary mb-xs">Informations Personnelles</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Gérez vos détails personnels et vos préférences de contact.</p>
+</div>
+<form class="grid grid-cols-1 md:grid-cols-2 gap-md" onsubmit="return false;">
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface ml-base">Nom Complet</label>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-lg p-sm font-body-md text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" type="text" value="Aya Kouassi"/>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface ml-base">Adresse Email</label>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-lg p-sm font-body-md text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" type="email" value="aya.kouassi@exemple.ci"/>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface ml-base">Numéro de Téléphone</label>
+<div class="flex gap-xs">
+<div class="bg-surface-container-high border border-outline-variant rounded-lg px-sm flex items-center justify-center font-body-md text-body-md text-on-surface-variant">
+                                +225
+                            </div>
+<input class="flex-1 bg-surface-container-low border border-outline-variant rounded-lg p-sm font-body-md text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" type="tel" value="0708091011"/>
+</div>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface ml-base">Date de Naissance</label>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-lg p-sm font-body-md text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" type="date" value="1995-05-24"/>
+</div>
+<div class="md:col-span-2 flex flex-col gap-xs mt-md">
+<h4 class="font-headline-sm text-headline-sm text-primary mb-xs">Sécurité</h4>
+<div class="p-sm border border-outline-variant rounded-xl flex items-center justify-between bg-surface-container-lowest">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">lock</span>
+<div>
+<p class="font-label-md text-label-md">Mot de passe</p>
+<p class="font-body-md text-body-md text-on-surface-variant">Dernière modification il y a 3 mois</p>
+</div>
+</div>
+<button class="text-primary font-label-md text-label-md hover:underline">Modifier</button>
+</div>
+</div>
+<div class="md:col-span-2 flex justify-end gap-md mt-lg">
+<button class="px-md py-sm border border-primary text-primary rounded-full font-label-md text-label-md hover:bg-surface-container-low transition-all" type="reset">
+                            Annuler
+                        </button>
+<button class="px-xl py-sm bg-primary text-white rounded-full font-label-md text-label-md hover:brightness-110 transition-all" type="submit">
+                            Enregistrer les modifications
+                        </button>
+</div>
+</form>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-high border-t border-outline-variant py-xl mt-xl">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-lg px-margin-desktop max-w-7xl mx-auto">
+<div class="flex flex-col gap-sm">
+<span class="font-headline-sm text-headline-sm text-primary">IvorianMarket</span>
+<p class="font-body-md text-body-md text-on-surface-variant">Le plus grand marché digital de Côte d'Ivoire. Qualité, confiance et rapidité.</p>
+</div>
+<div class="flex flex-col gap-xs">
+<h4 class="font-label-md text-label-md text-primary mb-xs">Aide</h4>
+<a class="font-body-md text-body-md text-on-surface-variant hover:underline decoration-secondary transition-colors" href="#">About Us</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:underline decoration-secondary transition-colors" href="#">Shipping Policy</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:underline decoration-secondary transition-colors" href="#">Terms of Service</a>
+</div>
+<div class="flex flex-col gap-xs">
+<h4 class="font-label-md text-label-md text-primary mb-xs">Business</h4>
+<a class="font-body-md text-body-md text-on-surface-variant hover:underline decoration-secondary transition-colors" href="#">Vendor Portal</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:underline decoration-secondary transition-colors" href="#">Advertising</a>
+</div>
+<div class="flex flex-col gap-xs">
+<h4 class="font-label-md text-label-md text-primary mb-xs">Contact</h4>
+<a class="font-body-md text-body-md text-on-surface-variant hover:underline decoration-secondary transition-colors" href="#">Contact Support</a>
+<div class="flex gap-sm mt-xs">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer">face_nod</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer">share</span>
+</div>
+</div>
+</div>
+<div class="max-w-7xl mx-auto px-margin-desktop mt-lg pt-md border-t border-outline-variant flex justify-between items-center">
+<p class="font-body-md text-body-md text-on-surface-variant">© 2024 IvorianMarket. All rights reserved.</p>
+<div class="flex gap-md">
+<span class="material-symbols-outlined text-on-surface-variant">credit_card</span>
+<span class="material-symbols-outlined text-on-surface-variant">account_balance_wallet</span>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interaction for form inputs
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.querySelector('label')?.classList.add('text-primary');
+            });
+            input.addEventListener('blur', () => {
+                input.parentElement.querySelector('label')?.classList.remove('text-primary');
+            });
+        });
+    </script>
+</body></html>
