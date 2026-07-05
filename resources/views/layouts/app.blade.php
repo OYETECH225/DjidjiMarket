@@ -15,9 +15,9 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @livewireStyles
     </head>
-    <body class="min-h-screen bg-djidji-bg font-body text-djidji-text antialiased">
+    <body class="min-h-screen overflow-x-hidden bg-djidji-bg font-body text-djidji-text antialiased">
         <header class="sticky top-0 z-10 border-b border-djidji-outline bg-white">
-            <div class="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
+            <div class="mx-auto flex max-w-[1280px] items-center justify-between px-4 py-3 md:px-8">
                 <a href="{{ route('home') }}" class="flex items-center gap-2">
                     <img src="/images/DjidjiMarket-icone-seule.png" alt="DjidjiMarket" class="h-8 w-8">
                     <span class="font-sans text-lg font-bold text-djidji-green">djidji<span class="text-djidji-orange">market</span></span>
@@ -54,12 +54,38 @@
             </div>
         </header>
 
-        <main class="mx-auto max-w-5xl px-4 py-8 {{ ($showBottomNav ?? false) ? 'pb-24 md:pb-8' : '' }}">
+        <main class="mx-auto max-w-[1280px] px-4 py-8 md:px-8 {{ ($showBottomNav ?? false) ? 'pb-24 md:pb-8' : '' }}">
             {{ $slot }}
         </main>
 
-        <footer class="mx-auto max-w-5xl px-4 py-8 text-center text-sm text-djidji-text/50">
-            DjidjiMarket — le vrai marché, en toute confiance.
+        <footer class="w-full bg-djidji-green text-white">
+            <div class="mx-auto grid max-w-[1280px] grid-cols-1 gap-6 px-4 py-16 md:grid-cols-2 md:px-8">
+                <div class="space-y-6">
+                    <span class="font-sans text-lg font-bold">DjidjiMarket</span>
+                    <p class="text-sm text-white/70">La première plateforme de marché local en Côte d'Ivoire, connectant vendeurs et acheteurs en toute sécurité.</p>
+                    <div class="flex flex-wrap gap-4">
+                        <span class="rounded bg-white/10 px-2 py-1 text-xs font-medium text-white/80">Orange Money</span>
+                        <span class="rounded bg-white/10 px-2 py-1 text-xs font-medium text-white/80">MTN Money</span>
+                        <span class="rounded bg-white/10 px-2 py-1 text-xs font-medium text-white/80">Moov Money</span>
+                        <span class="rounded bg-white/10 px-2 py-1 text-xs font-medium text-white/80">Wave</span>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="mb-6 text-sm font-semibold uppercase tracking-wide text-white/50">Navigation</h4>
+                    <ul class="space-y-2 text-sm text-white/80">
+                        <li><a href="{{ route('home') }}" class="hover:text-white">Accueil</a></li>
+                        @guest
+                            <li><a href="{{ route('register') }}" class="hover:text-white">Devenir vendeur</a></li>
+                            <li><a href="{{ route('login') }}" class="hover:text-white">Connexion</a></li>
+                        @else
+                            <li><a href="{{ route('profile') }}" class="hover:text-white">Mon profil</a></li>
+                        @endguest
+                    </ul>
+                </div>
+            </div>
+            <div class="mx-auto max-w-[1280px] border-t border-white/10 px-4 py-4 text-center text-xs text-white/50 md:px-8">
+                © {{ date('Y') }} DjidjiMarket. Tous droits réservés.
+            </div>
         </footer>
 
         @if ($showBottomNav ?? false)
