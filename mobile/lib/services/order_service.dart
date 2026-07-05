@@ -25,6 +25,12 @@ class OrderService {
     return Order.fromJson(json['order']);
   }
 
+  Future<List<Order>> myOrders() async {
+    final json = await _client.get('/orders');
+
+    return (json['data'] as List<dynamic>).map((o) => Order.fromJson(o)).toList();
+  }
+
   Future<Order> show(int orderId) async {
     final json = await _client.get('/orders/$orderId');
 

@@ -35,6 +35,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/listings/{listing}', [VendorListingController::class, 'destroy']);
     });
 
+    Route::get('/orders', [OrderController::class, 'index']);
     Route::post('/orders', [OrderController::class, 'store']);
     Route::get('/orders/{order}', [OrderController::class, 'show']);
     Route::post('/orders/{order}/confirm-receipt', [OrderController::class, 'confirmReceipt']);

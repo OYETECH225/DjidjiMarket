@@ -61,6 +61,35 @@ class OrderPaymentFlowTest extends TestCase
         ]);
     }
 
+    public function test_client_can_list_only_their_own_orders(): void
+    {
+        [$vendor, $listing] = $this->makeVendorWithListing();
+        $client = User::factory()->create(['role' => 'client']);
+        $otherClient = User::factory()->create(['role' => 'client']);
+
+        Sanctum::actingAs($client);
+        $this->postJson('/api/orders', [
+            'vendor_id' => $vendor->id,
+            'items' => [['listing_id' => $listing->id, 'quantity' => 1]],
+            'delivery_address_text' => 'Cocody, Abidjan',
+        ])->assertCreated();
+
+        Sanctum::actingAs($otherClient);
+        $this->postJson('/api/orders', [
+            'vendor_id' => $vendor->id,
+            'items' => [['listing_id' => $listing->id, 'quantity' => 1]],
+            'delivery_address_text' => 'Yopougon, Abidjan',
+        ])->assertCreated();
+
+        Sanctum::actingAs($client);
+        $response = $this->getJson('/api/orders');
+
+        $response->assertOk();
+        $orders = $response->json('data');
+        $this->assertCount(1, $orders);
+        $this->assertSame('Boutique Test', $orders[0]['vendor_business_name']);
+    }
+
     public function test_order_creation_rejects_listing_from_a_different_vendor(): void
     {
         [$vendorA] = $this->makeVendorWithListing();

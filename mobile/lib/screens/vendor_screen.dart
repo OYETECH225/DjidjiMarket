@@ -7,6 +7,7 @@ import '../models/vendor.dart';
 import '../services/cart_service.dart';
 import '../services/vendor_service.dart';
 import '../theme/app_theme.dart';
+import '../widgets/app_bottom_nav.dart';
 import 'cart_screen.dart';
 
 class VendorScreen extends StatefulWidget {
@@ -40,6 +41,7 @@ class _VendorScreenState extends State<VendorScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Boutique')),
+      bottomNavigationBar: const AppBottomNav(),
       body: FutureBuilder<(Vendor, List<Listing>)>(
         future: _future,
         builder: (context, snapshot) {

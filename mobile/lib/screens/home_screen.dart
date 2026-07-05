@@ -8,6 +8,7 @@ import '../services/vendor_service.dart';
 import '../theme/app_theme.dart';
 import 'auth/login_screen.dart';
 import 'cart_screen.dart';
+import '../widgets/app_bottom_nav.dart';
 import 'courier/courier_dashboard_screen.dart';
 import 'vendor/vendor_dashboard_screen.dart';
 import 'vendor_screen.dart';
@@ -101,6 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ],
       ),
+      bottomNavigationBar: const AppBottomNav(currentIndex: 0),
       body: RefreshIndicator(
         onRefresh: _refresh,
         child: FutureBuilder<List<Vendor>>(

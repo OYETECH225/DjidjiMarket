@@ -39,4 +39,28 @@ void main() {
     expect(() => context.read<OrderService>(), returnsNormally);
     expect(() => context.read<PaymentService>(), returnsNormally);
   });
+
+  testWidgets('Bottom nav Panier tab opens the cart screen', (WidgetTester tester) async {
+    await tester.pumpWidget(const DjidjiMarketApp());
+    await tester.tap(find.text('Panier'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Mon panier'), findsOneWidget);
+  });
+
+  testWidgets('Bottom nav Commandes tab redirects to login when logged out', (WidgetTester tester) async {
+    await tester.pumpWidget(const DjidjiMarketApp());
+    await tester.tap(find.text('Commandes'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Connexion'), findsWidgets);
+  });
+
+  testWidgets('Bottom nav Profil tab redirects to login when logged out', (WidgetTester tester) async {
+    await tester.pumpWidget(const DjidjiMarketApp());
+    await tester.tap(find.text('Profil'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Connexion'), findsWidgets);
+  });
 }

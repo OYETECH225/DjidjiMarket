@@ -18,6 +18,13 @@ class OrderController extends Controller
         private readonly PaymentService $payments,
     ) {}
 
+    public function index(Request $request)
+    {
+        return OrderResource::collection(
+            $request->user()->orders()->with('vendor')->latest()->get()
+        );
+    }
+
     public function store(StoreOrderRequest $request)
     {
         $data = $request->validated();
