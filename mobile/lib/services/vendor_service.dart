@@ -37,4 +37,13 @@ class VendorService {
 
     return (json['data'] as List).map((l) => Listing.fromJson(l)).toList();
   }
+
+  Future<({List<Vendor> vendors, List<Listing> listings})> search(String query) async {
+    final json = await _client.get('/search?q=${Uri.encodeQueryComponent(query)}', auth: false);
+
+    return (
+      vendors: (json['vendors'] as List).map((v) => Vendor.fromJson(v)).toList(),
+      listings: (json['listings'] as List).map((l) => Listing.fromJson(l)).toList(),
+    );
+  }
 }

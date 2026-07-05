@@ -29,12 +29,22 @@ class _HomeScreenState extends State<HomeScreen> {
   String? _selectedType;
   final _currencyFormat = NumberFormat.decimalPattern('fr');
 
+  final _searchController = TextEditingController();
+  String _searchQuery = '';
+  Future<({List<Vendor> vendors, List<Listing> listings})>? _searchFuture;
+
   @override
   void initState() {
     super.initState();
     _vendorsFuture = context.read<VendorService>().list();
     _dishesFuture = context.read<VendorService>().dishesOfTheDay();
     _flashSalesFuture = context.read<VendorService>().flashSales();
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 
   Future<void> _refresh() async {
@@ -50,6 +60,13 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _selectedType = type;
       _vendorsFuture = context.read<VendorService>().list(type: type);
+    });
+  }
+
+  void _onSearchChanged(String value) {
+    setState(() {
+      _searchQuery = value.trim();
+      _searchFuture = _searchQuery.isEmpty ? null : context.read<VendorService>().search(_searchQuery);
     });
   }
 
@@ -140,124 +157,256 @@ class _HomeScreenState extends State<HomeScreen> {
         child: ListView(
           padding: const EdgeInsets.all(16),
           children: [
-            _buildHero(),
+            _buildSearchBar(),
             const SizedBox(height: 16),
-            _buildTrustRow(),
-            const SizedBox(height: 24),
-            _buildFlashSales(),
-            _buildCategoryGrid(),
-            const SizedBox(height: 24),
-            _buildDishesOfTheDay(),
-            _buildVendorSection(),
+            if (_searchQuery.isNotEmpty) ...[
+              _buildSearchResults(),
+              const SizedBox(height: 24),
+            ] else ...[
+              _buildCategoryPills(),
+              const SizedBox(height: 16),
+              _buildTrustBanner(),
+              const SizedBox(height: 24),
+              _buildFeaturedVendors(),
+              _buildFlashSales(),
+              _buildDishesOfTheDay(),
+              _buildVendorSection(),
+            ],
           ],
         ),
       ),
     );
   }
 
-  Widget _buildHero() {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: AppColors.green,
-        borderRadius: BorderRadius.circular(24),
+  Widget _buildSearchBar() {
+    return TextField(
+      controller: _searchController,
+      onChanged: _onSearchChanged,
+      decoration: InputDecoration(
+        hintText: 'Rechercher une boutique, un article...',
+        prefixIcon: const Icon(Icons.search, color: AppColors.onSurfaceVariant),
+        filled: true,
+        fillColor: Colors.white,
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(999), borderSide: const BorderSide(color: AppColors.outlineVariant)),
+        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(999), borderSide: const BorderSide(color: AppColors.outlineVariant)),
+        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(999), borderSide: const BorderSide(color: AppColors.green, width: 2)),
       ),
-      child: const Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+    );
+  }
+
+  Widget _buildSearchResults() {
+    return FutureBuilder<({List<Vendor> vendors, List<Listing> listings})>(
+      future: _searchFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Padding(
+            padding: EdgeInsets.only(top: 24),
+            child: Center(child: CircularProgressIndicator()),
+          );
+        }
+
+        final vendors = snapshot.data?.vendors ?? [];
+        final listings = snapshot.data?.listings ?? [];
+
+        if (vendors.isEmpty && listings.isEmpty) {
+          return const Padding(
+            padding: EdgeInsets.only(top: 24),
+            child: Center(child: Text('Aucun résultat.')),
+          );
+        }
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Résultats pour "$_searchQuery"',
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.green)),
+            const SizedBox(height: 12),
+            ...vendors.map((vendor) => Card(
+                  margin: const EdgeInsets.only(bottom: 8),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor: AppColors.background,
+                      backgroundImage: vendor.logoUrl != null ? NetworkImage(vendor.logoUrl!) : null,
+                      child: vendor.logoUrl == null ? const Icon(Icons.storefront, color: AppColors.green) : null,
+                    ),
+                    title: Text(vendor.businessName, style: const TextStyle(fontWeight: FontWeight.w600)),
+                    subtitle: Text(vendorTypeLabels[vendor.vendorType] ?? vendor.vendorType),
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => VendorScreen(slug: vendor.slug)),
+                    ),
+                  ),
+                )),
+            ...listings.map((listing) => Card(
+                  margin: const EdgeInsets.only(bottom: 8),
+                  child: ListTile(
+                    title: Text(listing.name, style: const TextStyle(fontWeight: FontWeight.w600)),
+                    subtitle: Text(listing.vendorBusinessName ?? ''),
+                    trailing: Text('${_currencyFormat.format(listing.effectivePrice)} ${listing.currency}',
+                        style: const TextStyle(color: AppColors.orange, fontWeight: FontWeight.bold)),
+                  ),
+                )),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildCategoryPills() {
+    final categories = vendorTypeLabels;
+
+    return SizedBox(
+      height: 44,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        itemCount: categories.length + 1,
+        separatorBuilder: (_, _) => const SizedBox(width: 8),
+        itemBuilder: (context, index) {
+          if (index == 0) {
+            return _categoryPill('Tous', null, selected: _selectedType == null);
+          }
+          final entry = categories.entries.elementAt(index - 1);
+          return _categoryPill(entry.value, entry.key, selected: _selectedType == entry.key);
+        },
+      ),
+    );
+  }
+
+  Widget _categoryPill(String label, String? type, {required bool selected}) {
+    return GestureDetector(
+      onTap: () => _filterBy(type),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        decoration: BoxDecoration(
+          color: selected ? AppColors.green : Colors.white,
+          borderRadius: BorderRadius.circular(999),
+          border: Border.all(color: selected ? AppColors.green : AppColors.outlineVariant),
+        ),
+        alignment: Alignment.center,
+        child: Text(
+          label,
+          style: TextStyle(color: selected ? Colors.white : AppColors.onSurface, fontWeight: FontWeight.w600),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTrustBanner() {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: AppColors.green.withValues(alpha: 0.08),
+        borderRadius: BorderRadius.circular(999),
+      ),
+      child: Row(
         children: [
-          Text(
-            'Le vrai marché, en toute confiance',
-            style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w800, height: 1.2),
-          ),
-          SizedBox(height: 8),
-          Text(
-            'Commandez vos produits locaux préférés. Livraison sécurisée et vendeurs vérifiés en Côte d\'Ivoire.',
-            style: TextStyle(color: Colors.white70),
+          const Icon(Icons.shield_outlined, color: AppColors.green),
+          const SizedBox(width: 12),
+          const Expanded(
+            child: Text(
+              'Paiement protégé jusqu\'à réception de votre commande',
+              style: TextStyle(color: AppColors.green, fontWeight: FontWeight.w600),
+            ),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildTrustRow() {
-    final items = [
-      (Icons.shield_outlined, 'Paiement protégé', 'Votre argent est reversé au vendeur qu\'après réception.'),
-      (Icons.verified_outlined, 'Vendeurs vérifiés', 'Chaque boutique passe par une vérification.'),
-      (Icons.local_shipping_outlined, 'Livraison rapide', 'Livraison garantie sous 24 à 48h.'),
-    ];
+  Widget _buildFeaturedVendors() {
+    return FutureBuilder<List<Vendor>>(
+      future: _vendorsFuture,
+      builder: (context, snapshot) {
+        final vendors = (snapshot.data ?? []).where((v) => v.isVerified).take(4).toList();
+        if (vendors.isEmpty) return const SizedBox.shrink();
 
-    return Column(
-      children: items
-          .map((item) => Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      radius: 20,
-                      backgroundColor: AppColors.green.withValues(alpha: 0.1),
-                      child: Icon(item.$1, color: AppColors.green, size: 20),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(item.$2, style: const TextStyle(fontWeight: FontWeight.w600)),
-                          Text(item.$3, style: TextStyle(color: Colors.grey[600], fontSize: 13)),
-                        ],
-                      ),
-                    ),
-                  ],
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Vendeurs en vedette', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.green)),
+                ],
+              ),
+              const SizedBox(height: 12),
+              SizedBox(
+                height: 170,
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: vendors.length,
+                  separatorBuilder: (_, _) => const SizedBox(width: 12),
+                  itemBuilder: (context, index) => _featuredVendorCard(vendors[index]),
                 ),
-              ))
-          .toList(),
-    );
-  }
-
-  Widget _buildCategoryGrid() {
-    final categories = {
-      'boutique': 'djidji-cat-boutique',
-      'street_food': 'djidji-cat-food',
-      'restaurant': 'djidji-cat-restaurant',
-    };
-
-    return SizedBox(
-      height: 110,
-      child: ListView.separated(
-        scrollDirection: Axis.horizontal,
-        itemCount: categories.length + 1,
-        separatorBuilder: (_, _) => const SizedBox(width: 10),
-        itemBuilder: (context, index) {
-          if (index == 0) {
-            return _categoryChip('Tous', null, selected: _selectedType == null);
-          }
-          final entry = categories.entries.elementAt(index - 1);
-          return _categoryChip(vendorTypeLabels[entry.key] ?? entry.key, entry.key,
-              selected: _selectedType == entry.key);
-        },
-      ),
-    );
-  }
-
-  Widget _categoryChip(String label, String? type, {required bool selected}) {
-    return GestureDetector(
-      onTap: () => _filterBy(type),
-      child: Container(
-        width: 110,
-        decoration: BoxDecoration(
-          color: selected ? AppColors.green : Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: selected ? AppColors.green : AppColors.outlineVariant),
-        ),
-        alignment: Alignment.center,
-        child: Text(
-          label,
-          style: TextStyle(
-            color: selected ? Colors.white : AppColors.onSurface,
-            fontWeight: FontWeight.w600,
+              ),
+            ],
           ),
+        );
+      },
+    );
+  }
+
+  Widget _featuredVendorCard(Vendor vendor) {
+    return GestureDetector(
+      onTap: () => Navigator.of(context).push(
+        MaterialPageRoute(builder: (_) => VendorScreen(slug: vendor.slug)),
+      ),
+      child: Container(
+        width: 150,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: AppColors.outlineVariant),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
+              children: [
+                Container(
+                  height: 100,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: AppColors.green.withValues(alpha: 0.1),
+                    borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+                    image: vendor.logoUrl != null
+                        ? DecorationImage(image: NetworkImage(vendor.logoUrl!), fit: BoxFit.cover)
+                        : null,
+                  ),
+                  child: vendor.logoUrl == null
+                      ? const Icon(Icons.storefront, color: AppColors.green, size: 32)
+                      : null,
+                ),
+                Positioned(
+                  right: 6,
+                  top: 6,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(999)),
+                    child: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.verified, color: AppColors.green, size: 12),
+                        SizedBox(width: 2),
+                        Text('VÉRIFIÉ', style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: AppColors.green)),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(vendor.businessName, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontWeight: FontWeight.w600)),
+                  Text(vendorTypeLabels[vendor.vendorType] ?? vendor.vendorType, style: TextStyle(fontSize: 12, color: Colors.grey[600])),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -285,7 +434,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(height: 12),
               SizedBox(
-                height: 160,
+                height: 190,
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   itemCount: items.length,
@@ -301,9 +450,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _flashSaleCard(Listing item) {
+    final discount = item.salePrice != null ? (100 - (item.salePrice! / item.price * 100)).round() : 0;
+    final remaining = item.saleEndsAt != null ? item.saleEndsAt!.difference(DateTime.now()) : Duration.zero;
+
     return Container(
       width: 160,
-      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
@@ -312,29 +463,61 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(item.name, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontWeight: FontWeight.w600)),
-          if (item.vendorBusinessName != null)
-            Text(item.vendorBusinessName!, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 12, color: Colors.grey[600])),
-          const Spacer(),
-          Row(
+          Stack(
             children: [
-              Text(_currencyFormat.format(item.price), style: const TextStyle(decoration: TextDecoration.lineThrough, fontSize: 12)),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('${_currencyFormat.format(item.salePrice)} ${item.currency}',
-                  style: const TextStyle(color: AppColors.orange, fontWeight: FontWeight.bold)),
-              InkWell(
-                onTap: () => _addToCart(item),
-                child: const CircleAvatar(
-                  radius: 14,
-                  backgroundColor: AppColors.orange,
-                  child: Icon(Icons.add, color: Colors.white, size: 16),
+              Container(
+                height: 80,
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  color: AppColors.background,
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                ),
+              ),
+              Positioned(
+                left: 6,
+                top: 6,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  decoration: BoxDecoration(color: AppColors.orange, borderRadius: BorderRadius.circular(999)),
+                  child: Text('-$discount%', style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.white)),
                 ),
               ),
             ],
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(item.name, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontWeight: FontWeight.w600)),
+                if (item.vendorBusinessName != null)
+                  Text(item.vendorBusinessName!, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 11, color: Colors.grey[600])),
+                Text('Se termine dans ${remaining.inHours}h${(remaining.inMinutes % 60).toString().padLeft(2, '0')}',
+                    style: const TextStyle(fontSize: 11, color: AppColors.orange, fontWeight: FontWeight.w600)),
+                const SizedBox(height: 4),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(_currencyFormat.format(item.price), style: const TextStyle(decoration: TextDecoration.lineThrough, fontSize: 11)),
+                        Text('${_currencyFormat.format(item.salePrice)} ${item.currency}',
+                            style: const TextStyle(color: AppColors.orange, fontWeight: FontWeight.bold)),
+                      ],
+                    ),
+                    InkWell(
+                      onTap: () => _addToCart(item),
+                      child: const CircleAvatar(
+                        radius: 14,
+                        backgroundColor: AppColors.orange,
+                        child: Icon(Icons.add, color: Colors.white, size: 16),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ],
       ),

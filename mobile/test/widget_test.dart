@@ -17,7 +17,7 @@ void main() {
     await tester.pumpWidget(const DjidjiMarketApp());
 
     expect(find.byType(RichText).evaluate().any((e) => (e.widget as RichText).text.toPlainText() == 'djidjimarket'), isTrue);
-    expect(find.text('Le vrai marché, en toute confiance'), findsOneWidget);
+    expect(find.text('Rechercher une boutique, un article...'), findsOneWidget);
 
     // Not asserting on the vendors/dishes/flash-sales FutureBuilders here:
     // the home screen fires 3 concurrent HTTP requests in initState, and in
