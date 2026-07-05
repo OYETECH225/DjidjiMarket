@@ -73,4 +73,43 @@ class HomeApiTest extends TestCase
         $this->assertTrue($robeWax['is_on_flash_sale']);
         $this->assertEquals(9000, $robeWax['effective_price']);
     }
+
+    public function test_search_matches_vendor_names_and_listing_names(): void
+    {
+        $vendor = $this->makeVendor();
+        Vendor::create([
+            'user_id' => User::factory()->create(['role' => 'vendor'])->id, 'business_name' => 'Chez Tantie Awa', 'vendor_type' => 'restaurant',
+            'slug' => 'chez-tantie-awa', 'is_active' => true,
+        ]);
+        Listing::create(['vendor_id' => $vendor->id, 'type' => 'produit', 'name' => 'Attieke poisson', 'price' => 2000, 'is_active' => true]);
+
+        $response = $this->getJson('/api/search?q=awa');
+        $response->assertOk();
+        $this->assertTrue(collect($response->json('vendors'))->pluck('business_name')->contains('Chez Tantie Awa'));
+        $this->assertFalse(collect($response->json('vendors'))->pluck('business_name')->contains('La Boutique'));
+
+        $response = $this->getJson('/api/search?q=attieke');
+        $response->assertOk();
+        $this->assertTrue(collect($response->json('listings'))->pluck('name')->contains('Attieke poisson'));
+    }
+
+    public function test_search_excludes_inactive_vendors_and_listings(): void
+    {
+        $inactiveVendor = $this->makeVendor(active: false);
+        Listing::create(['vendor_id' => $inactiveVendor->id, 'type' => 'produit', 'name' => 'Article fantome', 'price' => 1000, 'is_active' => true]);
+
+        $activeVendor = $this->makeVendor();
+        Listing::create(['vendor_id' => $activeVendor->id, 'type' => 'produit', 'name' => 'Article inactif', 'price' => 1000, 'is_active' => false]);
+
+        $response = $this->getJson('/api/search?q=article');
+        $response->assertOk();
+        $this->assertEmpty($response->json('listings'));
+    }
+
+    public function test_search_returns_empty_results_for_blank_query(): void
+    {
+        $response = $this->getJson('/api/search?q=');
+        $response->assertOk();
+        $this->assertSame(['vendors' => [], 'listings' => []], $response->json());
+    }
 }

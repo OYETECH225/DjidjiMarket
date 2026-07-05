@@ -51,4 +51,16 @@ class Vendor extends Model
     {
         return $this->hasMany(Order::class);
     }
+
+    /**
+     * Shared by the PWA home search box and the public API so both surfaces
+     * search vendors the exact same way.
+     */
+    public static function searchActive(string $query, int $limit = 10)
+    {
+        return static::where('is_active', true)
+            ->where('business_name', 'like', '%'.$query.'%')
+            ->limit($limit)
+            ->get();
+    }
 }

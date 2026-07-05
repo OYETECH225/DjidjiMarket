@@ -104,4 +104,18 @@ class Listing extends Model
             ->limit($limit)
             ->get();
     }
+
+    /**
+     * Shared by the PWA home search box and the public API so both surfaces
+     * search listings the exact same way.
+     */
+    public static function searchActive(string $query, int $limit = 10)
+    {
+        return static::where('is_active', true)
+            ->where('name', 'like', '%'.$query.'%')
+            ->whereHas('vendor', fn ($q) => $q->where('is_active', true))
+            ->with('vendor')
+            ->limit($limit)
+            ->get();
+    }
 }

@@ -41,6 +41,44 @@ class AccountAndNavTest extends TestCase
             ->assertDontSee('La Boutique');
     }
 
+    public function test_home_featured_vendors_only_shows_verified_active_vendors(): void
+    {
+        $verifiedUser = User::factory()->create(['role' => 'vendor']);
+        Vendor::create([
+            'user_id' => $verifiedUser->id, 'business_name' => 'Boutique Verifiee', 'vendor_type' => 'boutique',
+            'slug' => 'boutique-verifiee', 'is_active' => true, 'verification_level' => 'verifie',
+        ]);
+        $unverifiedUser = User::factory()->create(['role' => 'vendor']);
+        Vendor::create([
+            'user_id' => $unverifiedUser->id, 'business_name' => 'Boutique Non Verifiee', 'vendor_type' => 'boutique',
+            'slug' => 'boutique-non-verifiee', 'is_active' => true, 'verification_level' => 'non_verifie',
+        ]);
+
+        // Both vendors appear in the general directory further down the page —
+        // only the featured section (marked by the VÉRIFIÉ badge) is scoped
+        // to verified vendors, and no fake rating text is ever rendered.
+        Livewire::test(Home::class)
+            ->assertSee('Boutique Verifiee')
+            ->assertSee('VÉRIFIÉ')
+            ->assertDontSee('avis');
+    }
+
+    public function test_home_search_matches_vendor_and_listing_names(): void
+    {
+        $vendorUser = User::factory()->create(['role' => 'vendor']);
+        $vendor = Vendor::create([
+            'user_id' => $vendorUser->id, 'business_name' => 'Chez Tantie Awa', 'vendor_type' => 'restaurant',
+            'slug' => 'chez-tantie-awa', 'is_active' => true,
+        ]);
+        Listing::create(['vendor_id' => $vendor->id, 'type' => 'produit', 'name' => 'Attieke poisson', 'price' => 2000, 'is_active' => true]);
+
+        Livewire::test(Home::class)
+            ->set('query', 'awa')
+            ->assertSee('Chez Tantie Awa')
+            ->set('query', 'attieke')
+            ->assertSee('Attieke poisson');
+    }
+
     public function test_home_shows_only_active_dishes_of_the_day_from_active_vendors(): void
     {
         $activeVendorUser = User::factory()->create(['role' => 'vendor']);

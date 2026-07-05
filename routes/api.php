@@ -26,6 +26,7 @@ Route::get('/vendors/{vendor}/listings', [VendorController::class, 'listings']);
 
 Route::get('/dishes-of-the-day', [HomeController::class, 'dishesOfTheDay']);
 Route::get('/flash-sales', [HomeController::class, 'flashSales']);
+Route::get('/search', [HomeController::class, 'search']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('vendor')->middleware('role:vendor')->group(function () {
