@@ -70,7 +70,7 @@ class _VendorOnboardingScreenState extends State<VendorOnboardingScreen> {
             decoration: const InputDecoration(labelText: "Type d'activité"),
             items: const [
               DropdownMenuItem(value: 'boutique', child: Text('Boutique')),
-              DropdownMenuItem(value: 'street_food', child: Text('Street food')),
+              DropdownMenuItem(value: 'street_food', child: Text('Nourriture')),
               DropdownMenuItem(value: 'restaurant', child: Text('Restaurant')),
             ],
             onChanged: (value) => setState(() => _vendorType = value!),

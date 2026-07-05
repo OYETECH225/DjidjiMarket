@@ -23,7 +23,7 @@ class Vendor extends Model
 
     public const VENDOR_TYPE_LABELS = [
         'boutique' => 'Boutique',
-        'street_food' => 'Street food',
+        'street_food' => 'Nourriture',
         'restaurant' => 'Restaurant',
     ];
 
