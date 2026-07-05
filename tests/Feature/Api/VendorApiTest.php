@@ -99,6 +99,41 @@ class VendorApiTest extends TestCase
         $this->assertFalse($names->contains('Inactive'));
     }
 
+    public function test_index_can_be_filtered_by_vendor_type(): void
+    {
+        $boutiqueUser = User::factory()->create(['role' => 'vendor']);
+        Vendor::create([
+            'user_id' => $boutiqueUser->id, 'business_name' => 'La Boutique', 'vendor_type' => 'boutique',
+            'slug' => 'la-boutique', 'is_active' => true,
+        ]);
+        $restaurantUser = User::factory()->create(['role' => 'vendor']);
+        Vendor::create([
+            'user_id' => $restaurantUser->id, 'business_name' => 'Le Restaurant', 'vendor_type' => 'restaurant',
+            'slug' => 'le-restaurant', 'is_active' => true,
+        ]);
+
+        $response = $this->getJson('/api/vendors?type=restaurant');
+
+        $response->assertOk();
+        $names = collect($response->json('data'))->pluck('business_name');
+        $this->assertTrue($names->contains('Le Restaurant'));
+        $this->assertFalse($names->contains('La Boutique'));
+    }
+
+    public function test_index_ignores_unknown_vendor_type_filter(): void
+    {
+        $vendorUser = User::factory()->create(['role' => 'vendor']);
+        Vendor::create([
+            'user_id' => $vendorUser->id, 'business_name' => 'La Boutique', 'vendor_type' => 'boutique',
+            'slug' => 'la-boutique', 'is_active' => true,
+        ]);
+
+        $response = $this->getJson('/api/vendors?type=not-a-real-type');
+
+        $response->assertOk();
+        $this->assertTrue(collect($response->json('data'))->pluck('business_name')->contains('La Boutique'));
+    }
+
     public function test_public_listings_only_returns_active_listings(): void
     {
         $vendorUser = User::factory()->create(['role' => 'vendor']);

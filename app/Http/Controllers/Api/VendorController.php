@@ -17,9 +17,15 @@ class VendorController extends Controller
 {
     public function __construct(private readonly VendorOnboardingService $onboarding) {}
 
-    public function index()
+    public function index(Request $request)
     {
-        $vendors = Vendor::where('is_active', true)->latest()->paginate(20);
+        $vendors = Vendor::where('is_active', true)
+            ->when(
+                $request->filled('type') && array_key_exists($request->string('type')->toString(), Vendor::VENDOR_TYPE_LABELS),
+                fn ($query) => $query->where('vendor_type', $request->string('type')->toString())
+            )
+            ->latest()
+            ->paginate(20);
 
         return VendorResource::collection($vendors);
     }

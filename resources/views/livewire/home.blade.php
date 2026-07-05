@@ -1,7 +1,30 @@
 <div>
-    <div class="mb-8 text-center">
+    <div class="mb-6 text-center">
         <h1 class="font-sans text-3xl font-bold text-djidji-green">Le vrai marché, en toute confiance</h1>
         <p class="mt-2 text-djidji-text/70">Découvrez les boutiques vérifiées près de chez vous.</p>
+    </div>
+
+    <div class="mb-6 rounded-xl border border-djidji-outline bg-djidji-green/5 p-4 text-center text-sm text-djidji-green">
+        Paiement sécurisé : votre argent n'est reversé au vendeur qu'après réception de votre commande.
+    </div>
+
+    <div class="mb-6 flex flex-wrap justify-center gap-2">
+        <button
+            type="button"
+            wire:click="filterBy(null)"
+            class="rounded-full px-4 py-1.5 text-sm font-medium transition {{ is_null($type) ? 'bg-djidji-green text-white' : 'border border-djidji-outline text-djidji-text/70' }}"
+        >
+            Tous
+        </button>
+        @foreach (\App\Models\Vendor::VENDOR_TYPE_LABELS as $value => $label)
+            <button
+                type="button"
+                wire:click="filterBy('{{ $value }}')"
+                class="rounded-full px-4 py-1.5 text-sm font-medium transition {{ $type === $value ? 'bg-djidji-green text-white' : 'border border-djidji-outline text-djidji-text/70' }}"
+            >
+                {{ $label }}
+            </button>
+        @endforeach
     </div>
 
     @if ($vendors->isEmpty())
@@ -21,7 +44,9 @@
                         >
                         <div>
                             <p class="font-sans font-semibold text-djidji-text">{{ $vendor->business_name }}</p>
-                            <p class="text-xs uppercase tracking-wide text-djidji-text/50">{{ $vendor->vendor_type }}</p>
+                            <p class="text-xs uppercase tracking-wide text-djidji-text/50">
+                                {{ \App\Models\Vendor::VENDOR_TYPE_LABELS[$vendor->vendor_type] ?? $vendor->vendor_type }}
+                            </p>
                         </div>
                     </div>
                     @if ($vendor->verification_level === 'verifie')

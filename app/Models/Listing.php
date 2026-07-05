@@ -14,6 +14,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 ])]
 class Listing extends Model
 {
+    public const TYPE_LABELS = [
+        'produit' => 'Produit',
+        'plat_du_jour' => 'Plat du jour',
+        'menu_item' => 'Menu',
+    ];
+
     protected static function booted(): void
     {
         // The DB column defaults to true, but that default isn't reflected

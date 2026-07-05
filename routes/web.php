@@ -10,7 +10,9 @@ use App\Livewire\Courier\Dashboard as CourierDashboard;
 use App\Livewire\Courier\MyDeliveries as CourierMyDeliveries;
 use App\Livewire\Courier\Onboarding as CourierOnboarding;
 use App\Livewire\Home;
+use App\Livewire\MyOrders;
 use App\Livewire\OrderTracking;
+use App\Livewire\Profile;
 use App\Livewire\Vendor\Dashboard as VendorDashboard;
 use App\Livewire\Vendor\ListingForm;
 use App\Livewire\Vendor\Listings as VendorListings;
@@ -43,6 +45,8 @@ Route::get('/panier', Cart::class)->name('cart.show');
 Route::middleware('auth')->group(function () {
     Route::get('/commande/nouvelle', Checkout::class)->name('checkout');
     Route::get('/commande/{order}', OrderTracking::class)->name('order.show');
+    Route::get('/mes-commandes', MyOrders::class)->name('my-orders');
+    Route::get('/profil', Profile::class)->name('profile');
 
     Route::prefix('vendeur')->middleware('role:vendor')->group(function () {
         Route::get('/profil', VendorOnboarding::class)->name('vendor.onboarding');

@@ -54,13 +54,17 @@
             </div>
         </header>
 
-        <main class="mx-auto max-w-5xl px-4 py-8">
+        <main class="mx-auto max-w-5xl px-4 py-8 {{ ($showBottomNav ?? false) ? 'pb-24 md:pb-8' : '' }}">
             {{ $slot }}
         </main>
 
         <footer class="mx-auto max-w-5xl px-4 py-8 text-center text-sm text-djidji-text/50">
             DjidjiMarket — le vrai marché, en toute confiance.
         </footer>
+
+        @if ($showBottomNav ?? false)
+            <x-bottom-nav />
+        @endif
 
         @livewireScripts
         <script>
