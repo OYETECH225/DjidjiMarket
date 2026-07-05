@@ -51,6 +51,7 @@ class Order {
   final double deliveryFee;
   final String source;
   final String? vendorBusinessName;
+  final String? vendorAddressText;
   final String? clientName;
   final DateTime? createdAt;
   final List<OrderItem> items;
@@ -66,6 +67,7 @@ class Order {
     required this.source,
     this.courierId,
     this.vendorBusinessName,
+    this.vendorAddressText,
     this.clientName,
     this.createdAt,
     this.items = const [],
@@ -85,6 +87,7 @@ class Order {
       deliveryFee: double.parse((json['delivery_fee'] ?? 0).toString()),
       source: json['source'] ?? 'app',
       vendorBusinessName: json['vendor_business_name'],
+      vendorAddressText: json['vendor_address_text'],
       clientName: json['client_name'],
       createdAt: json['created_at'] != null ? DateTime.tryParse(json['created_at']) : null,
       items: (json['items'] as List<dynamic>? ?? [])

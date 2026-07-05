@@ -484,8 +484,11 @@ Ajout à l'état "fait" : **app Flutter (parcours vendeur)** — même périmèt
 
 Ajout à l'état "fait" : **PWA (parcours livreur)** — onboarding (véhicule), tableau de bord (statut de vérification, toggle disponibilité, compteur de livraisons en cours), liste des commandes en attente d'un livreur avec acceptation atomique "premier arrivé", mes livraisons avec progression du statut (`livreur_assigne` → `recuperee` → `en_livraison` → `livree`). Logique d'acceptation/transition extraite dans `CourierDispatchService`, partagée avec l'API (le contrôleur API a été refactoré pour l'utiliser aussi, au lieu de dupliquer la logique de verrou atomique).
 
+Ajout à l'état "fait" : **app Flutter (parcours livreur)** — même périmètre que la PWA livreur (onboarding, tableau de bord, commandes disponibles + acceptation, mes livraisons + progression du statut). Les trois parcours (client, vendeur, livreur) sont maintenant construits sur les deux plateformes.
+
+**Bug trouvé et corrigé pendant ce chantier :** `VendorPortalService` avait été codé et utilisé par tous les écrans vendeur Flutter mais jamais déclaré dans `MultiProvider` (`main.dart`) — chaque écran vendeur aurait planté à l'exécution (`ProviderNotFoundException`) malgré `flutter analyze`/`flutter test` au vert, car le seul test existant ne montait que `HomeScreen`. Corrigé (ainsi que l'ajout de `CourierPortalService`, jamais oublié cette fois), et un test de régression ajouté qui résout chaque service depuis l'arbre de widgets réel de l'app pour détecter ce genre d'oubli à l'avenir.
+
 **Écarts connus vis-à-vis de la section 6 :**
-- Flutter : parcours livreur pas encore construit (seuls client et vendeur le sont).
 - Maquettes HTML fournies (structure nav basse, hero, catégories) pas encore intégrées aux écrans PWA/Flutter existants — accueil/boutique/panier/suivi actuels restent plus simples que les maquettes.
 - Lancement pilote (hors périmètre code).
 

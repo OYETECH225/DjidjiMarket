@@ -8,6 +8,7 @@ import '../services/vendor_service.dart';
 import '../theme/app_theme.dart';
 import 'auth/login_screen.dart';
 import 'cart_screen.dart';
+import 'courier/courier_dashboard_screen.dart';
 import 'vendor/vendor_dashboard_screen.dart';
 import 'vendor_screen.dart';
 
@@ -83,6 +84,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 tooltip: 'Mon espace vendeur',
                 onPressed: () => Navigator.of(context).push(
                   MaterialPageRoute(builder: (_) => const VendorDashboardScreen()),
+                ),
+              ),
+            if (auth.currentUser?.role == 'courier')
+              IconButton(
+                icon: const Icon(Icons.two_wheeler_outlined),
+                tooltip: 'Mon espace livreur',
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const CourierDashboardScreen()),
                 ),
               ),
             IconButton(

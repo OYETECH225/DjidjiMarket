@@ -5,8 +5,10 @@ import 'screens/home_screen.dart';
 import 'services/api_client.dart';
 import 'services/auth_service.dart';
 import 'services/cart_service.dart';
+import 'services/courier_portal_service.dart';
 import 'services/order_service.dart';
 import 'services/payment_service.dart';
+import 'services/vendor_portal_service.dart';
 import 'services/vendor_service.dart';
 import 'theme/app_theme.dart';
 
@@ -27,6 +29,8 @@ class DjidjiMarketApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AuthService(apiClient)),
         ChangeNotifierProvider(create: (_) => CartService()),
         Provider(create: (_) => VendorService(apiClient)),
+        Provider(create: (_) => VendorPortalService(apiClient)),
+        Provider(create: (_) => CourierPortalService(apiClient)),
         Provider(create: (_) => OrderService(apiClient)),
         Provider(create: (_) => PaymentService(apiClient)),
       ],
