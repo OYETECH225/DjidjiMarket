@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CourierController;
+use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\VendorController;
@@ -22,6 +23,9 @@ Route::prefix('auth')->middleware('throttle:auth')->group(function () {
 Route::get('/vendors', [VendorController::class, 'index']);
 Route::get('/vendors/{slug}', [VendorController::class, 'show']);
 Route::get('/vendors/{vendor}/listings', [VendorController::class, 'listings']);
+
+Route::get('/dishes-of-the-day', [HomeController::class, 'dishesOfTheDay']);
+Route::get('/flash-sales', [HomeController::class, 'flashSales']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('vendor')->middleware('role:vendor')->group(function () {

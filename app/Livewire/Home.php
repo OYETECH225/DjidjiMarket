@@ -57,20 +57,8 @@ class Home extends Component
                 ->when($this->type, fn ($query) => $query->where('vendor_type', $this->type))
                 ->latest()
                 ->paginate(12),
-            'dishesOfTheDay' => Listing::where('type', 'plat_du_jour')
-                ->where('is_active', true)
-                ->whereHas('vendor', fn ($query) => $query->where('is_active', true))
-                ->with('vendor')
-                ->latest()
-                ->limit(8)
-                ->get(),
-            'flashSales' => Listing::onFlashSale()
-                ->where('is_active', true)
-                ->whereHas('vendor', fn ($query) => $query->where('is_active', true))
-                ->with('vendor')
-                ->orderBy('sale_ends_at')
-                ->limit(8)
-                ->get(),
+            'dishesOfTheDay' => Listing::activeDishesOfTheDay(),
+            'flashSales' => Listing::activeFlashSales(),
         ]);
     }
 }

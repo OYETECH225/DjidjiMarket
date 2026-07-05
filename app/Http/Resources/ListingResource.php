@@ -27,6 +27,7 @@ class ListingResource extends JsonResource
             'photo_urls' => $this->photo_urls,
             'display_number' => $this->display_number,
             'is_active' => $this->is_active,
+            'vendor_business_name' => $this->whenLoaded('vendor', fn () => $this->vendor->business_name),
         ];
     }
 }

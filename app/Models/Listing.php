@@ -73,4 +73,35 @@ class Listing extends Model
             ->whereNotNull('sale_ends_at')
             ->where('sale_ends_at', '>', now());
     }
+
+    /**
+     * Shared by the PWA home page and the public API so both surfaces list
+     * the exact same cross-vendor "plats du jour" without duplicating the
+     * active-vendor/active-listing conditions.
+     */
+    public static function activeDishesOfTheDay(int $limit = 8)
+    {
+        return static::where('type', 'plat_du_jour')
+            ->where('is_active', true)
+            ->whereHas('vendor', fn ($query) => $query->where('is_active', true))
+            ->with('vendor')
+            ->latest()
+            ->limit($limit)
+            ->get();
+    }
+
+    /**
+     * Shared by the PWA home page and the public API for the same reason as
+     * activeDishesOfTheDay().
+     */
+    public static function activeFlashSales(int $limit = 8)
+    {
+        return static::onFlashSale()
+            ->where('is_active', true)
+            ->whereHas('vendor', fn ($query) => $query->where('is_active', true))
+            ->with('vendor')
+            ->orderBy('sale_ends_at')
+            ->limit($limit)
+            ->get();
+    }
 }
