@@ -10,6 +10,8 @@ use App\Models\Listing;
 use App\Models\Order;
 use App\Models\User;
 use App\Models\Vendor;
+use App\Services\CartService;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 use Tests\TestCase;
@@ -37,6 +39,61 @@ class AccountAndNavTest extends TestCase
             ->call('filterBy', 'restaurant')
             ->assertSee('Le Restaurant')
             ->assertDontSee('La Boutique');
+    }
+
+    public function test_home_shows_only_active_dishes_of_the_day_from_active_vendors(): void
+    {
+        $activeVendorUser = User::factory()->create(['role' => 'vendor']);
+        $activeVendor = Vendor::create([
+            'user_id' => $activeVendorUser->id, 'business_name' => 'Chez Fatou', 'vendor_type' => 'restaurant',
+            'slug' => 'chez-fatou', 'is_active' => true,
+        ]);
+        Listing::create(['vendor_id' => $activeVendor->id, 'type' => 'plat_du_jour', 'name' => 'Riz gras', 'price' => 1500, 'is_active' => true]);
+        Listing::create(['vendor_id' => $activeVendor->id, 'type' => 'plat_du_jour', 'name' => 'Plat inactif', 'price' => 1000, 'is_active' => false]);
+        Listing::create(['vendor_id' => $activeVendor->id, 'type' => 'produit', 'name' => 'Sac de riz', 'price' => 5000, 'is_active' => true]);
+
+        $inactiveVendorUser = User::factory()->create(['role' => 'vendor']);
+        $inactiveVendor = Vendor::create([
+            'user_id' => $inactiveVendorUser->id, 'business_name' => 'Boutique fermée', 'vendor_type' => 'restaurant',
+            'slug' => 'boutique-fermee', 'is_active' => false,
+        ]);
+        Listing::create(['vendor_id' => $inactiveVendor->id, 'type' => 'plat_du_jour', 'name' => 'Plat fantome', 'price' => 1200, 'is_active' => true]);
+
+        Livewire::test(Home::class)
+            ->assertSee('Riz gras')
+            ->assertDontSee('Plat inactif')
+            ->assertDontSee('Sac de riz')
+            ->assertDontSee('Plat fantome');
+    }
+
+    public function test_add_dish_of_the_day_to_cart(): void
+    {
+        $vendorUser = User::factory()->create(['role' => 'vendor']);
+        $vendor = Vendor::create([
+            'user_id' => $vendorUser->id, 'business_name' => 'Chez Fatou', 'vendor_type' => 'restaurant',
+            'slug' => 'chez-fatou', 'is_active' => true,
+        ]);
+        $dish = Listing::create(['vendor_id' => $vendor->id, 'type' => 'plat_du_jour', 'name' => 'Riz gras', 'price' => 1500, 'is_active' => true]);
+
+        Livewire::test(Home::class)
+            ->call('addDishToCart', $dish->id)
+            ->assertSet('addedMessage', '"Riz gras" ajouté au panier.');
+
+        $this->assertSame(1, app(CartService::class)->count());
+    }
+
+    public function test_cannot_add_non_dish_listing_via_add_dish_to_cart(): void
+    {
+        $vendorUser = User::factory()->create(['role' => 'vendor']);
+        $vendor = Vendor::create([
+            'user_id' => $vendorUser->id, 'business_name' => 'La Boutique', 'vendor_type' => 'boutique',
+            'slug' => 'la-boutique', 'is_active' => true,
+        ]);
+        $listing = Listing::create(['vendor_id' => $vendor->id, 'type' => 'produit', 'name' => 'Robe wax', 'price' => 15000, 'is_active' => true]);
+
+        $this->expectException(ModelNotFoundException::class);
+
+        Livewire::test(Home::class)->call('addDishToCart', $listing->id);
     }
 
     public function test_home_ignores_invalid_vendor_type_filter(): void
