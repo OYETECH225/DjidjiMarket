@@ -1,8 +1,9 @@
 # DjidjiMarket — Spécification technique
 
-**Version 1.1 — Document de référence pour développement avec Claude Code**
+**Version 1.2 — Document de référence pour développement avec Claude Code**
 
 *v1.1 : ajout des sections 8-11 (identité de marque, sécurité API, stratégie de tests, état d'avancement Phase 1) reflétant les décisions prises lors de l'implémentation. Sections 1-7 inchangées.*
+*v1.2 : ajout de la section 8 (page d'accueil, référence validée), champs `sale_price`/`sale_ends_at` en 3.3, endpoints accueil en section 5. Sections 8-11 de la v1.1 renumérotées 9-12.*
 
 ---
 
@@ -93,6 +94,8 @@ listings
 - name
 - description
 - price
+- sale_price (nullable — si renseigné avec sale_ends_at, indique une vente flash active)
+- sale_ends_at (nullable timestamp — si renseigné avec sale_price, l'article apparaît dans "Vente flash" avec le prix barré/promo jusqu'à cette date)
 - currency (par défaut XOF)
 - stock_quantity (nullable — non pertinent pour plat_du_jour)
 - available_from, available_until (nullable — utile pour plat_du_jour/street_food)
@@ -329,10 +332,13 @@ POST   /api/auth/register
 POST   /api/auth/login
 POST   /api/auth/otp/verify        # vérification par SMS/WhatsApp
 
-GET    /api/vendors                 # liste des boutiques actives (découverte, nécessaire à l'app Flutter)
+GET    /api/vendors                 # liste des boutiques actives (découverte, nécessaire à l'app Flutter), filtrable par ?type=
 GET    /api/vendors/{slug}          # page boutique publique (lien perso)
 GET    /api/vendors/{id}/listings
+GET    /api/dishes-of-the-day       # plats du jour actifs, tous vendeurs actifs confondus (accueil)
+GET    /api/flash-sales             # ventes flash actives, tous vendeurs actifs confondus (accueil)
 
+GET    /api/orders                  # commandes du client connecté
 POST   /api/orders                  # création de commande
 GET    /api/orders/{id}
 POST   /api/orders/{id}/confirm-receipt   # libère le paiement séquestre
@@ -411,7 +417,33 @@ POST   /api/reviews
 
 ---
 
-## 8. Identité de marque
+## 8. Page d'accueil (client) — référence validée
+
+Maquette validée (générée sur Stitch à partir d'un prompt basé sur cette spec), structure de haut en bas :
+
+1. **Barre du haut** : logo DjidjiMarket (icône panier + wordmark — utiliser le fichier de marque officiel, pas une réinterprétation) + sélecteur de zone/quartier (ex: "Cocody") avec icône de localisation
+2. **Barre de recherche** : placeholder "Rechercher une boutique, un plat..."
+3. **Hero** : titre + sous-titre + 2 CTA ("Découvrir les boutiques" / "Comment ça marche")
+4. **Bandeau de confiance** : 3 cartes (paiement protégé par escrow, vendeurs vérifiés, livraison rapide)
+5. **Vente flash** : cartes produit avec prix barré, prix réduit en orange, date de fin — pilotée par `sale_price`/`sale_ends_at` sur `listings` (voir section 3.3), tous vendeurs actifs confondus
+6. **Grille de catégories** : Boutiques / Nourriture / Restaurants (cartes cliquables, filtrent la liste de boutiques plus bas via `vendor_type`)
+7. **Plats du jour** : nom du plat, sous-titre vendeur, prix en orange, bouton d'ajout rapide — `type = plat_du_jour` sur `listings`, tous vendeurs actifs confondus
+8. **Liste des boutiques** : filtrable par catégorie, respecte le filtre choisi en 6
+9. **Bandeau live TikTok** : n'apparaît que si un vendeur a un live actif (voir flow 4.7) — **Phase 2, volontairement absent de l'implémentation actuelle**
+10. **Navigation basse** (mobile) : Accueil / Panier / Commandes / Profil
+
+**Écarts assumés vis-à-vis de la maquette d'origine, à corriger si un vrai besoin apparaît :**
+- Pas de barre de recherche ni de sélecteur de zone/quartier — aucune recherche texte ni géolocalisation implémentée à ce jour, pas de champ mort affiché en attendant.
+- Pas de section "Vendeurs en vedette" avec notes/avis — aucun système d'avis n'existe en base ; en construire un (`reviews`, note moyenne par vendeur) est un préalable avant de rétablir cette section avec de vraies données.
+- Vente flash et Plats du jour restent toujours visibles, pas conditionnés à l'onglet de catégorie actif — ce sont des sections cross-vendeurs, pas propres à une catégorie.
+
+**Points de vigilance pour l'implémentation (déjà respectés) :**
+- Couleurs de la charte (`#204E29` vert, `#D56E2B` orange) codées en dur dans le thème de l'app, pas approximées depuis une maquette.
+- Le bandeau live TikTok reste dynamique le jour où il sera construit (alimenté par `live_sessions`), jamais un bloc statique.
+
+---
+
+## 9. Identité de marque
 
 Charte graphique v1.0 (juillet 2026), fichiers sources dans `public/images/` (`DjidjiMarket-Charte-Graphique.pdf` + variantes du logo). Tagline : *« le vrai marché, en toute confiance »*.
 
@@ -428,11 +460,11 @@ Charte graphique v1.0 (juillet 2026), fichiers sources dans `public/images/` (`D
 
 **Logo :** espace de protection minimum = hauteur du "d" minuscule ; largeur minimale 30 mm print / 120 px écran ; versions fond clair et fond sombre disponibles (monochrome blanc/noir). Ne jamais étirer, recolorer, ombrer, ni placer sur un fond chargé.
 
-**État d'application :** intégré au panel Filament admin (`AdminPanelProvider`) — couleur primaire, logo clair/sombre, favicon. Pas encore appliqué à un front public (PWA non démarrée, voir section 11).
+**État d'application :** intégré au panel Filament admin (`AdminPanelProvider`) — couleur primaire, logo clair/sombre, favicon — et repris au thème PWA (`resources/css/app.css`) et Flutter (`lib/theme/app_theme.dart`), avec Plus Jakarta Sans à la place de Poppins/Inter suite au design system fourni ensuite (voir section 12).
 
 ---
 
-## 9. Sécurité API
+## 10. Sécurité API
 
 Décisions de sécurité prises lors de l'implémentation des endpoints de la section 5, à respecter pour toute extension future de l'API.
 
@@ -459,7 +491,7 @@ Décisions de sécurité prises lors de l'implémentation des endpoints de la se
 
 ---
 
-## 10. Stratégie de tests
+## 11. Stratégie de tests
 
 - Tests Feature (`tests/Feature/Api/`) via le client de test HTTP de Laravel + `Sanctum::actingAs()` pour les requêtes authentifiées — pas de tests unitaires isolés sur la logique métier, elle est simple et directement vérifiée par les tests d'intégration.
 - Tests des composants Livewire de la PWA (`tests/Feature/Livewire/`) via `Livewire::test()` / `Livewire::actingAs()` — vérifie le flow auth session, l'ajout au panier, la création de commande au checkout, et les autorisations sur le suivi de commande.
@@ -470,7 +502,7 @@ Décisions de sécurité prises lors de l'implémentation des endpoints de la se
 
 ---
 
-## 11. État d'avancement — Phase 1
+## 12. État d'avancement — Phase 1
 
 **Fait :** modèle de données, migrations, modèles Eloquent avec relations ; panel Filament (Vendors, Listings, Orders) ; endpoints API auth/OTP, onboarding vendeur et livreur, catalogue public, création de commande, paiement avec séquestre simplifié, liste d'attente + acceptation/statut livreur ; identité de marque appliquée au panel admin ; **PWA (parcours client)** — inscription/OTP/connexion en session web, découverte des boutiques, page boutique publique (`/boutique/{slug}`), panier (session), checkout avec choix du mode de paiement, suivi de commande avec confirmation de réception ; logique métier partagée entre API et PWA via `OrderService`/`PaymentService`/`AuthService`/`OtpService`/`CartService`.
 
@@ -488,17 +520,25 @@ Ajout à l'état "fait" : **app Flutter (parcours livreur)** — même périmèt
 
 **Bug trouvé et corrigé pendant ce chantier :** `VendorPortalService` avait été codé et utilisé par tous les écrans vendeur Flutter mais jamais déclaré dans `MultiProvider` (`main.dart`) — chaque écran vendeur aurait planté à l'exécution (`ProviderNotFoundException`) malgré `flutter analyze`/`flutter test` au vert, car le seul test existant ne montait que `HomeScreen`. Corrigé (ainsi que l'ajout de `CourierPortalService`, jamais oublié cette fois), et un test de régression ajouté qui résout chaque service depuis l'arbre de widgets réel de l'app pour détecter ce genre d'oubli à l'avenir.
 
+Ajout à l'état "fait" : **refonte de l'accueil (PWA puis Flutter)**, d'après la section 8 — nav basse mobile (Accueil/Panier/Commandes/Profil, masquée sur les pages transactionnelles), écrans "Mes commandes" et "Profil" côté client (n'existaient pas), filtre de catégorie réel (`?type=` sur `GET /api/vendors`), section "Plats du jour" et section "Vente flash" cross-vendeurs (nouveaux endpoints publics `GET /api/dishes-of-the-day` et `GET /api/flash-sales`, requêtes centralisées dans `Listing::activeDishesOfTheDay()`/`activeFlashSales()` pour que PWA et API restent identiques). Dimensions de la page d'accueil desktop alignées sur la maquette Stitch fournie (conteneur 1280px, espacements 16/24/64px).
+
+**Mécanisme de vente flash :** `sale_price`/`sale_ends_at` sur `listings` (section 3.3). `Listing::effectivePrice()` est l'unique source de vérité du prix facturé — `OrderService` et `CartService` (PWA et Flutter) l'utilisent tous les deux, donc le prix est toujours recalculé et verrouillé côté serveur à la création de la commande, jamais fait confiance au client. Exposé côté vendeur (Filament + formulaire PWA) avec validation (prix promo < prix normal, date de fin dans le futur, les deux champs vont ensemble).
+
+**Écarts assumés vis-à-vis de la section 8 :** voir la liste "Écarts assumés" dans cette même section — pas de recherche/géoloc, pas de "Vendeurs en vedette" avec vraies notes (système d'avis inexistant), bandeau TikTok Live explicitement Phase 2.
+
 **Écarts connus vis-à-vis de la section 6 :**
-- Maquettes HTML fournies (structure nav basse, hero, catégories) pas encore intégrées aux écrans PWA/Flutter existants — accueil/boutique/panier/suivi actuels restent plus simples que les maquettes.
+- Système d'avis/notation (`reviews`) : n'existe pas encore en base, bloque toute réintroduction honnête d'une section "Vendeurs en vedette" avec de vraies notes.
 - Lancement pilote (hors périmètre code).
 
 **Note d'environnement :** le SDK Flutter n'était pas installé au démarrage de ce chantier ; installé via `brew install --cask flutter`. Aucun SDK Android ni CocoaPods (iOS) n'est configuré sur cette machine — seule la cible web (Chrome) est disponible pour un lancement local. Rendu vérifié manuellement dans un vrai navigateur Chrome (boutique et logo visibles) ; la vérification automatisée via Playwright/Chromium headless n'a pas fonctionné dans ce sandbox (rendu WebGL/CanvasKit qui reste bloqué), à noter comme limite d'outillage plutôt que de code si ça se reproduit.
 
+**Note de test Flutter :** dans les tests widgets, `pumpWidget()`/`pumpAndSettle()` vident la file de microtâches plusieurs fois autour de la construction d'une frame (`AutomatedTestWidgetsFlutterBinding.pump`), et le faux client HTTP des tests répond en microtâche plutôt qu'avec un vrai délai — l'état transitoire ("en chargement") d'un `FutureBuilder` alimenté par un appel réseau n'est donc pas garanti observable, et devient une vraie course dès que l'écran fait plusieurs appels concurrents (vérifié empiriquement : deux exécutions strictement identiques du même test ont produit des arbres de widgets différents). Ne pas écrire de test qui dépend de cet état transitoire précis.
+
 ---
 
-## 12. Notes d'usage de ce document avec Claude Code
+## 13. Notes d'usage de ce document avec Claude Code
 
 - Donner ce document en contexte à chaque nouvelle session Claude Code pour éviter les incohérences d'architecture d'une session à l'autre.
 - Démarrer par les migrations Laravel correspondant à la section 3, puis les modèles Eloquent avec les relations, avant d'attaquer les endpoints de la section 5.
 - Prioriser strictement selon les phases de la section 6 — ne pas implémenter la section 7/monétisation additionnelle avant d'avoir un MVP fonctionnel avec de vrais vendeurs actifs.
-- Tenir la section 11 à jour à mesure que les écarts se comblent ou que de nouveaux apparaissent.
+- Tenir la section 12 à jour à mesure que les écarts se comblent ou que de nouveaux apparaissent.
