@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ListingResource\Pages;
-use App\Filament\Resources\ListingResource\RelationManagers;
 use App\Models\Listing;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ListingResource extends Resource
 {
@@ -44,6 +41,15 @@ class ListingResource extends Resource
                     ->required()
                     ->numeric()
                     ->suffix('XOF'),
+                Forms\Components\TextInput::make('sale_price')
+                    ->label('Prix promo (vente flash)')
+                    ->numeric()
+                    ->suffix('XOF')
+                    ->rules(['lt:price'])
+                    ->requiredWith('sale_ends_at'),
+                Forms\Components\DateTimePicker::make('sale_ends_at')
+                    ->label('Fin de la vente flash')
+                    ->requiredWith('sale_price'),
                 Forms\Components\TextInput::make('currency')
                     ->required()
                     ->maxLength(3)
@@ -87,6 +93,13 @@ class ListingResource extends Resource
                 Tables\Columns\TextColumn::make('price')
                     ->money('XOF')
                     ->sortable(),
+                Tables\Columns\TextColumn::make('sale_price')
+                    ->label('Vente flash')
+                    ->money('XOF')
+                    ->placeholder('—')
+                    ->description(fn (Listing $record) => $record->sale_ends_at?->isFuture()
+                        ? 'Jusqu\'au '.$record->sale_ends_at->format('d/m H:i')
+                        : ($record->sale_ends_at ? 'Terminée' : null)),
                 Tables\Columns\TextColumn::make('stock_quantity')
                     ->numeric()
                     ->sortable()

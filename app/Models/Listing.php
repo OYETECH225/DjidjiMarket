@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[Fillable([
     'vendor_id', 'type', 'name', 'description', 'price', 'currency',
+    'sale_price', 'sale_ends_at',
     'stock_quantity', 'available_from', 'available_until', 'photo_urls',
     'display_number', 'promo_code', 'is_active',
 ])]
@@ -34,6 +36,8 @@ class Listing extends Model
     {
         return [
             'price' => 'decimal:2',
+            'sale_price' => 'decimal:2',
+            'sale_ends_at' => 'datetime',
             'photo_urls' => 'array',
             'available_from' => 'datetime',
             'available_until' => 'datetime',
@@ -49,5 +53,24 @@ class Listing extends Model
     public function orderItems(): HasMany
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function isOnFlashSale(): bool
+    {
+        return $this->sale_price !== null
+            && $this->sale_ends_at !== null
+            && $this->sale_ends_at->isFuture();
+    }
+
+    public function effectivePrice(): float
+    {
+        return $this->isOnFlashSale() ? (float) $this->sale_price : (float) $this->price;
+    }
+
+    public function scopeOnFlashSale(Builder $query): Builder
+    {
+        return $query->whereNotNull('sale_price')
+            ->whereNotNull('sale_ends_at')
+            ->where('sale_ends_at', '>', now());
     }
 }

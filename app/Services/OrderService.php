@@ -50,7 +50,7 @@ class OrderService
                     ]);
                 }
 
-                $totalAmount += $listing->price * $item['quantity'];
+                $totalAmount += $listing->effectivePrice() * $item['quantity'];
             }
 
             $order = Order::create([
@@ -74,7 +74,7 @@ class OrderService
                 $order->items()->create([
                     'listing_id' => $listing->id,
                     'quantity' => $item['quantity'],
-                    'unit_price' => $listing->price,
+                    'unit_price' => $listing->effectivePrice(),
                 ]);
 
                 if ($listing->stock_quantity !== null) {

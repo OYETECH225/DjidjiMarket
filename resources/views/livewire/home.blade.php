@@ -63,6 +63,47 @@
         </div>
     </x-full-bleed>
 
+    @if ($flashSales->isNotEmpty())
+        <x-full-bleed class="rounded-xl border border-djidji-orange/30 bg-djidji-orange/5 py-8">
+            <div class="mb-6 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6 text-djidji-orange">
+                    <path fill-rule="evenodd" d="M14.615 1.595a.75.75 0 0 1 .359.852L12.982 9.75h7.268a.75.75 0 0 1 .548 1.262l-10.5 11.25a.75.75 0 0 1-1.272-.71l1.992-7.302H3.75a.75.75 0 0 1-.548-1.262l10.5-11.25a.75.75 0 0 1 .913-.143Z" clip-rule="evenodd"/>
+                </svg>
+                <h2 class="font-sans text-xl font-bold text-djidji-orange">Vente flash</h2>
+            </div>
+            <div class="grid grid-cols-2 gap-6 md:grid-cols-4">
+                @foreach ($flashSales as $item)
+                    <div class="overflow-hidden rounded-xl border border-djidji-outline bg-white">
+                        <div class="h-32 bg-cover bg-center" style="background-image: url('https://picsum.photos/seed/djidji-flash-{{ $item->id }}/300/200')"></div>
+                        <div class="p-4">
+                            <p class="font-sans font-semibold text-djidji-text">{{ $item->name }}</p>
+                            <p class="text-xs text-djidji-text/50">{{ $item->vendor->business_name }}</p>
+                            <p class="mt-1 text-xs font-medium text-djidji-orange">
+                                Jusqu'au {{ $item->sale_ends_at->format('d/m à H:i') }}
+                            </p>
+                            <div class="mt-2 flex items-center justify-between">
+                                <div class="flex items-baseline gap-2">
+                                    <span class="font-semibold text-djidji-orange">{{ number_format($item->sale_price, 0, ',', ' ') }} {{ $item->currency }}</span>
+                                    <span class="text-xs text-djidji-text/40 line-through">{{ number_format($item->price, 0, ',', ' ') }}</span>
+                                </div>
+                                <button
+                                    type="button"
+                                    wire:click="addFlashSaleToCart({{ $item->id }})"
+                                    class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-djidji-orange text-white hover:brightness-95"
+                                    aria-label="Ajouter {{ $item->name }} au panier"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4">
+                                        <path d="M12 4.5a.75.75 0 0 1 .75.75v6h6a.75.75 0 0 1 0 1.5h-6v6a.75.75 0 0 1-1.5 0v-6h-6a.75.75 0 0 1 0-1.5h6v-6A.75.75 0 0 1 12 4.5"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </x-full-bleed>
+    @endif
+
     <x-full-bleed>
         <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
             @foreach (['boutique' => 'djidji-cat-boutique', 'street_food' => 'djidji-cat-food', 'restaurant' => 'djidji-cat-restaurant'] as $value => $seed)

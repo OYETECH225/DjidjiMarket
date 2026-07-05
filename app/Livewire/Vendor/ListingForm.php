@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
 
 #[Layout('layouts.app')]
@@ -24,6 +25,10 @@ class ListingForm extends Component
 
     public string $price = '';
 
+    public ?string $sale_price = null;
+
+    public ?string $sale_ends_at = null;
+
     public ?string $stock_quantity = null;
 
     public ?string $display_number = null;
@@ -32,7 +37,7 @@ class ListingForm extends Component
 
     public bool $is_active = true;
 
-    /** @var array<\Livewire\Features\SupportFileUploads\TemporaryUploadedFile> */
+    /** @var array<TemporaryUploadedFile> */
     public array $newPhotos = [];
 
     public function mount(?Listing $listing = null): void
@@ -55,6 +60,8 @@ class ListingForm extends Component
             $this->name = $listing->name;
             $this->description = (string) $listing->description;
             $this->price = (string) $listing->price;
+            $this->sale_price = $listing->sale_price !== null ? (string) $listing->sale_price : null;
+            $this->sale_ends_at = $listing->sale_ends_at?->format('Y-m-d\TH:i');
             $this->stock_quantity = $listing->stock_quantity !== null ? (string) $listing->stock_quantity : null;
             $this->display_number = $listing->display_number !== null ? (string) $listing->display_number : null;
             $this->promo_code = (string) $listing->promo_code;
@@ -69,6 +76,15 @@ class ListingForm extends Component
             'name' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'price' => ['required', 'numeric', 'min:0'],
+            'sale_price' => [
+                'nullable', 'numeric', 'min:0', 'required_with:sale_ends_at',
+                function ($attribute, $value, $fail) {
+                    if ($value !== null && $value !== '' && (float) $value >= (float) $this->price) {
+                        $fail('Le prix promo doit être inférieur au prix normal.');
+                    }
+                },
+            ],
+            'sale_ends_at' => ['nullable', 'date', 'after:now', 'required_with:sale_price'],
             'stock_quantity' => ['nullable', 'integer', 'min:0'],
             'display_number' => ['nullable', 'integer', 'min:0'],
             'promo_code' => ['nullable', 'string', 'max:255'],
@@ -91,6 +107,8 @@ class ListingForm extends Component
             'name' => $data['name'],
             'description' => $data['description'] ?: null,
             'price' => $data['price'],
+            'sale_price' => $data['sale_price'] !== null && $data['sale_price'] !== '' ? $data['sale_price'] : null,
+            'sale_ends_at' => $data['sale_ends_at'] ?: null,
             'stock_quantity' => $data['stock_quantity'] !== null && $data['stock_quantity'] !== '' ? $data['stock_quantity'] : null,
             'display_number' => $data['display_number'] !== null && $data['display_number'] !== '' ? $data['display_number'] : null,
             'promo_code' => $data['promo_code'] ?: null,

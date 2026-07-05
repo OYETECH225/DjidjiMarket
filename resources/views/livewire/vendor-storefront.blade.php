@@ -62,7 +62,7 @@
                         @if ($listing->description)
                             <p class="mt-1 text-sm text-djidji-text/60">{{ $listing->description }}</p>
                         @endif
-                        <p class="mt-2 font-semibold text-djidji-orange">{{ number_format($listing->price, 0, ',', ' ') }} {{ $listing->currency }}</p>
+                        <x-listing-price :listing="$listing" class="mt-2" />
                     </div>
 
                     <x-button wire:click="addToCart({{ $listing->id }})" class="mt-4">

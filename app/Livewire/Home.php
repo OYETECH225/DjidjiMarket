@@ -38,6 +38,18 @@ class Home extends Component
         $this->addedMessage = "\"{$listing->name}\" ajouté au panier.";
     }
 
+    public function addFlashSaleToCart(int $listingId, CartService $cart): void
+    {
+        $listing = Listing::where('id', $listingId)
+            ->where('is_active', true)
+            ->onFlashSale()
+            ->firstOrFail();
+
+        $cart->add($listing);
+
+        $this->addedMessage = "\"{$listing->name}\" ajouté au panier.";
+    }
+
     public function render()
     {
         return view('livewire.home', [
@@ -50,6 +62,13 @@ class Home extends Component
                 ->whereHas('vendor', fn ($query) => $query->where('is_active', true))
                 ->with('vendor')
                 ->latest()
+                ->limit(8)
+                ->get(),
+            'flashSales' => Listing::onFlashSale()
+                ->where('is_active', true)
+                ->whereHas('vendor', fn ($query) => $query->where('is_active', true))
+                ->with('vendor')
+                ->orderBy('sale_ends_at')
                 ->limit(8)
                 ->get(),
         ]);

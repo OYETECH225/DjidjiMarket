@@ -21,6 +21,15 @@
         </div>
 
         <x-input label="Prix (XOF)" type="number" wire:model="price" :error="$errors->first('price')" />
+
+        <div class="rounded-xl border border-djidji-outline p-4">
+            <p class="mb-3 text-sm font-semibold text-djidji-green">Vente flash (optionnel)</p>
+            <div class="space-y-4">
+                <x-input label="Prix promo (XOF)" type="number" wire:model="sale_price" :error="$errors->first('sale_price')" />
+                <x-input label="Se termine le" type="datetime-local" wire:model="sale_ends_at" :error="$errors->first('sale_ends_at')" />
+            </div>
+        </div>
+
         <x-input label="Stock (laisser vide si non applicable)" type="number" wire:model="stock_quantity" />
         <x-input label="Numéro d'affichage (pour les lives)" type="number" wire:model="display_number" />
         <x-input label="Code promo" wire:model="promo_code" />

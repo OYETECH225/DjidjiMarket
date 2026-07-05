@@ -11,6 +11,7 @@ use App\Models\Listing;
 use App\Models\Order;
 use App\Models\User;
 use App\Models\Vendor;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 use Tests\TestCase;
@@ -114,6 +115,55 @@ class VendorJourneyTest extends TestCase
         ]);
     }
 
+    public function test_vendor_can_create_a_listing_with_a_flash_sale(): void
+    {
+        [$vendorUser, $vendor] = $this->makeVendor();
+
+        Livewire::actingAs($vendorUser)
+            ->test(ListingForm::class)
+            ->set('type', 'produit')
+            ->set('name', 'Robe wax')
+            ->set('price', '15000')
+            ->set('sale_price', '9000')
+            ->set('sale_ends_at', now()->addHours(2)->format('Y-m-d\TH:i'))
+            ->call('save')
+            ->assertRedirect(route('vendor.listings'));
+
+        $listing = Listing::where('vendor_id', $vendor->id)->where('name', 'Robe wax')->firstOrFail();
+        $this->assertSame('9000.00', $listing->sale_price);
+        $this->assertTrue($listing->isOnFlashSale());
+        $this->assertSame(9000.0, $listing->effectivePrice());
+    }
+
+    public function test_flash_sale_price_must_be_lower_than_regular_price(): void
+    {
+        [$vendorUser] = $this->makeVendor();
+
+        Livewire::actingAs($vendorUser)
+            ->test(ListingForm::class)
+            ->set('type', 'produit')
+            ->set('name', 'Robe wax')
+            ->set('price', '15000')
+            ->set('sale_price', '15000')
+            ->set('sale_ends_at', now()->addHours(2)->format('Y-m-d\TH:i'))
+            ->call('save')
+            ->assertHasErrors(['sale_price']);
+    }
+
+    public function test_flash_sale_requires_both_price_and_end_date(): void
+    {
+        [$vendorUser] = $this->makeVendor();
+
+        Livewire::actingAs($vendorUser)
+            ->test(ListingForm::class)
+            ->set('type', 'produit')
+            ->set('name', 'Robe wax')
+            ->set('price', '15000')
+            ->set('sale_price', '9000')
+            ->call('save')
+            ->assertHasErrors(['sale_ends_at']);
+    }
+
     public function test_vendor_cannot_edit_another_vendors_listing(): void
     {
         [, $vendorA] = $this->makeVendor();
@@ -139,7 +189,7 @@ class VendorJourneyTest extends TestCase
 
         $this->assertFalse($listingA->fresh()->is_active);
 
-        $this->expectException(\Illuminate\Database\Eloquent\ModelNotFoundException::class);
+        $this->expectException(ModelNotFoundException::class);
 
         Livewire::actingAs($vendorUserB)
             ->test(Listings::class)

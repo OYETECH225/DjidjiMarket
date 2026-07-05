@@ -82,6 +82,76 @@ class AccountAndNavTest extends TestCase
         $this->assertSame(1, app(CartService::class)->count());
     }
 
+    public function test_home_shows_only_active_flash_sales_from_active_vendors(): void
+    {
+        $activeVendorUser = User::factory()->create(['role' => 'vendor']);
+        $activeVendor = Vendor::create([
+            'user_id' => $activeVendorUser->id, 'business_name' => 'La Boutique', 'vendor_type' => 'boutique',
+            'slug' => 'la-boutique', 'is_active' => true,
+        ]);
+        Listing::create([
+            'vendor_id' => $activeVendor->id, 'type' => 'produit', 'name' => 'Robe wax', 'price' => 15000,
+            'sale_price' => 9000, 'sale_ends_at' => now()->addHours(2), 'is_active' => true,
+        ]);
+        Listing::create([
+            'vendor_id' => $activeVendor->id, 'type' => 'produit', 'name' => 'Vente expirée', 'price' => 8000,
+            'sale_price' => 5000, 'sale_ends_at' => now()->subHour(), 'is_active' => true,
+        ]);
+        Listing::create(['vendor_id' => $activeVendor->id, 'type' => 'produit', 'name' => 'Sac a main', 'price' => 8000, 'is_active' => true]);
+
+        $inactiveVendorUser = User::factory()->create(['role' => 'vendor']);
+        $inactiveVendor = Vendor::create([
+            'user_id' => $inactiveVendorUser->id, 'business_name' => 'Boutique fermée', 'vendor_type' => 'boutique',
+            'slug' => 'boutique-fermee', 'is_active' => false,
+        ]);
+        Listing::create([
+            'vendor_id' => $inactiveVendor->id, 'type' => 'produit', 'name' => 'Vente fantome', 'price' => 8000,
+            'sale_price' => 4000, 'sale_ends_at' => now()->addHours(2), 'is_active' => true,
+        ]);
+
+        Livewire::test(Home::class)
+            ->assertSee('Robe wax')
+            ->assertDontSee('Vente expirée')
+            ->assertDontSee('Sac a main')
+            ->assertDontSee('Vente fantome');
+    }
+
+    public function test_add_flash_sale_item_to_cart_charges_the_sale_price(): void
+    {
+        $vendorUser = User::factory()->create(['role' => 'vendor']);
+        $vendor = Vendor::create([
+            'user_id' => $vendorUser->id, 'business_name' => 'La Boutique', 'vendor_type' => 'boutique',
+            'slug' => 'la-boutique', 'is_active' => true,
+        ]);
+        $listing = Listing::create([
+            'vendor_id' => $vendor->id, 'type' => 'produit', 'name' => 'Robe wax', 'price' => 15000,
+            'sale_price' => 9000, 'sale_ends_at' => now()->addHours(2), 'is_active' => true,
+        ]);
+
+        Livewire::test(Home::class)
+            ->call('addFlashSaleToCart', $listing->id)
+            ->assertSet('addedMessage', '"Robe wax" ajouté au panier.');
+
+        $this->assertSame(9000.0, app(CartService::class)->total());
+    }
+
+    public function test_cannot_add_expired_flash_sale_item_to_cart(): void
+    {
+        $vendorUser = User::factory()->create(['role' => 'vendor']);
+        $vendor = Vendor::create([
+            'user_id' => $vendorUser->id, 'business_name' => 'La Boutique', 'vendor_type' => 'boutique',
+            'slug' => 'la-boutique', 'is_active' => true,
+        ]);
+        $listing = Listing::create([
+            'vendor_id' => $vendor->id, 'type' => 'produit', 'name' => 'Robe wax', 'price' => 15000,
+            'sale_price' => 9000, 'sale_ends_at' => now()->subHour(), 'is_active' => true,
+        ]);
+
+        $this->expectException(ModelNotFoundException::class);
+
+        Livewire::test(Home::class)->call('addFlashSaleToCart', $listing->id);
+    }
+
     public function test_cannot_add_non_dish_listing_via_add_dish_to_cart(): void
     {
         $vendorUser = User::factory()->create(['role' => 'vendor']);

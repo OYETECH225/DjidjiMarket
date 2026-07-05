@@ -99,7 +99,7 @@ class CartService
             ->map(fn (Listing $listing) => [
                 'listing' => $listing,
                 'quantity' => $raw[$listing->id],
-                'subtotal' => $listing->price * $raw[$listing->id],
+                'subtotal' => $listing->effectivePrice() * $raw[$listing->id],
             ]);
     }
 

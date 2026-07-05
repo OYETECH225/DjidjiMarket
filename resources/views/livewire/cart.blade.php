@@ -11,7 +11,14 @@
                 <div class="flex items-center justify-between rounded-xl border border-djidji-outline bg-white p-4">
                     <div>
                         <p class="font-semibold text-djidji-text">{{ $item['listing']->name }}</p>
-                        <p class="text-sm text-djidji-text/60">{{ number_format($item['listing']->price, 0, ',', ' ') }} {{ $item['listing']->currency }}</p>
+                        <p class="text-sm text-djidji-text/60">
+                            @if ($item['listing']->isOnFlashSale())
+                                <span class="line-through">{{ number_format($item['listing']->price, 0, ',', ' ') }}</span>
+                                <span class="font-medium text-djidji-orange">{{ number_format($item['listing']->sale_price, 0, ',', ' ') }} {{ $item['listing']->currency }}</span>
+                            @else
+                                {{ number_format($item['listing']->price, 0, ',', ' ') }} {{ $item['listing']->currency }}
+                            @endif
+                        </p>
                     </div>
 
                     <div class="flex items-center gap-3">

@@ -61,6 +61,44 @@ class OrderPaymentFlowTest extends TestCase
         ]);
     }
 
+    public function test_order_charges_the_active_flash_sale_price(): void
+    {
+        [$vendor, $listing] = $this->makeVendorWithListing(price: 15000, commissionRate: 10);
+        $listing->update(['sale_price' => 9000, 'sale_ends_at' => now()->addHours(2)]);
+        $client = User::factory()->create(['role' => 'client']);
+        Sanctum::actingAs($client);
+
+        $response = $this->postJson('/api/orders', [
+            'vendor_id' => $vendor->id,
+            'items' => [['listing_id' => $listing->id, 'quantity' => 2]],
+            'delivery_address_text' => 'Cocody, Abidjan',
+        ]);
+
+        $response->assertCreated();
+        $response->assertJsonPath('order.total_amount', '18000.00');
+        $this->assertDatabaseHas('order_items', [
+            'listing_id' => $listing->id,
+            'unit_price' => 9000,
+        ]);
+    }
+
+    public function test_order_ignores_an_expired_flash_sale_price(): void
+    {
+        [$vendor, $listing] = $this->makeVendorWithListing(price: 15000, commissionRate: 10);
+        $listing->update(['sale_price' => 9000, 'sale_ends_at' => now()->subHour()]);
+        $client = User::factory()->create(['role' => 'client']);
+        Sanctum::actingAs($client);
+
+        $response = $this->postJson('/api/orders', [
+            'vendor_id' => $vendor->id,
+            'items' => [['listing_id' => $listing->id, 'quantity' => 1]],
+            'delivery_address_text' => 'Cocody, Abidjan',
+        ]);
+
+        $response->assertCreated();
+        $response->assertJsonPath('order.total_amount', '15000.00');
+    }
+
     public function test_client_can_list_only_their_own_orders(): void
     {
         [$vendor, $listing] = $this->makeVendorWithListing();

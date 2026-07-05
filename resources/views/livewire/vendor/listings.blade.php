@@ -15,7 +15,13 @@
                     <div>
                         <p class="font-semibold text-djidji-text">{{ $listing->name }}</p>
                         <p class="text-sm text-djidji-text/60">
-                            {{ number_format($listing->price, 0, ',', ' ') }} {{ $listing->currency }}
+                            @if ($listing->isOnFlashSale())
+                                <span class="line-through">{{ number_format($listing->price, 0, ',', ' ') }}</span>
+                                <span class="font-semibold text-djidji-orange">{{ number_format($listing->sale_price, 0, ',', ' ') }} {{ $listing->currency }}</span>
+                                <span class="text-xs text-djidji-orange">(vente flash jusqu'au {{ $listing->sale_ends_at->format('d/m H:i') }})</span>
+                            @else
+                                {{ number_format($listing->price, 0, ',', ' ') }} {{ $listing->currency }}
+                            @endif
                             @if ($listing->stock_quantity !== null)
                                 · Stock : {{ $listing->stock_quantity }}
                             @endif
