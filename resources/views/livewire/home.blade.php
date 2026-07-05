@@ -26,58 +26,6 @@
         </div>
     </x-full-bleed>
 
-    <x-full-bleed>
-        <div class="relative">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-djidji-text/40">
-                <path fill-rule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5M2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5" clip-rule="evenodd"/>
-            </svg>
-            <input
-                type="search"
-                wire:model.live.debounce.400ms="query"
-                placeholder="Rechercher une boutique, un article..."
-                class="w-full rounded-full border border-djidji-outline bg-white py-3 pl-11 pr-4 text-djidji-text focus:outline-none focus:ring-2 focus:ring-djidji-green"
-            >
-        </div>
-    </x-full-bleed>
-
-    @if (trim($query) !== '')
-        <x-full-bleed>
-            <h2 class="mb-6 font-sans text-xl font-bold text-djidji-green">Résultats pour "{{ $query }}"</h2>
-
-            @if ($searchResultVendors->isEmpty() && $searchResultListings->isEmpty())
-                <p class="text-center text-djidji-text/60">Aucun résultat.</p>
-            @else
-                @if ($searchResultVendors->isNotEmpty())
-                    <p class="mb-3 text-sm font-semibold uppercase tracking-wide text-djidji-text/50">Boutiques</p>
-                    <div class="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
-                        @foreach ($searchResultVendors as $vendor)
-                            <a href="{{ route('vendor.show', $vendor->slug) }}" class="flex items-center gap-3 rounded-xl border border-djidji-outline bg-white p-4">
-                                <img src="{{ $vendor->logo_url ?? '/images/DjidjiMarket-icone-seule.png' }}" alt="{{ $vendor->business_name }}" class="h-12 w-12 rounded-full object-cover">
-                                <div>
-                                    <p class="font-sans font-semibold text-djidji-text">{{ $vendor->business_name }}</p>
-                                    <p class="text-xs uppercase tracking-wide text-djidji-text/50">{{ \App\Models\Vendor::VENDOR_TYPE_LABELS[$vendor->vendor_type] ?? $vendor->vendor_type }}</p>
-                                </div>
-                            </a>
-                        @endforeach
-                    </div>
-                @endif
-
-                @if ($searchResultListings->isNotEmpty())
-                    <p class="mb-3 text-sm font-semibold uppercase tracking-wide text-djidji-text/50">Articles</p>
-                    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
-                        @foreach ($searchResultListings as $listing)
-                            <a href="{{ route('vendor.show', $listing->vendor->slug) }}" class="rounded-xl border border-djidji-outline bg-white p-4">
-                                <p class="font-sans font-semibold text-djidji-text">{{ $listing->name }}</p>
-                                <p class="text-xs text-djidji-text/50">{{ $listing->vendor->business_name }}</p>
-                                <x-listing-price :listing="$listing" class="mt-2" />
-                            </a>
-                        @endforeach
-                    </div>
-                @endif
-            @endif
-        </x-full-bleed>
-    @endif
-
     <x-full-bleed id="confiance" class="grid grid-cols-1 gap-6 md:grid-cols-3">
         <div class="flex items-center gap-4 rounded-xl border border-djidji-outline bg-white p-6">
             <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-djidji-green/10 text-djidji-green">
@@ -126,17 +74,12 @@
             <div class="grid grid-cols-2 gap-6 md:grid-cols-4">
                 @foreach ($flashSales as $item)
                     <div class="overflow-hidden rounded-xl border border-djidji-outline bg-white">
-                        <div class="relative h-32 bg-cover bg-center" style="background-image: url('https://picsum.photos/seed/djidji-flash-{{ $item->id }}/300/200')">
-                            <span class="absolute left-2 top-2 rounded-full bg-djidji-orange px-2 py-0.5 text-xs font-bold text-white">
-                                -{{ round((1 - $item->sale_price / $item->price) * 100) }}%
-                            </span>
-                        </div>
+                        <div class="h-32 bg-cover bg-center" style="background-image: url('https://picsum.photos/seed/djidji-flash-{{ $item->id }}/300/200')"></div>
                         <div class="p-4">
                             <p class="font-sans font-semibold text-djidji-text">{{ $item->name }}</p>
                             <p class="text-xs text-djidji-text/50">{{ $item->vendor->business_name }}</p>
                             <p class="mt-1 text-xs font-medium text-djidji-orange">
-                                @php($diff = now()->diff($item->sale_ends_at))
-                                Se termine dans {{ $diff->h }}h{{ str_pad($diff->i, 2, '0', STR_PAD_LEFT) }}
+                                Jusqu'au {{ $item->sale_ends_at->format('d/m à H:i') }}
                             </p>
                             <div class="mt-2 flex items-center justify-between">
                                 <div class="flex items-baseline gap-2">
@@ -179,37 +122,44 @@
         </div>
     </x-full-bleed>
 
-    @if ($featuredVendors->isNotEmpty())
-        <x-full-bleed>
-            <div class="mb-6 flex items-end justify-between">
-                <div>
-                    <h2 class="font-sans text-xl font-bold text-djidji-green">Vendeurs en vedette</h2>
-                    <p class="text-sm text-djidji-text/60">Boutiques vérifiées récemment</p>
+    {{-- Exemple statique en attendant un système d'avis/notation réel — à retirer dès qu'il existera. --}}
+    <x-full-bleed>
+        <div class="mb-6 flex items-end justify-between">
+            <div>
+                <h2 class="font-sans text-xl font-bold text-djidji-green">Vendeurs en vedette</h2>
+                <p class="text-sm text-djidji-text/60">Les boutiques les plus fiables de la semaine</p>
+            </div>
+            <a href="#boutiques" class="flex items-center gap-1 text-sm font-semibold text-djidji-orange hover:underline">
+                Voir tout →
+            </a>
+        </div>
+        <div class="grid grid-cols-2 gap-6 md:grid-cols-4">
+            @foreach ([
+                ['name' => 'Aya Confection', 'rating' => '4.9', 'reviews' => 120, 'seed' => 'djidji-vendor-1'],
+                ['name' => 'Épices du Plateau', 'rating' => '4.8', 'reviews' => 85, 'seed' => 'djidji-vendor-2'],
+                ['name' => 'Chez Tonton Marc', 'rating' => '5.0', 'reviews' => 210, 'seed' => 'djidji-vendor-3'],
+                ['name' => "Naturel d'Ivoire", 'rating' => '4.7', 'reviews' => 54, 'seed' => 'djidji-vendor-4'],
+            ] as $example)
+                <div class="overflow-hidden rounded-xl border border-djidji-outline bg-white">
+                    <div class="h-32 bg-cover bg-center" style="background-image: url('https://picsum.photos/seed/{{ $example['seed'] }}/300/200')"></div>
+                    <div class="space-y-1 p-4">
+                        <div class="flex items-center gap-1">
+                            <p class="truncate text-sm font-semibold text-djidji-text">{{ $example['name'] }}</p>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 shrink-0 text-djidji-green">
+                                <path fill-rule="evenodd" d="M8.603 3.799A4.49 4.49 0 0 1 12 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 0 1 3.498 1.307 4.49 4.49 0 0 1 1.307 3.497A4.49 4.49 0 0 1 21.75 12a4.49 4.49 0 0 1-1.549 3.397 4.49 4.49 0 0 1-1.307 3.497 4.49 4.49 0 0 1-3.497 1.307A4.49 4.49 0 0 1 12 21.75a4.49 4.49 0 0 1-3.397-1.549 4.49 4.49 0 0 1-3.498-1.306 4.49 4.49 0 0 1-1.307-3.498A4.49 4.49 0 0 1 2.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 0 1 1.307-3.497 4.49 4.49 0 0 1 3.497-1.307m7.007 6.387a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                        <div class="flex items-center gap-1 text-xs text-djidji-text/60">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-3.5 w-3.5 text-djidji-orange">
+                                <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433z" clip-rule="evenodd"/>
+                            </svg>
+                            <span>{{ $example['rating'] }} ({{ $example['reviews'] }} avis)</span>
+                        </div>
+                    </div>
                 </div>
-                <a href="#boutiques" class="flex items-center gap-1 text-sm font-semibold text-djidji-orange hover:underline">
-                    Voir tout →
-                </a>
-            </div>
-            <div class="grid grid-cols-2 gap-6 md:grid-cols-4">
-                @foreach ($featuredVendors as $vendor)
-                    <a href="{{ route('vendor.show', $vendor->slug) }}" class="overflow-hidden rounded-xl border border-djidji-outline bg-white">
-                        <div class="relative h-32 bg-djidji-green/10 bg-cover bg-center" @if ($vendor->cover_url) style="background-image: url('{{ $vendor->cover_url }}')" @endif>
-                            <span class="absolute right-2 top-2 flex items-center gap-1 rounded-full bg-white px-2 py-0.5 text-[10px] font-semibold text-djidji-green">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-3 w-3">
-                                    <path fill-rule="evenodd" d="M8.603 3.799A4.49 4.49 0 0 1 12 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 0 1 3.498 1.307 4.49 4.49 0 0 1 1.307 3.497A4.49 4.49 0 0 1 21.75 12a4.49 4.49 0 0 1-1.549 3.397 4.49 4.49 0 0 1-1.307 3.497 4.49 4.49 0 0 1-3.497 1.307A4.49 4.49 0 0 1 12 21.75a4.49 4.49 0 0 1-3.397-1.549 4.49 4.49 0 0 1-3.498-1.306 4.49 4.49 0 0 1-1.307-3.498A4.49 4.49 0 0 1 2.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 0 1 1.307-3.497 4.49 4.49 0 0 1 3.497-1.307m7.007 6.387a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094z" clip-rule="evenodd"/>
-                                </svg>
-                                VÉRIFIÉ
-                            </span>
-                        </div>
-                        <div class="p-4">
-                            <p class="truncate font-sans font-semibold text-djidji-text">{{ $vendor->business_name }}</p>
-                            <p class="text-xs text-djidji-text/50">{{ \App\Models\Vendor::VENDOR_TYPE_LABELS[$vendor->vendor_type] ?? $vendor->vendor_type }}</p>
-                        </div>
-                    </a>
-                @endforeach
-            </div>
-        </x-full-bleed>
-    @endif
+            @endforeach
+        </div>
+    </x-full-bleed>
 
     @if ($addedMessage)
         <div class="rounded-xl bg-djidji-green/10 px-4 py-2 text-sm text-djidji-green">

@@ -18,18 +18,11 @@ class Home extends Component
     #[Url(as: 'type')]
     public ?string $type = null;
 
-    public string $query = '';
-
     public ?string $addedMessage = null;
 
     public function filterBy(?string $type): void
     {
         $this->type = $type && array_key_exists($type, Vendor::VENDOR_TYPE_LABELS) ? $type : null;
-        $this->resetPage();
-    }
-
-    public function updatedQuery(): void
-    {
         $this->resetPage();
     }
 
@@ -59,8 +52,6 @@ class Home extends Component
 
     public function render()
     {
-        $trimmedQuery = trim($this->query);
-
         return view('livewire.home', [
             'vendors' => Vendor::where('is_active', true)
                 ->when($this->type, fn ($query) => $query->where('vendor_type', $this->type))
@@ -68,9 +59,6 @@ class Home extends Component
                 ->paginate(12),
             'dishesOfTheDay' => Listing::activeDishesOfTheDay(),
             'flashSales' => Listing::activeFlashSales(),
-            'featuredVendors' => Vendor::where('is_active', true)->where('verification_level', 'verifie')->latest()->limit(4)->get(),
-            'searchResultVendors' => $trimmedQuery !== '' ? Vendor::searchActive($trimmedQuery) : collect(),
-            'searchResultListings' => $trimmedQuery !== '' ? Listing::searchActive($trimmedQuery) : collect(),
         ]);
     }
 }
