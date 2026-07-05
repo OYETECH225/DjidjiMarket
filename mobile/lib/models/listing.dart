@@ -5,9 +5,12 @@ class Listing {
   final String name;
   final String? description;
   final double price;
+  final double? salePrice;
+  final DateTime? saleEndsAt;
   final String currency;
   final int? stockQuantity;
   final bool isActive;
+  final String? vendorBusinessName;
 
   Listing({
     required this.id,
@@ -17,9 +20,16 @@ class Listing {
     required this.price,
     required this.currency,
     this.description,
+    this.salePrice,
+    this.saleEndsAt,
     this.stockQuantity,
     this.isActive = true,
+    this.vendorBusinessName,
   });
+
+  bool get isOnFlashSale => salePrice != null && saleEndsAt != null && saleEndsAt!.isAfter(DateTime.now());
+
+  double get effectivePrice => isOnFlashSale ? salePrice! : price;
 
   factory Listing.fromJson(Map<String, dynamic> json) {
     return Listing(
@@ -29,9 +39,12 @@ class Listing {
       name: json['name'],
       description: json['description'],
       price: double.parse(json['price'].toString()),
+      salePrice: json['sale_price'] != null ? double.parse(json['sale_price'].toString()) : null,
+      saleEndsAt: json['sale_ends_at'] != null ? DateTime.tryParse(json['sale_ends_at']) : null,
       currency: json['currency'] ?? 'XOF',
       stockQuantity: json['stock_quantity'],
       isActive: json['is_active'] ?? true,
+      vendorBusinessName: json['vendor_business_name'],
     );
   }
 }

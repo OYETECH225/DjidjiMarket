@@ -7,7 +7,7 @@ class CartLine {
 
   CartLine(this.listing, this.quantity);
 
-  double get subtotal => listing.price * quantity;
+  double get subtotal => listing.effectivePrice * quantity;
 }
 
 /// In-memory cart, scoped to a single vendor at a time — mirrors the web

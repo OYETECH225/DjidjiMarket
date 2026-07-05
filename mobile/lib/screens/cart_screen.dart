@@ -27,7 +27,22 @@ class CartScreen extends StatelessWidget {
                       margin: const EdgeInsets.only(bottom: 8),
                       child: ListTile(
                         title: Text(line.listing.name),
-                        subtitle: Text('${currencyFormat.format(line.listing.price)} XOF'),
+                        subtitle: line.listing.isOnFlashSale
+                            ? Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    currencyFormat.format(line.listing.price),
+                                    style: const TextStyle(decoration: TextDecoration.lineThrough),
+                                  ),
+                                  const SizedBox(width: 6),
+                                  Text(
+                                    '${currencyFormat.format(line.listing.salePrice)} XOF',
+                                    style: const TextStyle(color: AppColors.orange, fontWeight: FontWeight.w600),
+                                  ),
+                                ],
+                              )
+                            : Text('${currencyFormat.format(line.listing.price)} XOF'),
                         leading: SizedBox(
                           width: 90,
                           child: Row(

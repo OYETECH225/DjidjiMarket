@@ -1,3 +1,10 @@
+/// Mirrors Vendor::VENDOR_TYPE_LABELS on the backend.
+const Map<String, String> vendorTypeLabels = {
+  'boutique': 'Boutique',
+  'street_food': 'Nourriture',
+  'restaurant': 'Restaurant',
+};
+
 class Vendor {
   final int id;
   final String businessName;

@@ -104,10 +104,25 @@ class _VendorScreenState extends State<VendorScreen> {
                       child: ListTile(
                         contentPadding: const EdgeInsets.all(12),
                         title: Text(listing.name, style: const TextStyle(fontWeight: FontWeight.w600)),
-                        subtitle: Text(
-                          '${_currencyFormat.format(listing.price)} ${listing.currency}',
-                          style: const TextStyle(color: AppColors.orange, fontWeight: FontWeight.w600),
-                        ),
+                        subtitle: listing.isOnFlashSale
+                            ? Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    _currencyFormat.format(listing.price),
+                                    style: const TextStyle(decoration: TextDecoration.lineThrough),
+                                  ),
+                                  const SizedBox(width: 6),
+                                  Text(
+                                    '${_currencyFormat.format(listing.salePrice)} ${listing.currency}',
+                                    style: const TextStyle(color: AppColors.orange, fontWeight: FontWeight.w600),
+                                  ),
+                                ],
+                              )
+                            : Text(
+                                '${_currencyFormat.format(listing.price)} ${listing.currency}',
+                                style: const TextStyle(color: AppColors.orange, fontWeight: FontWeight.w600),
+                              ),
                         trailing: ElevatedButton(
                           onPressed: () {
                             context.read<CartService>().add(listing);
