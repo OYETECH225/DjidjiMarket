@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use Illuminate\Validation\Rule;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
@@ -32,7 +33,7 @@ class Profile extends Component
     {
         $data = $this->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['nullable', 'email', 'max:255'],
+            'email' => ['nullable', 'email', 'max:255', Rule::unique('users', 'email')->ignore(auth()->id())],
         ]);
 
         auth()->user()->update($data);

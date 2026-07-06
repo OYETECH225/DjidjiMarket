@@ -40,6 +40,33 @@ class ProfileApiTest extends TestCase
         $response->assertStatus(422);
     }
 
+    public function test_update_profile_rejects_an_email_already_used_by_another_account(): void
+    {
+        User::factory()->create(['email' => 'taken@example.ci']);
+        $user = User::factory()->create(['email' => null]);
+        Sanctum::actingAs($user);
+
+        $response = $this->patchJson('/api/user', [
+            'name' => $user->name,
+            'email' => 'taken@example.ci',
+        ]);
+
+        $response->assertStatus(422);
+    }
+
+    public function test_update_profile_allows_keeping_own_current_email(): void
+    {
+        $user = User::factory()->create(['email' => 'me@example.ci']);
+        Sanctum::actingAs($user);
+
+        $response = $this->patchJson('/api/user', [
+            'name' => 'New Name',
+            'email' => 'me@example.ci',
+        ]);
+
+        $response->assertOk();
+    }
+
     public function test_guest_cannot_update_profile(): void
     {
         $response = $this->patchJson('/api/user', ['name' => 'New Name']);

@@ -300,6 +300,20 @@ class AccountAndNavTest extends TestCase
         $this->assertSame('new@example.ci', $client->email);
     }
 
+    public function test_profile_rejects_an_email_already_used_by_another_account(): void
+    {
+        User::factory()->create(['email' => 'taken@example.ci']);
+        $client = User::factory()->create(['role' => 'client', 'email' => null]);
+
+        Livewire::actingAs($client)
+            ->test(Profile::class)
+            ->set('email', 'taken@example.ci')
+            ->call('save')
+            ->assertHasErrors('email');
+
+        $this->assertNull($client->fresh()->email);
+    }
+
     public function test_bottom_nav_shown_on_home_and_storefront_but_not_on_cart(): void
     {
         $vendorUser = User::factory()->create(['role' => 'vendor']);
