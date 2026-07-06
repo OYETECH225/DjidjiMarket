@@ -58,8 +58,11 @@ class Vendor extends Model
      */
     public static function searchActive(string $query, int $limit = 10)
     {
+        // whereRaw + LOWER() rather than a plain `like` because Postgres'
+        // LIKE is case-sensitive (unlike SQLite's, which is why this passed
+        // in tests but silently returned nothing on the real dev database).
         return static::where('is_active', true)
-            ->where('business_name', 'like', '%'.$query.'%')
+            ->whereRaw('LOWER(business_name) LIKE ?', ['%'.mb_strtolower($query).'%'])
             ->limit($limit)
             ->get();
     }

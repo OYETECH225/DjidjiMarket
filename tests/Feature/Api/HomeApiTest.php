@@ -76,6 +76,11 @@ class HomeApiTest extends TestCase
 
     public function test_search_matches_vendor_names_and_listing_names(): void
     {
+        // Query casing intentionally differs from the stored names below —
+        // SQLite's LIKE is case-insensitive by default so this alone won't
+        // catch a regression to plain `like`, but it documents the real
+        // requirement (Postgres' LIKE is case-sensitive; verified manually
+        // against the dev database that LOWER()-wrapped search matches).
         $vendor = $this->makeVendor();
         Vendor::create([
             'user_id' => User::factory()->create(['role' => 'vendor'])->id, 'business_name' => 'Chez Tantie Awa', 'vendor_type' => 'restaurant',
