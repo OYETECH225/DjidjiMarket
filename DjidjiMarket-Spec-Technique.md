@@ -337,6 +337,7 @@ GET    /api/vendors/{slug}          # page boutique publique (lien perso)
 GET    /api/vendors/{id}/listings
 GET    /api/dishes-of-the-day       # plats du jour actifs, tous vendeurs actifs confondus (accueil)
 GET    /api/flash-sales             # ventes flash actives, tous vendeurs actifs confondus (accueil)
+GET    /api/search?q=               # recherche boutiques + articles actifs (utilisé par l'app Flutter, pas la PWA)
 
 GET    /api/orders                  # commandes du client connecté
 POST   /api/orders                  # création de commande
@@ -526,8 +527,15 @@ Ajout à l'état "fait" : **refonte de l'accueil (PWA puis Flutter)**, d'après 
 
 **Écarts assumés vis-à-vis de la section 8 :** voir la liste "Écarts assumés" dans cette même section — pas de recherche/géoloc, pas de "Vendeurs en vedette" avec vraies notes (système d'avis inexistant), bandeau TikTok Live explicitement Phase 2.
 
+Ajout à l'état "fait" : **accueil Flutter aligné sur la maquette mobile dédiée** (`design/ecran-mobile/stitch_djidjimarket_multi_vendor_accueil`, distincte de la maquette desktop de la section 8) — barre de recherche réelle (nouvel endpoint public `GET /api/search`, cherche sur noms de boutique et d'article actifs, requêtes centralisées dans `Vendor::searchActive()`/`Listing::searchActive()`), pilules de catégorie, bandeau confiance compact, "Vendeurs en vedette" avec de vrais vendeurs vérifiés (pas de notes — cette maquette n'en affiche pas non plus), badge de réduction + compte à rebours réels sur les ventes flash. **Important :** ces changements sont Flutter uniquement — l'accueil PWA (section 8) reste tel quel, volontairement non modifié pour ne pas toucher au rendu desktop déjà validé, alors que `home.blade.php` est un template partagé mobile/desktop. `GET /api/search` reste disponible côté API mais n'est pas câblé sur la PWA.
+
+**Bug trouvé et corrigé :** `Vendor::searchActive()`/`Listing::searchActive()` utilisaient un `like` simple — insensible à la casse sur SQLite (donc les tests passaient) mais sensible à la casse sur PostgreSQL, la vraie base de dev. La recherche renvoyait silencieusement zéro résultat dès que la casse ne correspondait pas exactement. Trouvé en testant l'endpoint en direct sur la vraie base plutôt qu'en se fiant aux tests seuls. Corrigé avec `whereRaw(... LOWER(...) LIKE ...)`.
+
 **Écarts connus vis-à-vis de la section 6 :**
-- Système d'avis/notation (`reviews`) : n'existe pas encore en base, bloque toute réintroduction honnête d'une section "Vendeurs en vedette" avec de vraies notes.
+- Système d'avis/notation (`reviews`) : n'existe pas encore en base, bloque toute réintroduction honnête d'une section "Vendeurs en vedette" avec de vraies notes, et tout l'écran "Laisser un avis" des maquettes fournies.
+- Signalement de litige : l'endpoint `POST /api/orders/{id}/dispute` est documenté en section 5 mais pas implémenté ; le statut `litige_ouvert` existe sur `Order` mais rien ne peut l'atteindre pour l'instant.
+- Services partenaires : hors périmètre avant un MVP avec de vrais vendeurs actifs (section 7).
+- Écrans non encore repris des maquettes `design/ecran-mobile`/`design/ecran-web` : authentification (nouveau style), profil client détaillé, historique de commandes détaillé, espace vendeur, boutique vendeur (web), inscription vendeur, mon compte (web), paiement optimisé, panier et paiement (web).
 - Lancement pilote (hors périmètre code).
 
 **Note d'environnement :** le SDK Flutter n'était pas installé au démarrage de ce chantier ; installé via `brew install --cask flutter`. Aucun SDK Android ni CocoaPods (iOS) n'est configuré sur cette machine — seule la cible web (Chrome) est disponible pour un lancement local. Rendu vérifié manuellement dans un vrai navigateur Chrome (boutique et logo visibles) ; la vérification automatisée via Playwright/Chromium headless n'a pas fonctionné dans ce sandbox (rendu WebGL/CanvasKit qui reste bloqué), à noter comme limite d'outillage plutôt que de code si ça se reproduit.
