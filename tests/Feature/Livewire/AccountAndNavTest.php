@@ -225,6 +225,34 @@ class AccountAndNavTest extends TestCase
         $this->assertSame(1, $client->orders()->count());
     }
 
+    public function test_my_orders_splits_between_en_cours_and_terminees_tabs(): void
+    {
+        $client = User::factory()->create(['role' => 'client']);
+        $vendorUser = User::factory()->create(['role' => 'vendor']);
+        $vendor = Vendor::create([
+            'user_id' => $vendorUser->id, 'business_name' => 'La Boutique', 'vendor_type' => 'boutique',
+            'slug' => 'la-boutique', 'is_active' => true,
+        ]);
+
+        Order::create([
+            'client_id' => $client->id, 'vendor_id' => $vendor->id, 'status' => 'en_preparation',
+            'delivery_address_text' => 'Cocody', 'total_amount' => 5000, 'commission_amount' => 500,
+        ]);
+        Order::create([
+            'client_id' => $client->id, 'vendor_id' => $vendor->id, 'status' => 'livree',
+            'delivery_address_text' => 'Cocody', 'total_amount' => 7000, 'commission_amount' => 700,
+        ]);
+
+        Livewire::actingAs($client)
+            ->test(MyOrders::class)
+            ->assertSet('tab', 'en_cours')
+            ->assertSee('5 000')
+            ->assertDontSee('7 000')
+            ->call('selectTab', 'terminees')
+            ->assertSee('7 000')
+            ->assertDontSee('5 000');
+    }
+
     public function test_guest_cannot_access_my_orders_or_profile(): void
     {
         $this->get('/mes-commandes')->assertRedirect('/connexion');
@@ -243,7 +271,33 @@ class AccountAndNavTest extends TestCase
             ->test(Profile::class)
             ->assertSee('Awa Kone')
             ->assertSee('Vendeur')
-            ->assertSee('Mon espace vendeur');
+            ->assertSee('Mon espace vendeur')
+            ->assertDontSee('Devenir vendeur');
+    }
+
+    public function test_profile_shows_devenir_vendeur_only_for_clients(): void
+    {
+        $client = User::factory()->create(['role' => 'client']);
+
+        Livewire::actingAs($client)
+            ->test(Profile::class)
+            ->assertSee('Devenir vendeur');
+    }
+
+    public function test_profile_can_update_name_and_email(): void
+    {
+        $client = User::factory()->create(['role' => 'client', 'name' => 'Old Name']);
+
+        Livewire::actingAs($client)
+            ->test(Profile::class)
+            ->set('name', 'New Name')
+            ->set('email', 'new@example.ci')
+            ->call('save')
+            ->assertSet('savedMessage', 'Profil mis à jour.');
+
+        $client->refresh();
+        $this->assertSame('New Name', $client->name);
+        $this->assertSame('new@example.ci', $client->email);
     }
 
     public function test_bottom_nav_shown_on_home_and_storefront_but_not_on_cart(): void

@@ -20,11 +20,28 @@ class VendorJourneyTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_only_vendor_role_can_access_onboarding(): void
+    public function test_courier_cannot_access_onboarding(): void
+    {
+        $courier = User::factory()->create(['role' => 'courier']);
+
+        $this->actingAs($courier)->get(route('vendor.onboarding'))->assertForbidden();
+    }
+
+    public function test_client_can_access_onboarding_and_becomes_a_vendor_on_submit(): void
     {
         $client = User::factory()->create(['role' => 'client']);
 
-        $this->actingAs($client)->get(route('vendor.onboarding'))->assertForbidden();
+        $this->actingAs($client)->get(route('vendor.onboarding'))->assertOk();
+
+        Livewire::actingAs($client)
+            ->test(Onboarding::class)
+            ->set('business_name', 'Boutique Client')
+            ->set('vendor_type', 'boutique')
+            ->set('slug', 'boutique-client')
+            ->call('create')
+            ->assertRedirect(route('vendor.dashboard'));
+
+        $this->assertSame('vendor', $client->fresh()->role);
     }
 
     public function test_onboarding_creates_vendor_profile_and_redirects_to_dashboard(): void

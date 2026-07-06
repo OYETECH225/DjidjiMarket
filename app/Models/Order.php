@@ -29,6 +29,14 @@ class Order extends Model
         'annulee' => 'Annulée',
     ];
 
+    /** Statuses after which the order no longer moves — used to bucket "Mes commandes" into En cours / Terminées. */
+    public const FINAL_STATUSES = ['livree', 'paiement_libere', 'annulee'];
+
+    public function isFinal(): bool
+    {
+        return in_array($this->status, self::FINAL_STATUSES, true);
+    }
+
     protected static function booted(): void
     {
         // The DB column defaults to 'en_attente_paiement', but that default

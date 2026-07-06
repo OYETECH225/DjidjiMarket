@@ -22,7 +22,7 @@ class Onboarding extends Component
 
     public function mount(): void
     {
-        abort_unless(auth()->user()->role === 'vendor', 403);
+        abort_unless(in_array(auth()->user()->role, ['client', 'vendor'], true), 403);
 
         if (auth()->user()->vendor()->exists()) {
             $this->redirectRoute('vendor.dashboard', navigate: true);

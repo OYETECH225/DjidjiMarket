@@ -19,9 +19,17 @@ class VendorOnboardingService
             ]);
         }
 
-        return $user->vendor()->create([
+        $vendor = $user->vendor()->create([
             ...$data,
             'verification_level' => 'non_verifie',
         ]);
+
+        // "Devenir vendeur" lets an existing client open a shop without a
+        // separate account/phone number — promote them on successful signup.
+        if ($user->role === 'client') {
+            $user->update(['role' => 'vendor']);
+        }
+
+        return $vendor;
     }
 }

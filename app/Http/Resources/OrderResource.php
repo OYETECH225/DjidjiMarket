@@ -15,6 +15,7 @@ class OrderResource extends JsonResource
             'vendor_id' => $this->vendor_id,
             'courier_id' => $this->courier_id,
             'status' => $this->status,
+            'is_final' => $this->isFinal(),
             'delivery_latitude' => $this->delivery_latitude,
             'delivery_longitude' => $this->delivery_longitude,
             'delivery_address_text' => $this->delivery_address_text,

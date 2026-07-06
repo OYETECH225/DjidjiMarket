@@ -44,8 +44,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/mes-commandes', MyOrders::class)->name('my-orders');
     Route::get('/profil', Profile::class)->name('profile');
 
+    // Onboarding is reachable by clients too (see "Devenir vendeur" on the
+    // profile page) — it promotes the account to role=vendor on submit. The
+    // rest of the vendor area stays vendor-only.
+    Route::get('/vendeur/profil', VendorOnboarding::class)->middleware('role:client,vendor')->name('vendor.onboarding');
+
     Route::prefix('vendeur')->middleware('role:vendor')->group(function () {
-        Route::get('/profil', VendorOnboarding::class)->name('vendor.onboarding');
         Route::get('/', VendorDashboard::class)->name('vendor.dashboard');
         Route::get('/catalogue', VendorListings::class)->name('vendor.listings');
         Route::get('/catalogue/nouveau', ListingForm::class)->name('vendor.listings.create');

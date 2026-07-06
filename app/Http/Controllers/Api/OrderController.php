@@ -21,7 +21,7 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         return OrderResource::collection(
-            $request->user()->orders()->with('vendor')->latest()->get()
+            $request->user()->orders()->with(['vendor', 'items.listing'])->latest()->get()
         );
     }
 

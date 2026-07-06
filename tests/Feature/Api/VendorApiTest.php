@@ -13,10 +13,25 @@ class VendorApiTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_only_vendor_role_can_create_profile(): void
+    public function test_client_can_create_a_profile_and_is_promoted_to_vendor(): void
     {
         $client = User::factory()->create(['role' => 'client']);
         Sanctum::actingAs($client);
+
+        $response = $this->postJson('/api/vendor/profile', [
+            'business_name' => 'Boutique X',
+            'vendor_type' => 'boutique',
+            'slug' => 'boutique-x',
+        ]);
+
+        $response->assertCreated();
+        $this->assertSame('vendor', $client->fresh()->role);
+    }
+
+    public function test_courier_cannot_create_a_vendor_profile(): void
+    {
+        $courier = User::factory()->create(['role' => 'courier']);
+        Sanctum::actingAs($courier);
 
         $response = $this->postJson('/api/vendor/profile', [
             'business_name' => 'Boutique X',

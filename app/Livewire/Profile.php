@@ -16,6 +16,30 @@ class Profile extends Component
         'partner_manager' => 'Gestionnaire partenaire',
     ];
 
+    public string $name = '';
+
+    public string $email = '';
+
+    public ?string $savedMessage = null;
+
+    public function mount(): void
+    {
+        $this->name = auth()->user()->name;
+        $this->email = (string) auth()->user()->email;
+    }
+
+    public function save(): void
+    {
+        $data = $this->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['nullable', 'email', 'max:255'],
+        ]);
+
+        auth()->user()->update($data);
+
+        $this->savedMessage = 'Profil mis à jour.';
+    }
+
     public function render()
     {
         return view('livewire.profile', [

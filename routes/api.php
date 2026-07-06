@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\CourierController;
 use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\PaymentController;
+use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\VendorController;
 use App\Http\Controllers\Api\VendorListingController;
 use Illuminate\Http\Request;
@@ -13,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
+
+Route::patch('/user', [ProfileController::class, 'update'])->middleware('auth:sanctum');
 
 Route::prefix('auth')->middleware('throttle:auth')->group(function () {
     Route::post('/otp/request', [AuthController::class, 'requestOtp']);
@@ -28,8 +31,11 @@ Route::get('/flash-sales', [HomeController::class, 'flashSales']);
 Route::get('/search', [HomeController::class, 'search']);
 
 Route::middleware('auth:sanctum')->group(function () {
+    // Reachable by clients too — see "Devenir vendeur" (promotes the account
+    // to role=vendor on submit). The rest of the vendor area stays vendor-only.
+    Route::post('/vendor/profile', [VendorController::class, 'storeProfile'])->middleware('role:client,vendor');
+
     Route::prefix('vendor')->middleware('role:vendor')->group(function () {
-        Route::post('/profile', [VendorController::class, 'storeProfile']);
         Route::get('/me', [VendorController::class, 'me']);
         Route::patch('/me', [VendorController::class, 'updateMe']);
         Route::get('/orders', [VendorController::class, 'myOrders']);
