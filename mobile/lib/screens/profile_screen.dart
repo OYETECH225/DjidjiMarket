@@ -17,55 +17,80 @@ const _roleLabels = {
   'partner_manager': 'Gestionnaire partenaire',
 };
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
-  @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
-  late final TextEditingController _nameController;
-  late final TextEditingController _emailController;
-  bool _isSaving = false;
-  String? _errorMessage;
-  String? _savedMessage;
-
-  @override
-  void initState() {
-    super.initState();
+  Future<void> _openEditDialog(BuildContext context) async {
     final user = context.read<AuthService>().currentUser!;
-    _nameController = TextEditingController(text: user.name);
-    _emailController = TextEditingController(text: user.email ?? '');
-  }
+    final nameController = TextEditingController(text: user.name);
+    final emailController = TextEditingController(text: user.email ?? '');
+    String? errorMessage;
+    bool isSaving = false;
 
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _emailController.dispose();
-    super.dispose();
-  }
+    await showDialog<void>(
+      context: context,
+      builder: (dialogContext) {
+        return StatefulBuilder(
+          builder: (dialogContext, setState) {
+            return AlertDialog(
+              title: const Text('Modifier mon profil'),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextField(
+                    controller: nameController,
+                    decoration: const InputDecoration(labelText: 'Nom complet'),
+                  ),
+                  const SizedBox(height: 12),
+                  TextField(
+                    controller: emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: const InputDecoration(labelText: 'Adresse email', hintText: 'vous@exemple.ci'),
+                  ),
+                  if (errorMessage != null) ...[
+                    const SizedBox(height: 8),
+                    Text(errorMessage!, style: const TextStyle(color: AppColors.error)),
+                  ],
+                ],
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(dialogContext).pop(),
+                  child: const Text('Annuler'),
+                ),
+                FilledButton(
+                  onPressed: isSaving
+                      ? null
+                      : () async {
+                          setState(() {
+                            isSaving = true;
+                            errorMessage = null;
+                          });
 
-  Future<void> _save() async {
-    setState(() {
-      _isSaving = true;
-      _errorMessage = null;
-      _savedMessage = null;
-    });
+                          try {
+                            await context.read<AuthService>().updateProfile(
+                                  name: nameController.text,
+                                  email: emailController.text.isEmpty ? null : emailController.text,
+                                );
 
-    try {
-      await context.read<AuthService>().updateProfile(
-            name: _nameController.text,
-            email: _emailController.text.isEmpty ? null : _emailController.text,
-          );
-
-      if (!mounted) return;
-      setState(() => _savedMessage = 'Profil mis à jour.');
-    } on ApiException catch (e) {
-      setState(() => _errorMessage = e.errorFor('name') ?? e.errorFor('email') ?? e.message);
-    } finally {
-      if (mounted) setState(() => _isSaving = false);
-    }
+                            if (dialogContext.mounted) Navigator.of(dialogContext).pop();
+                          } on ApiException catch (e) {
+                            setState(() {
+                              errorMessage = e.errorFor('name') ?? e.errorFor('email') ?? e.message;
+                              isSaving = false;
+                            });
+                          }
+                        },
+                  child: isSaving
+                      ? const SizedBox(height: 18, width: 18, child: CircularProgressIndicator(strokeWidth: 2))
+                      : const Text('Enregistrer'),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
   }
 
   @override
@@ -76,54 +101,62 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       appBar: AppBar(title: const Text('Profil')),
       body: ListView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
         children: [
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                children: [
-                  CircleAvatar(
-                    radius: 28,
-                    backgroundColor: AppColors.green.withValues(alpha: 0.1),
-                    child: const Icon(Icons.person, color: AppColors.green, size: 32),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(user.name, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                        Text(user.phone, style: TextStyle(color: Colors.grey[600])),
-                        const SizedBox(height: 6),
-                        Chip(
-                          label: Text(roleLabel, style: const TextStyle(fontSize: 12)),
-                          backgroundColor: AppColors.green.withValues(alpha: 0.1),
-                          labelStyle: const TextStyle(color: AppColors.green, fontWeight: FontWeight.w600),
-                          side: BorderSide.none,
-                        ),
-                      ],
+          Center(
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                CircleAvatar(
+                  radius: 44,
+                  backgroundColor: AppColors.green.withValues(alpha: 0.1),
+                  child: const Icon(Icons.person, color: AppColors.green, size: 48),
+                ),
+                Positioned(
+                  right: -2,
+                  bottom: -2,
+                  child: GestureDetector(
+                    onTap: () => _openEditDialog(context),
+                    child: Container(
+                      padding: const EdgeInsets.all(6),
+                      decoration: const BoxDecoration(color: AppColors.green, shape: BoxShape.circle),
+                      child: const Icon(Icons.edit, color: Colors.white, size: 16),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-          if (user.role == 'client') ...[
-            const SizedBox(height: 16),
+          const SizedBox(height: 16),
+          Text(user.name, textAlign: TextAlign.center, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 4),
+          Text(user.phone, textAlign: TextAlign.center, style: TextStyle(color: Colors.grey[600])),
+          const SizedBox(height: 8),
+          Center(
+            child: Chip(
+              label: Text(roleLabel, style: const TextStyle(fontSize: 12)),
+              backgroundColor: AppColors.green.withValues(alpha: 0.1),
+              labelStyle: const TextStyle(color: AppColors.green, fontWeight: FontWeight.w600),
+              side: BorderSide.none,
+            ),
+          ),
+          const SizedBox(height: 24),
+          if (user.role == 'client')
             Material(
               color: AppColors.orange,
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(24),
               child: InkWell(
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(24),
                 onTap: () => Navigator.of(context).push(
                   MaterialPageRoute(builder: (_) => const VendorOnboardingScreen()),
                 ),
-                child: const Padding(
-                  padding: EdgeInsets.all(16),
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
                   child: Row(
                     children: [
-                      Expanded(
+                      const Icon(Icons.storefront_outlined, color: Colors.white),
+                      const SizedBox(width: 12),
+                      const Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -134,97 +167,85 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ],
                         ),
                       ),
-                      Icon(Icons.chevron_right, color: Colors.white),
+                      const Icon(Icons.chevron_right, color: Colors.white),
                     ],
                   ),
                 ),
               ),
             ),
-          ],
-          const SizedBox(height: 16),
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text('Informations personnelles', style: TextStyle(fontWeight: FontWeight.w600)),
-                  const SizedBox(height: 12),
-                  TextField(
-                    controller: _nameController,
-                    decoration: const InputDecoration(labelText: 'Nom complet'),
-                  ),
-                  const SizedBox(height: 12),
-                  TextField(
-                    controller: _emailController,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: const InputDecoration(labelText: 'Adresse email', hintText: 'vous@exemple.ci'),
-                  ),
-                  if (_errorMessage != null) ...[
-                    const SizedBox(height: 8),
-                    Text(_errorMessage!, style: const TextStyle(color: AppColors.error)),
-                  ],
-                  if (_savedMessage != null) ...[
-                    const SizedBox(height: 8),
-                    Text(_savedMessage!, style: const TextStyle(color: AppColors.green)),
-                  ],
-                  const SizedBox(height: 12),
-                  ElevatedButton(
-                    onPressed: _isSaving ? null : _save,
-                    child: _isSaving
-                        ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2))
-                        : const Text('Enregistrer'),
-                  ),
-                ],
-              ),
+          const SizedBox(height: 20),
+          Container(
+            decoration: BoxDecoration(
+              color: AppColors.background,
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: AppColors.outlineVariant),
             ),
-          ),
-          const SizedBox(height: 16),
-          if (user.role == 'vendor')
-            Card(
-              child: ListTile(
-                title: const Text('Mon espace vendeur'),
-                trailing: const Icon(Icons.chevron_right),
-                onTap: () => Navigator.of(context).push(
-                  MaterialPageRoute(builder: (_) => const VendorDashboardScreen()),
+            child: Column(
+              children: [
+                if (user.role == 'vendor')
+                  _MenuRow(
+                    icon: Icons.storefront_outlined,
+                    label: 'Mon espace vendeur',
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => const VendorDashboardScreen()),
+                    ),
+                  )
+                else if (user.role == 'courier')
+                  _MenuRow(
+                    icon: Icons.two_wheeler_outlined,
+                    label: 'Mon espace livreur',
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => const CourierDashboardScreen()),
+                    ),
+                  ),
+                _MenuRow(
+                  icon: Icons.receipt_long_outlined,
+                  label: 'Mes commandes',
+                  showDivider: false,
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => const MyOrdersScreen()),
+                  ),
                 ),
-              ),
-            )
-          else if (user.role == 'courier')
-            Card(
-              child: ListTile(
-                title: const Text('Mon espace livreur'),
-                trailing: const Icon(Icons.chevron_right),
-                onTap: () => Navigator.of(context).push(
-                  MaterialPageRoute(builder: (_) => const CourierDashboardScreen()),
-                ),
-              ),
-            ),
-          Card(
-            child: ListTile(
-              title: const Text('Mes commandes'),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (_) => const MyOrdersScreen()),
-              ),
+              ],
             ),
           ),
           const SizedBox(height: 24),
-          OutlinedButton(
-            style: OutlinedButton.styleFrom(
-              foregroundColor: AppColors.error,
-              side: const BorderSide(color: AppColors.outlineVariant),
-              padding: const EdgeInsets.symmetric(vertical: 14),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(999)),
+          Center(
+            child: TextButton.icon(
+              onPressed: () {
+                context.read<AuthService>().logout();
+                Navigator.of(context).popUntil((route) => route.isFirst);
+              },
+              icon: const Icon(Icons.logout, color: AppColors.error, size: 18),
+              label: const Text('Se déconnecter', style: TextStyle(color: AppColors.error, fontWeight: FontWeight.w600)),
             ),
-            onPressed: () {
-              context.read<AuthService>().logout();
-              Navigator.of(context).popUntil((route) => route.isFirst);
-            },
-            child: const Text('Déconnexion'),
           ),
         ],
       ),
+    );
+  }
+}
+
+class _MenuRow extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+  final bool showDivider;
+
+  const _MenuRow({required this.icon, required this.label, required this.onTap, this.showDivider = true});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        ListTile(
+          leading: Icon(icon, color: AppColors.green),
+          title: Text(label, style: const TextStyle(fontWeight: FontWeight.w500)),
+          trailing: const Icon(Icons.chevron_right, color: AppColors.onSurfaceVariant),
+          onTap: onTap,
+        ),
+        if (showDivider) const Divider(height: 1, color: AppColors.outlineVariant),
+      ],
     );
   }
 }
