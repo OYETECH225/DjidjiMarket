@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../screens/auth/login_screen.dart';
+import '../screens/auth/welcome_screen.dart';
 import '../screens/cart_screen.dart';
 import '../screens/my_orders_screen.dart';
 import '../screens/profile_screen.dart';
@@ -32,13 +32,13 @@ class AppBottomNav extends StatelessWidget {
       case 2:
         final isAuthenticated = context.read<AuthService>().isAuthenticated;
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (_) => isAuthenticated ? const MyOrdersScreen() : const LoginScreen(),
+          builder: (_) => isAuthenticated ? const MyOrdersScreen() : const WelcomeScreen(),
         ));
         break;
       case 3:
         final isAuthenticated = context.read<AuthService>().isAuthenticated;
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (_) => isAuthenticated ? const ProfileScreen() : const LoginScreen(),
+          builder: (_) => isAuthenticated ? const ProfileScreen() : const WelcomeScreen(),
         ));
         break;
     }

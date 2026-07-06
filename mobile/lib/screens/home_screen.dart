@@ -9,7 +9,7 @@ import '../services/cart_service.dart';
 import '../services/vendor_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_bottom_nav.dart';
-import 'auth/login_screen.dart';
+import 'auth/welcome_screen.dart';
 import 'cart_screen.dart';
 import 'courier/courier_dashboard_screen.dart';
 import 'vendor/vendor_dashboard_screen.dart';
@@ -124,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
             IconButton(
               icon: const Icon(Icons.person_outline),
               onPressed: () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (_) => const LoginScreen()),
+                MaterialPageRoute(builder: (_) => const WelcomeScreen()),
               ),
             )
           else ...[

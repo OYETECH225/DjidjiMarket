@@ -59,19 +59,30 @@ void main() {
     expect(find.text('Mon panier'), findsOneWidget);
   });
 
-  testWidgets('Bottom nav Commandes tab redirects to login when logged out', (WidgetTester tester) async {
+  testWidgets('Bottom nav Commandes tab redirects to the welcome screen when logged out', (WidgetTester tester) async {
     await tester.pumpWidget(const DjidjiMarketApp());
     await tester.tap(find.text('Commandes'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Connexion'), findsWidgets);
+    expect(find.text('Bienvenue'), findsWidgets);
   });
 
-  testWidgets('Bottom nav Profil tab redirects to login when logged out', (WidgetTester tester) async {
+  testWidgets('Bottom nav Profil tab redirects to the welcome screen when logged out', (WidgetTester tester) async {
     await tester.pumpWidget(const DjidjiMarketApp());
     await tester.tap(find.text('Profil'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Connexion'), findsWidgets);
+    expect(find.text('Bienvenue'), findsWidgets);
+  });
+
+  testWidgets('Welcome screen leads to the phone entry screen', (WidgetTester tester) async {
+    await tester.pumpWidget(const DjidjiMarketApp());
+    await tester.tap(find.text('Profil'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Continuer en tant que client'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Votre numéro'), findsOneWidget);
   });
 }

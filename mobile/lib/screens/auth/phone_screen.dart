@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
-import '../../theme/app_theme.dart';
 import 'package:provider/provider.dart';
 
 import '../../services/api_client.dart';
 import '../../services/auth_service.dart';
-import 'register_screen.dart';
+import '../../theme/app_theme.dart';
+import 'verify_otp_screen.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+/// Entry point for both login and registration — there's no password, so
+/// the only difference between the two is whether [AuthService.requestOtp]
+/// reports the phone as new (see [VerifyOtpScreen]).
+class PhoneScreen extends StatefulWidget {
+  final String role;
+
+  const PhoneScreen({super.key, required this.role});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<PhoneScreen> createState() => _PhoneScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _PhoneScreenState extends State<PhoneScreen> {
   final _phoneController = TextEditingController();
-  final _passwordController = TextEditingController();
   bool _isLoading = false;
   String? _errorMessage;
 
@@ -26,13 +30,14 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     try {
-      await context.read<AuthService>().login(
-            phone: _phoneController.text,
-            password: _passwordController.text,
-          );
+      final isNew = await context.read<AuthService>().requestOtp(_phoneController.text);
 
       if (!mounted) return;
-      Navigator.of(context).pop();
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => VerifyOtpScreen(phone: _phoneController.text, role: widget.role, isNewUser: isNew),
+        ),
+      );
     } on ApiException catch (e) {
       setState(() => _errorMessage = e.errorFor('phone') ?? e.message);
     } finally {
@@ -43,22 +48,21 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Connexion')),
+      appBar: AppBar(title: const Text('Votre numéro')),
       body: Padding(
         padding: const EdgeInsets.all(24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            const Text(
+              'Entrez votre numéro pour recevoir un code de confirmation par SMS.',
+              style: TextStyle(color: AppColors.onSurfaceVariant),
+            ),
+            const SizedBox(height: 16),
             TextField(
               controller: _phoneController,
               keyboardType: TextInputType.phone,
               decoration: const InputDecoration(labelText: 'Téléphone', hintText: '+225 07 00 00 00 00'),
-            ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: _passwordController,
-              obscureText: true,
-              decoration: const InputDecoration(labelText: 'Mot de passe'),
             ),
             if (_errorMessage != null) ...[
               const SizedBox(height: 12),
@@ -69,14 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
               onPressed: _isLoading ? null : _submit,
               child: _isLoading
                   ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2))
-                  : const Text('Se connecter'),
-            ),
-            const SizedBox(height: 12),
-            TextButton(
-              onPressed: () => Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (_) => const RegisterScreen()),
-              ),
-              child: const Text('Pas encore de compte ? Créer un compte'),
+                  : const Text('Recevoir le code'),
             ),
           ],
         ),

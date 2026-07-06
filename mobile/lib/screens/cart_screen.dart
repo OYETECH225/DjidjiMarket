@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import '../services/auth_service.dart';
 import '../services/cart_service.dart';
 import '../theme/app_theme.dart';
-import 'auth/login_screen.dart';
+import 'auth/welcome_screen.dart';
 import 'checkout_screen.dart';
 
 class CartScreen extends StatelessWidget {
@@ -91,7 +91,7 @@ class CartScreen extends StatelessWidget {
                     final auth = context.read<AuthService>();
                     if (!auth.isAuthenticated) {
                       Navigator.of(context).push(
-                        MaterialPageRoute(builder: (_) => const LoginScreen()),
+                        MaterialPageRoute(builder: (_) => const WelcomeScreen()),
                       );
                       return;
                     }

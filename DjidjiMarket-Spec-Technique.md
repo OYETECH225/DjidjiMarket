@@ -1,9 +1,10 @@
 # DjidjiMarket — Spécification technique
 
-**Version 1.2 — Document de référence pour développement avec Claude Code**
+**Version 1.3 — Document de référence pour développement avec Claude Code**
 
 *v1.1 : ajout des sections 8-11 (identité de marque, sécurité API, stratégie de tests, état d'avancement Phase 1) reflétant les décisions prises lors de l'implémentation. Sections 1-7 inchangées.*
 *v1.2 : ajout de la section 8 (page d'accueil, référence validée), champs `sale_price`/`sale_ends_at` en 3.3, endpoints accueil en section 5. Sections 8-11 de la v1.1 renumérotées 9-12.*
+*v1.3 : authentification passée à 100% OTP sans mot de passe (3.1, 5, 10) — `password` devient nullable, `/api/auth/register`+`/login` remplacés par `/api/auth/otp/request`+`/otp/verify`.*
 
 ---
 
@@ -55,7 +56,7 @@ users
 - name
 - phone (unique, identifiant principal — pas forcément d'email)
 - email (nullable)
-- password
+- password (nullable — client/vendor/courier créés par OTP n'en ont pas ; réservé aux comptes admin/partner_manager créés en interne, qui se connectent via le panel Filament, pas cette API)
 - role: enum [client, vendor, courier, admin, partner_manager]
 - created_at, updated_at
 ```
@@ -328,9 +329,8 @@ live_sessions
 ## 5. Endpoints API principaux (aperçu)
 
 ```
-POST   /api/auth/register
-POST   /api/auth/login
-POST   /api/auth/otp/verify        # vérification par SMS/WhatsApp
+POST   /api/auth/otp/request        # envoie un OTP (numéro connu ou non) — pas de mot de passe, jamais
+POST   /api/auth/otp/verify        # vérifie l'OTP ; connecte si le numéro existe, crée le compte sinon (nom+rôle requis)
 
 GET    /api/vendors                 # liste des boutiques actives (découverte, nécessaire à l'app Flutter), filtrable par ?type=
 GET    /api/vendors/{slug}          # page boutique publique (lien perso)
@@ -470,10 +470,11 @@ Charte graphique v1.0 (juillet 2026), fichiers sources dans `public/images/` (`D
 Décisions de sécurité prises lors de l'implémentation des endpoints de la section 5, à respecter pour toute extension future de l'API.
 
 **Authentification :**
-- Sanctum (tokens API), téléphone comme identifiant principal + vérification OTP.
-- L'inscription publique (`POST /api/auth/register`) ne peut auto-attribuer que les rôles `client`, `vendor`, `courier` — `admin` et `partner_manager` restent réservés à une attribution interne (jamais via un endpoint public), pour empêcher toute élévation de privilège.
-- Réinscrire un numéro déjà utilisé mais non-vérifié ne fait que renvoyer un nouvel OTP — ça n'écrase jamais le mot de passe/rôle existant. Sans cette règle, quelqu'un connaissant juste le numéro de téléphone d'un tiers pourrait détourner son inscription en cours avant qu'il ne la vérifie.
+- Sanctum (tokens API), téléphone comme identifiant principal, aucun mot de passe pour client/vendor/courier — uniquement OTP. `POST /api/auth/otp/request` envoie le code que le numéro existe ou non ; `POST /api/auth/otp/verify` connecte un numéro existant ou crée le compte (nom+rôle requis alors) selon le cas. Un seul code path pour inscription et connexion, donc pas de fenêtre "compte en attente non vérifié" à détourner comme avec l'ancien flow mot de passe — l'OTP est la seule preuve de possession du numéro, vérifiée atomiquement à la création du compte.
+- L'auto-attribution de rôle (uniquement possible pour un numéro nouveau) se limite à `client`, `vendor`, `courier` — `admin` et `partner_manager` restent réservés à une attribution interne (jamais via un endpoint public), pour empêcher toute élévation de privilège.
+- Pour un numéro déjà existant, `name`/`role` envoyés à `otp/verify` sont ignorés silencieusement — un attaquant qui intercepterait l'OTP de quelqu'un d'autre ne peut jamais changer son nom ou son rôle en renvoyant d'autres valeurs, seulement se connecter en tant que lui.
 - Les requêtes API non authentifiées renvoient toujours un 401 JSON propre (pas de tentative de redirection vers une page de login web inexistante).
+- Les comptes `admin`/`partner_manager` gardent un mot de passe (colonne nullable, mais toujours utilisée pour eux) et se connectent via le panel Filament (session Laravel classique), jamais via cette API.
 
 **OTP :**
 - Codes à 6 chiffres, hashés en base (table `otp_codes`), expiration 10 minutes.
@@ -531,11 +532,13 @@ Ajout à l'état "fait" : **accueil Flutter aligné sur la maquette mobile dédi
 
 **Bug trouvé et corrigé :** `Vendor::searchActive()`/`Listing::searchActive()` utilisaient un `like` simple — insensible à la casse sur SQLite (donc les tests passaient) mais sensible à la casse sur PostgreSQL, la vraie base de dev. La recherche renvoyait silencieusement zéro résultat dès que la casse ne correspondait pas exactement. Trouvé en testant l'endpoint en direct sur la vraie base plutôt qu'en se fiant aux tests seuls. Corrigé avec `whereRaw(... LOWER(...) LIKE ...)`.
 
+Ajout à l'état "fait" : **authentification 100% OTP, sans mot de passe** (PWA + Flutter), d'après `authentification_flow` (mobile) et `djidjimarket_authentification` (web) — voir section 3.1 (`password` nullable) et section 10 (sécurité). `POST /api/auth/otp/request` + `POST /api/auth/otp/verify` remplacent `register`/`login`. PWA : Register/VerifyOtp fusionnés dans un seul composant `Login` (`/connexion`), rôle + téléphone + OTP sur une page. Flutter : 3 écrans (`WelcomeScreen` → `PhoneScreen` → `VerifyOtpScreen`), avec un lien secondaire "Je suis livreur" puisque les maquettes ne montrent que Client/Vendeur en choix principal mais que l'inscription livreur reste nécessaire.
+
 **Écarts connus vis-à-vis de la section 6 :**
 - Système d'avis/notation (`reviews`) : n'existe pas encore en base, bloque toute réintroduction honnête d'une section "Vendeurs en vedette" avec de vraies notes, et tout l'écran "Laisser un avis" des maquettes fournies.
 - Signalement de litige : l'endpoint `POST /api/orders/{id}/dispute` est documenté en section 5 mais pas implémenté ; le statut `litige_ouvert` existe sur `Order` mais rien ne peut l'atteindre pour l'instant.
 - Services partenaires : hors périmètre avant un MVP avec de vrais vendeurs actifs (section 7).
-- Écrans non encore repris des maquettes `design/ecran-mobile`/`design/ecran-web` : authentification (nouveau style), profil client détaillé, historique de commandes détaillé, espace vendeur, boutique vendeur (web), inscription vendeur, mon compte (web), paiement optimisé, panier et paiement (web).
+- Écrans non encore repris des maquettes `design/ecran-mobile`/`design/ecran-web` : profil client détaillé, historique de commandes détaillé, espace vendeur, boutique vendeur (web), inscription vendeur, mon compte (web), paiement optimisé, panier et paiement (web).
 - Lancement pilote (hors périmètre code).
 
 **Note d'environnement :** le SDK Flutter n'était pas installé au démarrage de ce chantier ; installé via `brew install --cask flutter`. Aucun SDK Android ni CocoaPods (iOS) n'est configuré sur cette machine — seule la cible web (Chrome) est disponible pour un lancement local. Rendu vérifié manuellement dans un vrai navigateur Chrome (boutique et logo visibles) ; la vérification automatisée via Playwright/Chromium headless n'a pas fonctionné dans ce sandbox (rendu WebGL/CanvasKit qui reste bloqué), à noter comme limite d'outillage plutôt que de code si ça se reproduit.

@@ -30,39 +30,30 @@ class AuthService extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// On success the phone either just registered or already had a pending
-  /// signup — either way an OTP has been sent and the caller should move to
-  /// the verification screen.
-  Future<void> register({
-    required String name,
-    required String phone,
-    required String password,
-    required String role,
-  }) async {
-    await _client.post('/auth/register', body: {
-      'name': name,
-      'phone': phone,
-      'password': password,
-      'password_confirmation': password,
-      'role': role,
-    }, auth: false);
+  /// Sends an OTP to [phone] whether it's already registered or not, and
+  /// returns whether the phone is new — the caller must collect a name
+  /// before calling [verifyOtp] if so, since there's no password/registration
+  /// step separate from OTP verification.
+  Future<bool> requestOtp(String phone) async {
+    final json = await _client.post('/auth/otp/request', body: {'phone': phone}, auth: false);
+
+    return json['is_new'] as bool;
   }
 
-  Future<void> verifyOtp({required String phone, required String code}) async {
+  /// Verifies the OTP and logs the user in. [name]/[role] are required only
+  /// when the phone is new (see [requestOtp]) — the backend ignores them for
+  /// an existing phone.
+  Future<void> verifyOtp({
+    required String phone,
+    required String code,
+    String? name,
+    String? role,
+  }) async {
     final json = await _client.post('/auth/otp/verify', body: {
       'phone': phone,
       'code': code,
-    }, auth: false);
-
-    await _client.setToken(json['token']);
-    currentUser = AppUser.fromJson(json['user']);
-    notifyListeners();
-  }
-
-  Future<void> login({required String phone, required String password}) async {
-    final json = await _client.post('/auth/login', body: {
-      'phone': phone,
-      'password': password,
+      if (name != null) 'name': name,
+      if (role != null) 'role': role,
     }, auth: false);
 
     await _client.setToken(json['token']);
