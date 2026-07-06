@@ -2,6 +2,7 @@ class OrderItem {
   final int id;
   final int listingId;
   final String? listingName;
+  final String? listingPhotoUrl;
   final int quantity;
   final double unitPrice;
 
@@ -11,6 +12,7 @@ class OrderItem {
     required this.quantity,
     required this.unitPrice,
     this.listingName,
+    this.listingPhotoUrl,
   });
 
   factory OrderItem.fromJson(Map<String, dynamic> json) {
@@ -18,6 +20,7 @@ class OrderItem {
       id: json['id'],
       listingId: json['listing_id'],
       listingName: json['listing_name'],
+      listingPhotoUrl: json['listing_photo_url'],
       quantity: json['quantity'],
       unitPrice: double.parse(json['unit_price'].toString()),
     );
@@ -50,6 +53,7 @@ class Order {
   final double totalAmount;
   final double deliveryFee;
   final String source;
+  final bool isFinal;
   final String? vendorBusinessName;
   final String? vendorAddressText;
   final String? clientName;
@@ -65,6 +69,7 @@ class Order {
     required this.totalAmount,
     required this.deliveryFee,
     required this.source,
+    this.isFinal = false,
     this.courierId,
     this.vendorBusinessName,
     this.vendorAddressText,
@@ -82,6 +87,7 @@ class Order {
       vendorId: json['vendor_id'],
       courierId: json['courier_id'],
       status: json['status'],
+      isFinal: json['is_final'] ?? false,
       deliveryAddressText: json['delivery_address_text'] ?? '',
       totalAmount: double.parse(json['total_amount'].toString()),
       deliveryFee: double.parse((json['delivery_fee'] ?? 0).toString()),

@@ -30,6 +30,15 @@ class AuthService extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Re-fetches the current user — needed after an action that can change
+  /// the account server-side without going through [updateProfile], e.g.
+  /// "Devenir vendeur" promoting a client to role=vendor.
+  Future<void> refreshUser() async {
+    final json = await _client.get('/user');
+    currentUser = AppUser.fromJson(json);
+    notifyListeners();
+  }
+
   /// Sends an OTP to [phone] whether it's already registered or not, and
   /// returns whether the phone is new — the caller must collect a name
   /// before calling [verifyOtp] if so, since there's no password/registration
@@ -58,6 +67,16 @@ class AuthService extends ChangeNotifier {
 
     await _client.setToken(json['token']);
     currentUser = AppUser.fromJson(json['user']);
+    notifyListeners();
+  }
+
+  Future<void> updateProfile({required String name, String? email}) async {
+    final json = await _client.patch('/user', body: {
+      'name': name,
+      if (email != null) 'email': email,
+    });
+
+    currentUser = AppUser.fromJson(json['data']);
     notifyListeners();
   }
 

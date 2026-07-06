@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../services/api_client.dart';
+import '../../services/auth_service.dart';
 import '../../services/vendor_portal_service.dart';
 import '../../theme/app_theme.dart';
 import 'vendor_dashboard_screen.dart';
@@ -36,6 +37,12 @@ class _VendorOnboardingScreenState extends State<VendorOnboardingScreen> {
             addressText: _addressController.text,
             description: _descriptionController.text,
           );
+
+      if (!mounted) return;
+      // A client becomes a vendor on successful submit (see
+      // VendorOnboardingService::createProfile) — refresh the cached user so
+      // role-gated UI (bottom nav, profile) reflects it immediately.
+      await context.read<AuthService>().refreshUser();
 
       if (!mounted) return;
       Navigator.of(context).pushReplacement(
