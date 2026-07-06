@@ -3,12 +3,10 @@
 namespace Tests\Feature\Livewire;
 
 use App\Livewire\Auth\Login;
-use App\Livewire\Auth\Register;
-use App\Livewire\Auth\VerifyOtp;
 use App\Models\OtpCode;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Log;
 use Livewire\Livewire;
 use Tests\TestCase;
 
@@ -16,56 +14,98 @@ class AuthFlowTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_register_creates_unverified_user_and_redirects_to_otp_screen(): void
+    private function extractOtpFromLogs(string $phone): string
     {
-        Livewire::test(Register::class)
-            ->set('name', 'Awa Client')
+        $otp = null;
+
+        Log::shouldHaveReceived('info')->withArgs(function (string $message) use ($phone, &$otp) {
+            if (preg_match('/OTP for '.preg_quote($phone, '/').': (\d{6})/', $message, $matches)) {
+                $otp = $matches[1];
+
+                return true;
+            }
+
+            return false;
+        });
+
+        $this->assertNotNull($otp, 'OTP was not logged.');
+
+        return $otp;
+    }
+
+    public function test_request_code_for_a_new_phone_flags_it_as_new(): void
+    {
+        Log::spy();
+
+        Livewire::test(Login::class)
             ->set('phone', '+225 07 10 00 00 01')
-            ->set('role', 'client')
-            ->set('password', 'password123')
-            ->set('password_confirmation', 'password123')
-            ->call('register')
-            ->assertRedirect(route('otp.verify'));
+            ->call('requestCode')
+            ->assertSet('codeSent', true)
+            ->assertSet('isNewUser', true);
 
-        $user = User::where('phone', '+225 07 10 00 00 01')->firstOrFail();
-        $this->assertNull($user->phone_verified_at);
-        $this->assertSame('+225 07 10 00 00 01', Session::get('otp_phone'));
+        $this->extractOtpFromLogs('+225 07 10 00 00 01');
     }
 
-    public function test_register_rejects_privileged_role(): void
+    public function test_request_code_for_an_existing_phone_flags_it_as_not_new(): void
     {
-        Livewire::test(Register::class)
-            ->set('name', 'Fake Admin')
+        Log::spy();
+        User::factory()->create(['phone' => '+225 07 10 00 00 02']);
+
+        Livewire::test(Login::class)
             ->set('phone', '+225 07 10 00 00 02')
-            ->set('role', 'admin')
-            ->set('password', 'password123')
-            ->set('password_confirmation', 'password123')
-            ->call('register')
-            ->assertHasErrors('role');
+            ->call('requestCode')
+            ->assertSet('isNewUser', false);
     }
 
-    public function test_verify_otp_logs_the_user_in(): void
+    public function test_verify_creates_a_new_account_and_logs_in(): void
     {
-        $user = User::factory()->create(['phone' => '+225 07 10 00 00 03', 'phone_verified_at' => null]);
-        $code = OtpCode::generateFor($user->phone);
-        Session::put('otp_phone', $user->phone);
+        Log::spy();
 
-        Livewire::test(VerifyOtp::class)
+        $component = Livewire::test(Login::class)
+            ->set('role', 'vendor')
+            ->set('phone', '+225 07 10 00 00 03')
+            ->call('requestCode');
+
+        $code = $this->extractOtpFromLogs('+225 07 10 00 00 03');
+
+        $component
+            ->set('name', 'Awa Vendeuse')
             ->set('code', $code)
             ->call('verify')
             ->assertRedirect(route('home'));
 
-        $this->assertAuthenticatedAs($user->fresh());
-        $this->assertNotNull($user->fresh()->phone_verified_at);
+        $user = User::where('phone', '+225 07 10 00 00 03')->firstOrFail();
+        $this->assertSame('Awa Vendeuse', $user->name);
+        $this->assertSame('vendor', $user->role);
+        $this->assertAuthenticatedAs($user);
     }
 
-    public function test_verify_otp_rejects_wrong_code(): void
+    public function test_verify_rejects_new_account_without_name(): void
     {
-        $user = User::factory()->create(['phone' => '+225 07 10 00 00 04', 'phone_verified_at' => null]);
-        OtpCode::generateFor($user->phone);
-        Session::put('otp_phone', $user->phone);
+        Log::spy();
 
-        Livewire::test(VerifyOtp::class)
+        $component = Livewire::test(Login::class)
+            ->set('phone', '+225 07 10 00 00 04')
+            ->call('requestCode');
+
+        $code = $this->extractOtpFromLogs('+225 07 10 00 00 04');
+
+        $component
+            ->set('code', $code)
+            ->call('verify')
+            ->assertHasErrors('name');
+
+        $this->assertGuest();
+    }
+
+    public function test_verify_rejects_wrong_code(): void
+    {
+        $user = User::factory()->create(['phone' => '+225 07 10 00 00 05', 'phone_verified_at' => null]);
+        OtpCode::generateFor($user->phone);
+
+        Livewire::test(Login::class)
+            ->set('phone', $user->phone)
+            ->call('requestCode')
             ->set('code', '000000')
             ->call('verify')
             ->assertHasErrors('code');
@@ -73,35 +113,20 @@ class AuthFlowTest extends TestCase
         $this->assertGuest();
     }
 
-    public function test_login_fails_for_unverified_account(): void
+    public function test_verify_logs_in_an_existing_account(): void
     {
-        User::factory()->create([
-            'phone' => '+225 07 10 00 00 05',
-            'password' => bcrypt('password123'),
-            'phone_verified_at' => null,
-        ]);
+        Log::spy();
+        $user = User::factory()->create(['phone' => '+225 07 10 00 00 06', 'phone_verified_at' => now()]);
 
-        Livewire::test(Login::class)
-            ->set('phone', '+225 07 10 00 00 05')
-            ->set('password', 'password123')
-            ->call('login')
-            ->assertHasErrors('phone');
+        $component = Livewire::test(Login::class)
+            ->set('phone', $user->phone)
+            ->call('requestCode');
 
-        $this->assertGuest();
-    }
+        $code = $this->extractOtpFromLogs($user->phone);
 
-    public function test_login_succeeds_for_verified_account(): void
-    {
-        $user = User::factory()->create([
-            'phone' => '+225 07 10 00 00 06',
-            'password' => bcrypt('password123'),
-            'phone_verified_at' => now(),
-        ]);
-
-        Livewire::test(Login::class)
-            ->set('phone', '+225 07 10 00 00 06')
-            ->set('password', 'password123')
-            ->call('login')
+        $component
+            ->set('code', $code)
+            ->call('verify')
             ->assertRedirect(route('home'));
 
         $this->assertAuthenticatedAs($user);

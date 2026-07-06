@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
 class AuthService
@@ -11,43 +10,28 @@ class AuthService
     public function __construct(private readonly OtpService $otp) {}
 
     /**
-     * Register a new phone, or — if that phone already has a pending
-     * (unverified) signup — just resend the OTP. Never overwrites an
-     * existing row's name/password/role, since the caller hasn't proven
-     * control of the phone yet: an attacker who only knows someone else's
-     * number could otherwise hijack their in-progress registration.
-     *
-     * Check `$user->wasRecentlyCreated` to tell a fresh signup from a resend.
+     * Send an OTP to a phone, whether it belongs to an existing account or
+     * not — registration and login are the same code path, there's no
+     * password. Returns whether the phone is new, so the caller knows
+     * whether to collect a name/role before calling verifyOtpAndAuthenticate().
      */
-    public function registerOrResendOtp(string $name, string $phone, string $password, string $role): User
+    public function requestOtp(string $phone): bool
     {
-        $existing = User::where('phone', $phone)->first();
+        $isNew = ! User::where('phone', $phone)->exists();
 
-        if ($existing && $existing->phone_verified_at !== null) {
-            throw ValidationException::withMessages([
-                'phone' => ['Ce numéro est déjà enregistré et vérifié.'],
-            ]);
-        }
+        $this->otp->send($phone);
 
-        if ($existing) {
-            $this->otp->send($existing->phone);
-
-            return $existing;
-        }
-
-        $user = User::create([
-            'name' => $name,
-            'phone' => $phone,
-            'role' => $role,
-            'password' => Hash::make($password),
-        ]);
-
-        $this->otp->send($user->phone);
-
-        return $user;
+        return $isNew;
     }
 
-    public function verifyOtpAndActivate(string $phone, string $code): User
+    /**
+     * Verify the OTP and either log an existing user in or create a new one.
+     * $name/$role are only used when creating a new account — they're
+     * ignored for an existing phone, since logging in must never let the
+     * caller change someone else's identity just by supplying different
+     * values (the OTP proves phone ownership, not the right to edit).
+     */
+    public function verifyOtpAndAuthenticate(string $phone, string $code, ?string $name = null, ?string $role = null): User
     {
         if (! $this->otp->verify($phone, $code)) {
             throw ValidationException::withMessages([
@@ -55,7 +39,31 @@ class AuthService
             ]);
         }
 
-        $user = User::where('phone', $phone)->firstOrFail();
+        $user = User::where('phone', $phone)->first();
+
+        if ($user) {
+            if ($user->phone_verified_at === null) {
+                $user->forceFill(['phone_verified_at' => now()])->save();
+            }
+
+            return $user;
+        }
+
+        if (! $name || ! $role) {
+            throw ValidationException::withMessages([
+                'name' => ['Nom et rôle requis pour créer un compte.'],
+            ]);
+        }
+
+        $user = User::create([
+            'name' => $name,
+            'phone' => $phone,
+            'role' => $role,
+        ]);
+
+        // phone_verified_at is deliberately not mass-assignable (see the
+        // Fillable attribute on User) so it can never be set via a stray
+        // mass-assignment elsewhere — set it explicitly here instead.
         $user->forceFill(['phone_verified_at' => now()])->save();
 
         return $user;

@@ -2,43 +2,72 @@
 
 namespace App\Livewire\Auth;
 
-use App\Models\User;
+use App\Services\AuthService;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
 #[Layout('layouts.app', ['title' => 'Connexion — DjidjiMarket'])]
 class Login extends Component
 {
+    public string $role = 'client';
+
     public string $phone = '';
 
-    public string $password = '';
+    public bool $codeSent = false;
 
-    public function login(): void
+    public bool $isNewUser = false;
+
+    public string $name = '';
+
+    public string $code = '';
+
+    public ?string $resendMessage = null;
+
+    public function selectRole(string $role): void
     {
-        $this->validate([
-            'phone' => ['required', 'string'],
-            'password' => ['required', 'string'],
-        ]);
+        if (in_array($role, ['client', 'vendor', 'courier'], true)) {
+            $this->role = $role;
+        }
+    }
 
-        $user = User::where('phone', $this->phone)->first();
+    public function requestCode(AuthService $auth): void
+    {
+        $this->validate(['phone' => ['required', 'string', 'max:30']]);
 
-        // Check credentials before verification status, so a wrong password
-        // and an unverified account give different, distinguishable errors
-        // only once we already know the password is correct — otherwise an
-        // attacker could probe phone numbers to learn which are registered.
-        if (! $user || ! Hash::check($this->password, $user->password)) {
-            $this->addError('phone', 'Identifiants invalides.');
+        $this->isNewUser = $auth->requestOtp($this->phone);
+        $this->codeSent = true;
+    }
 
-            return;
+    public function changeNumber(): void
+    {
+        $this->codeSent = false;
+        $this->code = '';
+        $this->resendMessage = null;
+    }
+
+    public function resend(AuthService $auth): void
+    {
+        $auth->requestOtp($this->phone);
+        $this->resendMessage = 'Un nouveau code a été envoyé.';
+    }
+
+    public function verify(AuthService $auth): void
+    {
+        $rules = ['code' => ['required', 'string', 'size:6']];
+
+        if ($this->isNewUser) {
+            $rules['name'] = ['required', 'string', 'max:255'];
         }
 
-        if ($user->phone_verified_at === null) {
-            $this->addError('phone', 'Numéro non vérifié. Vérifiez votre code OTP avant de vous connecter.');
+        $this->validate($rules);
 
-            return;
-        }
+        $user = $auth->verifyOtpAndAuthenticate(
+            $this->phone,
+            $this->code,
+            $this->isNewUser ? $this->name : null,
+            $this->isNewUser ? $this->role : null,
+        );
 
         Auth::login($user);
         session()->regenerate();

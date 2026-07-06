@@ -45,9 +45,8 @@
                             <button type="submit" class="text-djidji-text/70 hover:text-djidji-green">Déconnexion</button>
                         </form>
                     @else
-                        <a href="{{ route('login') }}" class="text-djidji-text/70 hover:text-djidji-green">Connexion</a>
-                        <a href="{{ route('register') }}" class="rounded-full bg-djidji-green px-4 py-1.5 text-white hover:bg-djidji-green-dark">
-                            Créer un compte
+                        <a href="{{ route('login') }}" class="rounded-full bg-djidji-green px-4 py-1.5 text-white hover:bg-djidji-green-dark">
+                            Se connecter
                         </a>
                     @endauth
                 </nav>
@@ -75,7 +74,7 @@
                     <ul class="space-y-2 text-sm text-white/80">
                         <li><a href="{{ route('home') }}" class="hover:text-white">Accueil</a></li>
                         @guest
-                            <li><a href="{{ route('register') }}" class="hover:text-white">Devenir vendeur</a></li>
+                            <li><a href="{{ route('login') }}" class="hover:text-white">Devenir vendeur</a></li>
                             <li><a href="{{ route('login') }}" class="hover:text-white">Connexion</a></li>
                         @else
                             <li><a href="{{ route('profile') }}" class="hover:text-white">Mon profil</a></li>

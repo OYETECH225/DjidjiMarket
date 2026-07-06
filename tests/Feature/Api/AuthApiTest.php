@@ -39,138 +39,135 @@ class AuthApiTest extends TestCase
         return $otp;
     }
 
-    public function test_register_creates_unverified_user_and_logs_otp(): void
+    public function test_request_otp_for_a_new_phone_reports_is_new(): void
     {
         Log::spy();
 
-        $response = $this->postJson('/api/auth/register', [
-            'name' => 'Awa Client',
-            'phone' => '+225 07 00 00 00 01',
-            'password' => 'password123',
-            'password_confirmation' => 'password123',
-            'role' => 'client',
-        ]);
+        $response = $this->postJson('/api/auth/otp/request', ['phone' => '+225 07 00 00 00 01']);
 
-        $response->assertCreated();
-
-        $user = User::where('phone', '+225 07 00 00 00 01')->firstOrFail();
-        $this->assertNull($user->phone_verified_at);
-        $this->assertSame('client', $user->role);
-
-        $this->extractOtpFromLogs($user->phone);
+        $response->assertOk();
+        $response->assertJsonPath('is_new', true);
+        $this->assertDatabaseMissing('users', ['phone' => '+225 07 00 00 00 01']);
+        $this->extractOtpFromLogs('+225 07 00 00 00 01');
     }
 
-    public function test_register_rejects_privileged_roles(): void
-    {
-        $response = $this->postJson('/api/auth/register', [
-            'name' => 'Fake Admin',
-            'phone' => '+225 07 00 00 00 02',
-            'password' => 'password123',
-            'password_confirmation' => 'password123',
-            'role' => 'admin',
-        ]);
-
-        $response->assertStatus(422);
-        $this->assertDatabaseMissing('users', ['phone' => '+225 07 00 00 00 02']);
-    }
-
-    public function test_otp_verify_activates_account_and_returns_token(): void
+    public function test_request_otp_for_an_existing_phone_reports_not_new(): void
     {
         Log::spy();
+        User::factory()->create(['phone' => '+225 07 00 00 00 02']);
 
-        $this->postJson('/api/auth/register', [
-            'name' => 'Awa Client',
-            'phone' => '+225 07 00 00 00 03',
-            'password' => 'password123',
-            'password_confirmation' => 'password123',
-            'role' => 'client',
-        ])->assertCreated();
+        $response = $this->postJson('/api/auth/otp/request', ['phone' => '+225 07 00 00 00 02']);
 
+        $response->assertOk();
+        $response->assertJsonPath('is_new', false);
+        $this->extractOtpFromLogs('+225 07 00 00 00 02');
+    }
+
+    public function test_verify_otp_creates_a_new_account_with_name_and_role(): void
+    {
+        Log::spy();
+        $this->postJson('/api/auth/otp/request', ['phone' => '+225 07 00 00 00 03'])->assertOk();
         $code = $this->extractOtpFromLogs('+225 07 00 00 00 03');
 
         $response = $this->postJson('/api/auth/otp/verify', [
             'phone' => '+225 07 00 00 00 03',
             'code' => $code,
+            'name' => 'Awa Client',
+            'role' => 'client',
         ]);
 
         $response->assertOk()->assertJsonStructure(['token', 'user']);
 
         $user = User::where('phone', '+225 07 00 00 00 03')->firstOrFail();
+        $this->assertSame('Awa Client', $user->name);
+        $this->assertSame('client', $user->role);
         $this->assertNotNull($user->phone_verified_at);
+        $this->assertNull($user->password);
+    }
+
+    public function test_verify_otp_rejects_new_account_without_name_or_role(): void
+    {
+        Log::spy();
+        $this->postJson('/api/auth/otp/request', ['phone' => '+225 07 00 00 00 04'])->assertOk();
+        $code = $this->extractOtpFromLogs('+225 07 00 00 00 04');
+
+        $response = $this->postJson('/api/auth/otp/verify', [
+            'phone' => '+225 07 00 00 00 04',
+            'code' => $code,
+        ]);
+
+        $response->assertStatus(422);
+        $this->assertDatabaseMissing('users', ['phone' => '+225 07 00 00 00 04']);
+    }
+
+    public function test_verify_otp_rejects_privileged_roles_for_new_accounts(): void
+    {
+        Log::spy();
+        $this->postJson('/api/auth/otp/request', ['phone' => '+225 07 00 00 00 05'])->assertOk();
+        $code = $this->extractOtpFromLogs('+225 07 00 00 00 05');
+
+        $response = $this->postJson('/api/auth/otp/verify', [
+            'phone' => '+225 07 00 00 00 05',
+            'code' => $code,
+            'name' => 'Fake Admin',
+            'role' => 'admin',
+        ]);
+
+        $response->assertStatus(422);
+        $this->assertDatabaseMissing('users', ['phone' => '+225 07 00 00 00 05']);
+    }
+
+    public function test_verify_otp_logs_in_an_existing_account_and_ignores_supplied_name_and_role(): void
+    {
+        Log::spy();
+        $user = User::factory()->create([
+            'phone' => '+225 07 00 00 00 06', 'name' => 'Real Name', 'role' => 'client', 'phone_verified_at' => now(),
+        ]);
+        $this->postJson('/api/auth/otp/request', ['phone' => '+225 07 00 00 00 06'])->assertOk();
+        $code = $this->extractOtpFromLogs('+225 07 00 00 00 06');
+
+        // An attacker who intercepted someone else's OTP (or the real owner
+        // logging in from a form that still has stale fields) should never
+        // be able to change the account's name/role via this endpoint.
+        $response = $this->postJson('/api/auth/otp/verify', [
+            'phone' => '+225 07 00 00 00 06',
+            'code' => $code,
+            'name' => 'Attacker Name',
+            'role' => 'vendor',
+        ]);
+
+        $response->assertOk()->assertJsonStructure(['token', 'user']);
+
+        $user->refresh();
+        $this->assertSame('Real Name', $user->name);
+        $this->assertSame('client', $user->role);
+    }
+
+    public function test_verify_otp_marks_an_unverified_existing_account_as_verified(): void
+    {
+        Log::spy();
+        User::factory()->create(['phone' => '+225 07 00 00 00 07', 'phone_verified_at' => null]);
+        $this->postJson('/api/auth/otp/request', ['phone' => '+225 07 00 00 00 07'])->assertOk();
+        $code = $this->extractOtpFromLogs('+225 07 00 00 00 07');
+
+        $this->postJson('/api/auth/otp/verify', [
+            'phone' => '+225 07 00 00 00 07',
+            'code' => $code,
+        ])->assertOk();
+
+        $this->assertNotNull(User::where('phone', '+225 07 00 00 00 07')->firstOrFail()->phone_verified_at);
     }
 
     public function test_otp_verify_rejects_wrong_code(): void
     {
-        OtpCode::generateFor('+225 07 00 00 00 04');
-        User::factory()->create(['phone' => '+225 07 00 00 00 04']);
+        OtpCode::generateFor('+225 07 00 00 00 08');
+        User::factory()->create(['phone' => '+225 07 00 00 00 08']);
 
         $response = $this->postJson('/api/auth/otp/verify', [
-            'phone' => '+225 07 00 00 00 04',
+            'phone' => '+225 07 00 00 00 08',
             'code' => '000000',
         ]);
 
         $response->assertStatus(422);
-    }
-
-    public function test_login_fails_when_phone_unverified(): void
-    {
-        User::factory()->create([
-            'phone' => '+225 07 00 00 00 05',
-            'password' => bcrypt('password123'),
-            'phone_verified_at' => null,
-        ]);
-
-        $response = $this->postJson('/api/auth/login', [
-            'phone' => '+225 07 00 00 00 05',
-            'password' => 'password123',
-        ]);
-
-        $response->assertStatus(422);
-    }
-
-    public function test_reregistering_an_unverified_phone_only_resends_otp_without_overwriting_it(): void
-    {
-        Log::spy();
-
-        $this->postJson('/api/auth/register', [
-            'name' => 'Real Owner',
-            'phone' => '+225 07 00 00 00 07',
-            'password' => 'password123',
-            'password_confirmation' => 'password123',
-            'role' => 'client',
-        ])->assertCreated();
-
-        // An attacker who doesn't own the phone tries to hijack the pending
-        // signup by "re-registering" with their own password/role.
-        $response = $this->postJson('/api/auth/register', [
-            'name' => 'Attacker',
-            'phone' => '+225 07 00 00 00 07',
-            'password' => 'attacker-password',
-            'password_confirmation' => 'attacker-password',
-            'role' => 'vendor',
-        ]);
-
-        $response->assertOk();
-
-        $user = User::where('phone', '+225 07 00 00 00 07')->firstOrFail();
-        $this->assertSame('Real Owner', $user->name);
-        $this->assertSame('client', $user->role);
-        $this->assertTrue(\Illuminate\Support\Facades\Hash::check('password123', $user->password));
-    }
-
-    public function test_login_succeeds_once_verified(): void
-    {
-        User::factory()->create([
-            'phone' => '+225 07 00 00 00 06',
-            'password' => bcrypt('password123'),
-            'phone_verified_at' => now(),
-        ]);
-
-        $response = $this->postJson('/api/auth/login', [
-            'phone' => '+225 07 00 00 00 06',
-            'password' => 'password123',
-        ]);
-
-        $response->assertOk()->assertJsonStructure(['token', 'user']);
     }
 }

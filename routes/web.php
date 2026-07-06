@@ -1,8 +1,6 @@
 <?php
 
 use App\Livewire\Auth\Login;
-use App\Livewire\Auth\Register;
-use App\Livewire\Auth\VerifyOtp;
 use App\Livewire\Cart;
 use App\Livewire\Checkout;
 use App\Livewire\Courier\AvailableOrders as CourierAvailableOrders;
@@ -25,8 +23,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', Home::class)->name('home');
 
 Route::middleware('guest')->group(function () {
-    Route::get('/inscription', Register::class)->name('register');
-    Route::get('/verification-otp', VerifyOtp::class)->name('otp.verify');
     Route::get('/connexion', Login::class)->name('login');
 });
 
