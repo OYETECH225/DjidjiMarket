@@ -17,13 +17,18 @@ class OtpCode extends Model
         ];
     }
 
+    /** Fixed OTP used in local/testing so manual testing never needs to read the logs. Never used outside those environments. */
+    public const TESTING_CODE = '123456';
+
     /**
      * Create a new OTP for the phone and return the plaintext code to send.
      * Only the hash is persisted.
      */
     public static function generateFor(string $phone): string
     {
-        $plainCode = (string) random_int(100000, 999999);
+        $plainCode = app()->environment(['local', 'testing'])
+            ? self::TESTING_CODE
+            : (string) random_int(100000, 999999);
 
         static::create([
             'phone' => $phone,
